@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.2</title>
+<title>Troop Mess — Camp Meal Planner v3.3</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#14232B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Troop Mess">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -34,6 +42,14 @@ body{
 .masthead h1 span{color:var(--slate-2)}
 .mast-sub{font-size:.82rem;color:var(--slate-2);margin:7px 0 0;max-width:34em}
 .mast-byline{font-family:var(--mono);font-size:.63rem;letter-spacing:.06em;color:var(--enamel-3);margin:0 0 9px;line-height:1.55;max-width:40em;opacity:.85}
+.installbar{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--ember);border-left-width:5px;background:#FFF4EE;border-radius:3px;padding:12px 14px;margin:0 0 18px}
+.installbar .ib-txt{flex:1;min-width:0}
+.installbar b{display:block;font-family:var(--display);font-weight:700;font-size:1.02rem;text-transform:uppercase;letter-spacing:.02em;color:var(--ink);margin:0 0 3px}
+.installbar p{margin:0;font-size:.8rem;line-height:1.45;color:var(--slate)}
+.installbar .ib-btns{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.installbar button{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.84rem;padding:8px 13px;border:0;border-radius:3px;background:var(--ember);color:#fff;cursor:pointer}
+.installbar button.ib-no{background:transparent;color:var(--slate);font-size:.72rem;padding:3px}
+@media (max-width:520px){.installbar{flex-direction:column;gap:9px}.installbar .ib-btns{flex-direction:row;align-items:center;gap:10px}}
 .readme{border:1px solid var(--rule);background:var(--enamel-2);border-radius:3px;margin:0 0 30px}
 .readme>summary{font-family:var(--display);font-weight:700;font-size:1.12rem;text-transform:uppercase;letter-spacing:.03em;padding:11px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;color:var(--ink)}
 .readme>summary::-webkit-details-marker{display:none}
@@ -79,6 +95,14 @@ section[hidden]{display:none}
 .chip .sub{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;opacity:.65;text-transform:uppercase}
 
 .rlist{display:flex;flex-direction:column;gap:10px}
+.mgroup{display:flex;align-items:baseline;gap:10px;margin:26px 0 2px}
+.mgroup:first-child{margin-top:0}
+.mgroup h3{font-family:var(--display);font-weight:800;font-size:1.18rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin:0;white-space:nowrap}
+.mgroup .mrule{flex:1;height:2px;background:var(--ink);opacity:.16}
+.mgroup .mcount{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);white-space:nowrap}
+.mgroup .mcount.on{color:var(--pine);font-weight:600}
+.mwhen{font-family:var(--mono);font-size:.63rem;letter-spacing:.07em;text-transform:uppercase;color:var(--slate-2);margin:0 0 8px}
+.mnone{font-size:.8rem;color:var(--slate);background:var(--enamel-2);border:1px dashed var(--rule);border-radius:3px;padding:10px 12px;margin:0}
 .rcard{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--enamel-3);border-radius:3px;padding:13px 14px;cursor:pointer;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;text-align:left;width:100%;font-family:inherit;transition:border-left-color .18s}
 .rcard[data-on="1"]{border-left-color:var(--ember)}
 .rcard:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
@@ -329,7 +353,7 @@ section[hidden]{display:none}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.2</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.3</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -345,6 +369,16 @@ section[hidden]{display:none}
 
 <main>
   <section id="p-trip" role="tabpanel" aria-labelledby="tab-trip">
+    <div class="installbar" id="installBar" hidden>
+      <div class="ib-txt">
+        <b id="ibHead">Put this on your phone</b>
+        <p id="ibBody">Install it once with signal and it opens from your home screen afterwards — recipes, coal counts and the shopping list all work at camp with no bars.</p>
+      </div>
+      <div class="ib-btns">
+        <button id="ibGo" hidden>Install</button>
+        <button class="ib-no" id="ibNo">Not now</button>
+      </div>
+    </div>
     <details class="readme" id="readme">
       <summary>Read Me</summary>
       <div class="readme-body">
@@ -447,7 +481,7 @@ section[hidden]{display:none}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.2 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.3 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -459,7 +493,7 @@ section[hidden]{display:none}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.2","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.3","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1171,6 +1205,10 @@ const STYLES=[
  {k:"nocook",n:"No-cook",      s:"Stoveless"},
  {k:"high", n:"High adventure",s:"Trek · pack it all"}
 ];
+/* Where each meal falls on a standard Friday-to-Sunday trip, so the grubmaster
+   can see what still needs covering instead of holding it in their head. */
+const MEALWHEN={breakfast:"Saturday and Sunday morning",lunch:"Saturday midday",
+  dinner:"Saturday night",dessert:"Saturday night, after dinner",crackerbarrel:"Friday night, on arrival"};
 const MEALS=[{k:"breakfast",n:"Breakfast"},{k:"lunch",n:"Lunch"},{k:"dinner",n:"Dinner"},{k:"dessert",n:"Dessert"},{k:"crackerbarrel",n:"Cracker barrel"}];
 const DIETS=[
  {k:"nuts",n:"Nut allergy",s:"No peanut or tree nut ingredients"},
@@ -1273,9 +1311,24 @@ function renderRecipes(){
     $("#menuHint").textContent="";
     $("#recipeList").innerHTML=`<div class="notice"><h3>No matches</h3><p>Nothing matches ${styleName.toLowerCase()} with these filters.</p><p>${S.noDutch?"Dutch oven recipes are excluded right now — unticking that box would bring a lot back. ":""}Try clearing a dietary restriction or adding another meal.</p></div>`;return;
   }
-  const mealLabel=[...S.meals].map(m=>MEALS.find(x=>x.k===m).n.toLowerCase()).join(" · ");
-  $("#menuHint").textContent=`${list.length} recipe${list.length===1?"":"s"} for ${styleName.toLowerCase()} · ${mealLabel}. Tap to add to the menu.`;
-  $("#recipeList").innerHTML=list.map(r=>{
+  $("#menuHint").textContent=`${list.length} recipe${list.length===1?"":"s"} for ${styleName.toLowerCase()}, grouped by meal. Tap to add to the menu. A recipe that suits more than one meal is listed under each.`;
+
+  /* Grouped by meal, in the order the weekend actually happens, so nothing gets
+     forgotten and nobody has to scroll a flat list hunting for a breakfast. */
+  $("#recipeList").innerHTML=MEALS.filter(m=>S.meals.has(m.k)).map(m=>{
+    const inMeal=list.filter(r=>r.meals.includes(m.k));
+    const chosen=inMeal.filter(r=>S.picked.has(r.id)).length;
+    const count=chosen
+      ? `<span class="mcount on">${chosen} chosen of ${inMeal.length}</span>`
+      : `<span class="mcount">${inMeal.length} to choose from</span>`;
+    const head=`<div class="mgroup"><h3>${m.n}</h3><span class="mrule"></span>${count}</div>
+      <p class="mwhen">${MEALWHEN[m.k]||""}</p>`;
+    if(!inMeal.length) return head+`<p class="mnone">Nothing here matches your cooking style and filters. Try unticking a restriction, or allowing Dutch oven recipes.</p>`;
+    return head+inMeal.map(cardHTML).join("");
+  }).join("");
+}
+
+function cardHTML(r){
     const on=S.picked.has(r.id),s=scaleOf(r),f=recipeFlags(r),cps=costPerServing(r),tags=[];
     if(r.coals)tags.push(`<span class="tag do">${r.coals.size} · ${r.coals.top} top / ${r.coals.bot} bottom</span>`);
     if(r.bag)tags.push(`<span class="tag do">Freezer bag · ${r.water} cup water</span>`);
@@ -1297,7 +1350,6 @@ function renderRecipes(){
       </span>
       <span class="rpick">${on?"✓":"+"}</span>
     </button>`;
-  }).join("");
 }
 
 function coalRing(top,bot){
@@ -1899,7 +1951,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.2";
+const APP_BASE="3.3";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2311,6 +2363,73 @@ document.addEventListener("change",e=>{
 });
 
 renderChips();renderDock();
+
+/* ================= INSTALL TO HOME SCREEN =================
+   Only meaningful on a hosted copy. A downloaded single file runs from
+   file:// where there is no service worker and nothing to install, so
+   everything here is guarded and simply does nothing in that case. */
+(function(){
+  var hosted = location.protocol === "https:" || location.hostname === "localhost";
+  if(!hosted) return;
+
+  /* Register the worker that keeps the app available with no signal. */
+  if("serviceWorker" in navigator){
+    window.addEventListener("load",function(){
+      navigator.serviceWorker.register("sw.js").catch(function(){});
+    });
+  }
+
+  var bar=document.getElementById("installBar"),
+      go=document.getElementById("ibGo"),
+      no=document.getElementById("ibNo"),
+      head=document.getElementById("ibHead"),
+      body=document.getElementById("ibBody");
+  if(!bar) return;
+
+  /* Already installed and running from the home screen: nothing to offer. */
+  var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)
+                   || navigator.standalone === true;
+  if(standalone) return;
+
+  var DISMISS="tm_install_dismissed";
+  var dismissed=false;
+  try{ dismissed = localStorage.getItem(DISMISS)==="1"; }catch(e){}
+  if(dismissed) return;
+
+  function hide(remember){
+    bar.hidden=true;
+    if(remember){ try{ localStorage.setItem(DISMISS,"1"); }catch(e){} }
+  }
+  no.addEventListener("click",function(){ hide(true); });
+
+  var isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent||"")
+              || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+
+  if(isiOS){
+    /* Safari has no install prompt; the user does it from the Share menu. */
+    head.textContent="Put this on your phone";
+    body.textContent='Tap the Share button at the bottom of Safari, then "Add to Home Screen". It opens from your home screen afterwards and works at camp with no signal.';
+    bar.hidden=false;
+    return;
+  }
+
+  /* Chrome and friends hand us a prompt we can fire on a real tap. */
+  var deferred=null;
+  window.addEventListener("beforeinstallprompt",function(e){
+    e.preventDefault();
+    deferred=e;
+    go.hidden=false;
+    bar.hidden=false;
+  });
+
+  go.addEventListener("click",function(){
+    if(!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function(){ deferred=null; hide(true); });
+  });
+
+  window.addEventListener("appinstalled",function(){ hide(true); });
+})();
 </script>
 </body>
 </html>
