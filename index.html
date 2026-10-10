@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.3</title>
+<title>Troop Mess — Camp Meal Planner v3.4</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -95,12 +95,12 @@ section[hidden]{display:none}
 .chip .sub{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;opacity:.65;text-transform:uppercase}
 
 .rlist{display:flex;flex-direction:column;gap:10px}
-.mgroup{display:flex;align-items:baseline;gap:10px;margin:26px 0 2px}
+.mgroup{display:flex;align-items:center;gap:12px;margin:30px 0 4px}
 .mgroup:first-child{margin-top:0}
 .mgroup h3{font-family:var(--display);font-weight:800;font-size:1.18rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin:0;white-space:nowrap}
-.mgroup .mrule{flex:1;height:2px;background:var(--ink);opacity:.16}
-.mgroup .mcount{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);white-space:nowrap}
-.mgroup .mcount.on{color:var(--pine);font-weight:600}
+.mgroup .mrule{flex:1;height:20px;background:var(--ember);opacity:1;border-radius:2px}
+.mgroup .mcount{font-family:var(--mono);font-weight:600;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ember);white-space:nowrap}
+.mgroup .mcount.on{color:var(--pine);font-weight:700}
 .mwhen{font-family:var(--mono);font-size:.63rem;letter-spacing:.07em;text-transform:uppercase;color:var(--slate-2);margin:0 0 8px}
 .mnone{font-size:.8rem;color:var(--slate);background:var(--enamel-2);border:1px dashed var(--rule);border-radius:3px;padding:10px 12px;margin:0}
 .rcard{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--enamel-3);border-radius:3px;padding:13px 14px;cursor:pointer;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;text-align:left;width:100%;font-family:inherit;transition:border-left-color .18s}
@@ -353,7 +353,7 @@ section[hidden]{display:none}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.3</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.4</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -481,7 +481,7 @@ section[hidden]{display:none}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.3 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.4 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -493,7 +493,7 @@ section[hidden]{display:none}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.3","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.4","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1951,7 +1951,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.3";
+const APP_BASE="3.4";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
