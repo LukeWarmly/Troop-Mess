@@ -56,6 +56,21 @@ are provided for every recipe you picked, including Dutch oven coal counts.
 
 **Roster.** A blank duty roster for the patrol to fill in.
 
+**Share a menu without a server.** The List has a *Share this menu* button. On a phone it
+opens the normal share sheet — Messages, email, whatever you use — and sends a link with
+the entire plan packed inside it. Whoever taps it gets their own copy of the app opened on
+your shopping list: same head count, same cooking style, same recipes. It is a snapshot
+rather than live collaboration, so later changes do not follow, but it means the plan
+survives the grubmaster coming down with flu on the Friday. Nothing is uploaded anywhere;
+the plan travels inside the link and nowhere else.
+
+**It remembers where you left off.** Plan at Thursday's meeting, close the app, open it at
+camp with no signal — the head count, the cooking style and every recipe you picked are
+still there. A "Start a new trip" button on The Trip clears it when you want a fresh
+start, and it takes two taps so nobody wipes a menu by accident. Printing is still the
+most reliable thing at a campsite, and a phone battery is the one thing paper doesn't
+have.
+
 **Add.** Type in your own recipes one at a time, or paste in a batch. Then download the
 app again with your recipes baked into it.
 

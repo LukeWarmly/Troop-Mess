@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.10** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.12** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,37 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.12
+- **"Share this menu" on The List.** Every copy of the app is separate — no server, no
+  accounts — which is good for privacy and bad for handing a plan to anybody else. This
+  closes that without changing the shape of the thing: the whole plan is packed into the
+  link itself, about 270 characters for a five-recipe menu. On a phone the button opens
+  the native share sheet; on a desktop it copies the link, and if the browser blocks even
+  that it shows the link to copy by hand.
+- Opening a shared link loads that plan, jumps straight to The List, saves it like any
+  other plan, and strips the data out of the address bar so a refresh does not keep
+  re-applying it.
+- A recipe the receiving copy does not have — one the sender added themselves — is left
+  out rather than breaking the menu, and the app says how many were dropped and why.
+- Still a snapshot, not live collaboration. Two people cannot edit one plan. But the
+  grubmaster can hand off to his assistant, which was the actual problem.
+- Nothing is uploaded. The plan travels inside the link and nowhere else.
+
+### v3.11
+- **The meal plan now survives closing the app.** It never did before: head count,
+  cooking style, meals and every chosen recipe lived only in memory, so a grubmaster who
+  planned at Thursday's meeting and shut the tab arrived at camp with a working app and an
+  empty plan. Only the zip code was being kept. Now the whole plan is saved as it is built
+  and restored on open — offline included — right down to the tab you were last on.
+- **"Start a new trip" button** on The Trip, shown only when there is something to clear,
+  with a summary of what is being carried over: "8 scouts · car camping · 4 recipes
+  chosen." It takes two taps, so a month of planning cannot be wiped by a thumb.
+- Restoring drops anything the app no longer recognises — a recipe deleted in a later
+  version cannot come back as a ghost in somebody's saved menu.
+- All of it is wrapped in try/catch, because private windows and blocked site data make
+  browser storage throw rather than simply come back empty. The app still runs if storage
+  is unavailable; it just forgets, as it did before.
 
 ### v3.10
 - **Dutch Oven Potato & Pepper Bake removed.** It was added in v3.8 to fill a gap, and

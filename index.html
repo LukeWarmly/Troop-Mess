@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.10</title>
+<title>Troop Mess — Camp Meal Planner v3.12</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -42,6 +42,10 @@ body{
 .masthead h1 span{color:var(--slate-2)}
 .mast-sub{font-size:.82rem;color:var(--slate-2);margin:7px 0 0;max-width:34em}
 .mast-byline{font-family:var(--mono);font-size:.63rem;letter-spacing:.06em;color:var(--enamel-3);margin:0 0 9px;line-height:1.55;max-width:40em;opacity:.85}
+.triptop{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--enamel-2);border:1px solid var(--rule);border-radius:3px;padding:9px 12px;margin:0 0 18px}
+.triptop p{margin:0;font-size:.78rem;color:var(--slate);line-height:1.4}
+.triptop button{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.76rem;padding:7px 12px;border:1px solid var(--slate-2);border-radius:3px;background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.triptop button.arm{background:var(--ember);border-color:var(--ember);color:#fff}
 .installbar{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--ember);border-left-width:5px;background:#FFF4EE;border-radius:3px;padding:12px 14px;margin:0 0 18px}
 .installbar .ib-txt{flex:1;min-width:0}
 .installbar b{display:block;font-family:var(--display);font-weight:700;font-size:1.02rem;text-transform:uppercase;letter-spacing:.02em;color:var(--ink);margin:0 0 3px}
@@ -353,7 +357,7 @@ section[hidden]{display:none}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.10</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.12</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -369,6 +373,10 @@ section[hidden]{display:none}
 
 <main>
   <section id="p-trip" role="tabpanel" aria-labelledby="tab-trip">
+    <div class="triptop" id="tripTop" hidden>
+      <p id="tripTopTxt"></p>
+      <button id="btnNewTrip">Start a new trip</button>
+    </div>
     <div class="installbar" id="installBar" hidden>
       <div class="ib-txt">
         <b id="ibHead">Put this on your phone</b>
@@ -481,7 +489,7 @@ section[hidden]{display:none}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.10 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.12 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -493,7 +501,7 @@ section[hidden]{display:none}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.10","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.12","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1885,7 +1893,9 @@ function renderList(){
 
   html+=`<div class="block"><div class="btnrow" style="margin-bottom:16px">
       <button class="btn warn" id="btnPrint">Print / save as PDF</button>
+      <button class="btn alt" id="btnShare">Share this menu</button>
     </div>
+    ${SHAREMSG?`<p class="hint" style="margin-top:-8px">${SHAREMSG.ok?`<b>${SHAREMSG.msg}</b>`:`Copy this link and send it:<br><span style="word-break:break-all;font-family:var(--mono);font-size:.72rem">${SHAREMSG.msg}</span>`}</p>`:""}
     <p class="hint" style="margin-top:-8px">Prints the shopping list and every cook card, one recipe per page. Choose "Save as PDF" in the print dialog to email it or keep it on a phone for a campsite with no signal.</p></div>`;
 
   html+=`<div class="block"><div class="block-head"><h2>Cook cards</h2><span class="rule"></span></div>
@@ -2047,7 +2057,117 @@ function setTab(t){
   if(t==="add")renderAdd();
   renderDock();window.scrollTo({top:0,behavior:"instant"});
 }
-function refresh(){renderChips();if(S.tab==="menu")renderRecipes();if(S.tab==="list")renderList();renderDock();}
+/* The plan lives in memory, so closing the tab used to lose it — a grubmaster who
+   planned on Thursday arrived at camp with an empty app. Keep it in localStorage and
+   put it back on open, offline included. Wrapped in try/catch because private windows
+   and blocked site data make localStorage throw rather than return nothing. */
+const PLAN_KEY="troopmess_plan";
+
+/* Sharing with no server: the whole plan is packed into the link itself. The grubmaster
+   texts it, the assistant taps it, and his copy opens with the same menu. A snapshot,
+   not live collaboration — but it means the plan survives the grubmaster getting flu on
+   the Friday. Base64url so it travels through texts and mail intact. */
+const b64u={
+  enc:o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""),
+  dec:t=>JSON.parse(decodeURIComponent(escape(atob(t.replace(/-/g,"+").replace(/_/g,"/"))))) 
+};
+function planToLink(){
+  const data=b64u.enc({v:1,s:S.scouts,a:S.adults,d:S.days,pt:S.pattern,st:S.style,
+    nd:S.noDutch?1:0,m:[...S.meals],di:[...S.diets],p:[...S.picked]});
+  return location.origin+location.pathname+"#p="+data;
+}
+/* Returns the number of recipes the receiving copy did not recognise, or null if the
+   link carried nothing usable. */
+function planFromLink(){
+  const m=/[#&]p=([A-Za-z0-9\-_]+)/.exec(location.hash||"");
+  if(!m)return null;
+  let d=null;
+  try{ d=b64u.dec(m[1]); }catch(e){ return null; }
+  if(!d||d.v!==1)return null;
+  const n=(x,lo,hi,dflt)=>Number.isFinite(x)&&x>=lo&&x<=hi?x:dflt;
+  S.scouts=n(d.s,0,99,0); S.adults=n(d.a,0,99,0); S.days=n(d.d,1,14,2);
+  if(["weekend","week"].includes(d.pt))S.pattern=d.pt;
+  if(STYLES.some(x=>x.k===d.st))S.style=d.st;
+  S.noDutch=!!d.nd;
+  S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
+  (d.m||[]).forEach(k=>{if(MEALS.some(x=>x.k===k))S.meals.add(k);});
+  (d.di||[]).forEach(k=>{if(DIETS.some(x=>x.k===k))S.diets.add(k);});
+  let lost=0;
+  (d.p||[]).forEach(id=>{ R.some(r=>r.id===id) ? S.picked.add(id) : lost++; });
+  S.tab = S.picked.size ? "list" : "trip";
+  return lost;
+}
+let SHAREMSG=null;
+async function sharePlan(){
+  const url=planToLink();
+  const share={title:"Troop Mess menu",
+    text:"Here is the camp menu and shopping list. Tap to open it in the planner.",url};
+  try{
+    if(navigator.share&&(!navigator.canShare||navigator.canShare(share))){
+      await navigator.share(share); return;
+    }
+  }catch(e){ if(e&&e.name==="AbortError")return; }
+  try{
+    await navigator.clipboard.writeText(url);
+    SHAREMSG={ok:true,msg:"Link copied. Paste it into a text or an email."};
+  }catch(e){
+    SHAREMSG={ok:false,msg:url};
+  }
+  renderList();
+}
+function savePlan(){
+  try{
+    localStorage.setItem(PLAN_KEY,JSON.stringify({v:1,
+      scouts:S.scouts,adults:S.adults,days:S.days,pattern:S.pattern,
+      style:S.style,noDutch:S.noDutch,
+      meals:[...S.meals],diets:[...S.diets],picked:[...S.picked],checked:[...S.checked],
+      tab:S.tab==="add"?"trip":S.tab}));
+  }catch(e){}
+}
+function loadPlan(){
+  let d=null;
+  try{ d=JSON.parse(localStorage.getItem(PLAN_KEY)||"null"); }catch(e){}
+  if(!d||d.v!==1)return;
+  const n=(x,lo,hi,dflt)=>Number.isFinite(x)&&x>=lo&&x<=hi?x:dflt;
+  S.scouts=n(d.scouts,0,99,0); S.adults=n(d.adults,0,99,0); S.days=n(d.days,1,14,2);
+  if(["weekend","week"].includes(d.pattern))S.pattern=d.pattern;
+  if(STYLES.some(x=>x.k===d.style))S.style=d.style;
+  S.noDutch=!!d.noDutch;
+  /* Only keep keys the app still knows about. A recipe deleted in a later version
+     must not come back as a ghost in somebody's saved menu. */
+  (d.meals||[]).forEach(k=>{if(MEALS.some(x=>x.k===k))S.meals.add(k);});
+  (d.diets||[]).forEach(k=>{if(DIETS.some(x=>x.k===k))S.diets.add(k);});
+  (d.picked||[]).forEach(id=>{if(R.some(r=>r.id===id))S.picked.add(id);});
+  (d.checked||[]).forEach(k=>S.checked.add(k));
+  if(["trip","menu","list","roster"].includes(d.tab))S.tab=d.tab;
+}
+function planHasAnything(){
+  return !!(S.scouts||S.adults||S.style||S.meals.size||S.picked.size||S.diets.size);
+}
+let newTripArmed=false;
+function renderTripTop(){
+  const bar=$("#tripTop"); if(!bar)return;
+  if(!planHasAnything()){ bar.hidden=true; newTripArmed=false; return; }
+  bar.hidden=false;
+  const bits=[];
+  if(eaters())bits.push(`${S.scouts} scout${S.scouts===1?"":"s"}${S.adults?` and ${S.adults} leader${S.adults===1?"":"s"}`:""}`);
+  if(S.style)bits.push((STYLES.find(x=>x.k===S.style)||{}).n.toLowerCase());
+  if(S.picked.size)bits.push(`${S.picked.size} recipe${S.picked.size===1?"":"s"} chosen`);
+  $("#tripTopTxt").textContent = bits.length
+    ? "Carried over from last time: "+bits.join(" · ")+"."
+    : "You have a plan in progress.";
+  const b=$("#btnNewTrip");
+  b.textContent = newTripArmed ? "Tap again to clear" : "Start a new trip";
+  b.classList.toggle("arm", newTripArmed);
+}
+function newTrip(){
+  S.scouts=0;S.adults=0;S.days=2;S.pattern="weekend";S.style=null;S.noDutch=false;
+  S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
+  newTripArmed=false;
+  try{ localStorage.removeItem(PLAN_KEY); }catch(e){}
+  setTab("trip"); refresh();
+}
+function refresh(){renderTripTop();renderChips();if(S.tab==="menu")renderRecipes();if(S.tab==="list")renderList();renderDock();}
 
 document.addEventListener("click",e=>{
   const t=e.target.closest("button");if(!t)return;
@@ -2055,6 +2175,12 @@ document.addEventListener("click",e=>{
     const[k,d]=t.dataset.step.split(":");
     S[k]=Math.max(0,S[k]+Number(d));
     $("#c-"+k).textContent=S[k];refresh();return;
+  }
+  if(t.id==="btnNewTrip"){
+    if(newTripArmed){newTrip();return;}
+    newTripArmed=true;renderTripTop();
+    setTimeout(()=>{if(newTripArmed){newTripArmed=false;renderTripTop();}},5000);
+    return;
   }
   if(t.id==="cbNoDutch"){S.noDutch=!S.noDutch;S.picked.clear();S.checked.clear();refresh();return;}
   if(t.dataset.style){S.style=t.dataset.style;if(S.style==="dutch")S.noDutch=false;S.picked.clear();S.checked.clear();refresh();return;}
@@ -2066,6 +2192,7 @@ document.addEventListener("click",e=>{
   }
   if(t.dataset.id){const id=t.dataset.id;S.picked.has(id)?S.picked.delete(id):S.picked.add(id);S.checked.clear();renderRecipes();renderDock();return;}
   if(t.id==="btnPrint"){document.body.classList.remove("print-roster");window.print();return;}
+  if(t.id==="btnShare"){SHAREMSG=null;sharePlan();return;}
   if(t.id==="btnPrintRoster"){printRoster();return;}
   if(t.dataset.pattern){S.pattern=t.dataset.pattern;renderRoster();return;}
   if(t.dataset.days){S.days=Math.min(14,Math.max(1,(S.days||2)+Number(t.dataset.days)));renderRoster();return;}
@@ -2076,7 +2203,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.10";
+const APP_BASE="3.12";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2487,7 +2614,20 @@ document.addEventListener("change",e=>{
   if(e.target.id==="fileImport"&&e.target.files&&e.target.files[0])importJSON(e.target.files[0]);
 });
 
-renderChips();renderDock();
+/* Runs after the handlers above, so the state it saves is already updated. */
+document.addEventListener("click",()=>savePlan());
+
+const sharedLost=planFromLink();
+if(sharedLost===null){ loadPlan(); }
+else {
+  /* Drop the data out of the address bar so a refresh doesn't keep re-applying it,
+     then keep the shared plan the same way any other plan is kept. */
+  history.replaceState(null,"",location.pathname);
+  savePlan();
+  if(sharedLost)SHAREMSG={ok:true,msg:`Menu loaded. ${sharedLost} recipe${sharedLost===1?" was":"s were"} left out — whoever sent this has recipes your copy does not.`};
+}
+setTab(S.tab||"trip");
+renderTripTop();renderChips();renderDock();
 
 /* ================= INSTALL TO HOME SCREEN =================
    Only meaningful on a hosted copy. A downloaded single file runs from
