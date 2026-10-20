@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.12** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.13** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,18 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.13
+- **The new-trip bar stopped claiming things that were not true.** It said "Carried over
+  from last time" whenever a plan existed — including one you had typed in thirty seconds
+  earlier, where nothing had been carried over from anywhere. Now that line appears only
+  when the app genuinely restored a plan on opening, and disappears the instant you change
+  anything, because at that point it is your plan rather than last month's. While you are
+  building, the button sits on its own and speaks for itself.
+- Shortened to "Carried over: 8 scouts · car camping · 4 recipes chosen."
+- The bar itself still stays for as long as there is a plan — it is the only way to reset,
+  so it does not fade. The five-second timer is on the second tap: "Tap again to clear"
+  reverts to normal if you do not, so a stray tap cannot leave it armed.
 
 ### v3.12
 - **"Share this menu" on The List.** Every copy of the app is separate — no server, no

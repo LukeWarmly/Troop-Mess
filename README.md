@@ -67,7 +67,10 @@ the plan travels inside the link and nowhere else.
 **It remembers where you left off.** Plan at Thursday's meeting, close the app, open it at
 camp with no signal — the head count, the cooking style and every recipe you picked are
 still there. A "Start a new trip" button on The Trip clears it when you want a fresh
-start, and it takes two taps so nobody wipes a menu by accident. Printing is still the
+start, and it takes two taps so nobody wipes a menu by accident. When the app has
+restored a plan it says what it brought back — "Carried over: 8 scouts · car camping · 4
+recipes chosen" — and drops that line the moment you change anything, because from then
+on it is your plan, not last month's. Printing is still the
 most reliable thing at a campsite, and a phone battery is the one thing paper doesn't
 have.
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.12</title>
+<title>Troop Mess — Camp Meal Planner v3.13</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -357,7 +357,7 @@ section[hidden]{display:none}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.12</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.13</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -489,7 +489,7 @@ section[hidden]{display:none}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.12 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.13 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -501,7 +501,7 @@ section[hidden]{display:none}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.12","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.13","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -2141,6 +2141,13 @@ function loadPlan(){
   (d.checked||[]).forEach(k=>S.checked.add(k));
   if(["trip","menu","list","roster"].includes(d.tab))S.tab=d.tab;
 }
+function planSig(){
+  return JSON.stringify([S.scouts,S.adults,S.style,S.noDutch,
+    [...S.meals].sort(),[...S.diets].sort(),[...S.picked].sort()]);
+}
+/* Set when a plan is restored on open. Cleared the moment the plan differs from what
+   was restored — "carried over from last time" is only true until you touch it. */
+let restoredSig=null;
 function planHasAnything(){
   return !!(S.scouts||S.adults||S.style||S.meals.size||S.picked.size||S.diets.size);
 }
@@ -2149,13 +2156,15 @@ function renderTripTop(){
   const bar=$("#tripTop"); if(!bar)return;
   if(!planHasAnything()){ bar.hidden=true; newTripArmed=false; return; }
   bar.hidden=false;
+  const untouched = restoredSig!==null && planSig()===restoredSig;
   const bits=[];
-  if(eaters())bits.push(`${S.scouts} scout${S.scouts===1?"":"s"}${S.adults?` and ${S.adults} leader${S.adults===1?"":"s"}`:""}`);
-  if(S.style)bits.push((STYLES.find(x=>x.k===S.style)||{}).n.toLowerCase());
-  if(S.picked.size)bits.push(`${S.picked.size} recipe${S.picked.size===1?"":"s"} chosen`);
-  $("#tripTopTxt").textContent = bits.length
-    ? "Carried over from last time: "+bits.join(" · ")+"."
-    : "You have a plan in progress.";
+  if(untouched){
+    if(eaters())bits.push(`${S.scouts} scout${S.scouts===1?"":"s"}${S.adults?` and ${S.adults} leader${S.adults===1?"":"s"}`:""}`);
+    if(S.style)bits.push((STYLES.find(x=>x.k===S.style)||{}).n.toLowerCase());
+    if(S.picked.size)bits.push(`${S.picked.size} recipe${S.picked.size===1?"":"s"} chosen`);
+  }
+  /* Once you are building your own plan the button speaks for itself. */
+  $("#tripTopTxt").textContent = bits.length ? "Carried over: "+bits.join(" · ")+"." : "";
   const b=$("#btnNewTrip");
   b.textContent = newTripArmed ? "Tap again to clear" : "Start a new trip";
   b.classList.toggle("arm", newTripArmed);
@@ -2163,7 +2172,7 @@ function renderTripTop(){
 function newTrip(){
   S.scouts=0;S.adults=0;S.days=2;S.pattern="weekend";S.style=null;S.noDutch=false;
   S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
-  newTripArmed=false;
+  newTripArmed=false; restoredSig=null;
   try{ localStorage.removeItem(PLAN_KEY); }catch(e){}
   setTab("trip"); refresh();
 }
@@ -2203,7 +2212,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.12";
+const APP_BASE="3.13";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2626,6 +2635,7 @@ else {
   savePlan();
   if(sharedLost)SHAREMSG={ok:true,msg:`Menu loaded. ${sharedLost} recipe${sharedLost===1?" was":"s were"} left out — whoever sent this has recipes your copy does not.`};
 }
+if(planHasAnything())restoredSig=planSig();
 setTab(S.tab||"trip");
 renderTripTop();renderChips();renderDock();
 
