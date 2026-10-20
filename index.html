@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.4</title>
+<title>Troop Mess — Camp Meal Planner v3.10</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -353,7 +353,7 @@ section[hidden]{display:none}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.4</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.10</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -481,7 +481,7 @@ section[hidden]{display:none}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.4 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.10 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -493,7 +493,7 @@ section[hidden]{display:none}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.4","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.10","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -509,6 +509,7 @@ smokedSausage:{n:"Smoked sausage rope",d:"Meat & Seafood",u:"lb",p:4.29,w:1,f:["
 bacon:{n:"Bacon",d:"Meat & Seafood",u:"lb",p:6.99,w:1,f:["meat","pork"]},
 hotDogs:{n:"Hot dogs (beef & pork)",d:"Meat & Seafood",u:"lb",p:4.99,w:1,f:["meat","pork"]},
 pepperoni:{n:"Sliced pepperoni",d:"Meat & Seafood",u:"lb",p:7.99,w:1,f:["meat","pork"]},
+ turkeyPep:{n:"Turkey pepperoni",d:"Meat & Seafood",u:"lb",p:7.49,w:1,f:["meat"]},
 pepStick:{n:"Pepperoni sticks",d:"Meat & Seafood",u:"stick",p:.79,w:.06,f:["meat","pork"]},
 summerSausage:{n:"Summer sausage",d:"Meat & Seafood",u:"oz",p:.42,w:.0625,f:["meat","pork"]},
 jerky:{n:"Beef jerky",d:"Meat & Seafood",u:"oz",p:1.15,w:.0625,f:["meat"]},
@@ -581,9 +582,9 @@ diced145:{n:"Diced tomatoes, 14.5 oz",d:"Canned & Jarred",u:"can",p:1.29,w:.95,f
 diced32:{n:"Diced tomatoes, 32 oz",d:"Canned & Jarred",u:"can",p:2.49,w:2.1,f:[]},
 tomSoup:{n:"Tomato soup, 10.75 oz",d:"Canned & Jarred",u:"can",p:1.19,w:.72,f:[]},
 mushSoup:{n:"Cream of mushroom soup",d:"Canned & Jarred",u:"can",p:1.49,w:.72,f:["dairy"]},
-broth14:{n:"Chicken broth, 14 oz",d:"Canned & Jarred",u:"can",p:1.39,w:.95,f:[]},
-broth105:{n:"Chicken broth, 10.5 oz",d:"Canned & Jarred",u:"can",p:1.19,w:.72,f:[]},
-stock:{n:"Chicken stock",d:"Canned & Jarred",u:"cup",p:.75,w:.52,f:[]},
+broth14:{n:"Chicken broth, 14 oz",d:"Canned & Jarred",u:"can",p:1.39,w:.95,f:["meat"]},
+broth105:{n:"Chicken broth, 10.5 oz",d:"Canned & Jarred",u:"can",p:1.19,w:.72,f:["meat"]},
+stock:{n:"Chicken stock",d:"Canned & Jarred",u:"cup",p:.75,w:.52,f:["meat"]},
 pinto:{n:"Pinto beans, 15 oz",d:"Canned & Jarred",u:"can",p:1.09,w:1.0,f:[]},
 black:{n:"Black beans, 15 oz",d:"Canned & Jarred",u:"can",p:1.09,w:1.0,f:[]},
 kidney:{n:"Kidney beans, 16 oz",d:"Canned & Jarred",u:"can",p:1.19,w:1.05,f:[]},
@@ -602,7 +603,7 @@ enchGreen:{n:"Green enchilada sauce, 10 oz",d:"Canned & Jarred",u:"can",p:2.29,w
 pieFilling:{n:"Apple pie filling, 21 oz",d:"Canned & Jarred",u:"can",p:3.99,w:1.45,f:[]},
 mushCan:{n:"Sliced mushrooms, 4 oz",d:"Canned & Jarred",u:"can",p:1.09,w:.3,f:[]},
 pineapple:{n:"Pineapple slices, 8 oz",d:"Canned & Jarred",u:"can",p:1.49,w:.55,f:[]},
-tunaPouch:{n:"Tuna pouch, 2.6 oz",d:"Canned & Jarred",u:"pouch",p:1.49,w:.18,f:[]},
+tunaPouch:{n:"Tuna pouch, 2.6 oz",d:"Canned & Jarred",u:"pouch",p:1.49,w:.18,f:["meat"]},
 chickenPouch:{n:"Chicken pouch, 2.6 oz",d:"Canned & Jarred",u:"pouch",p:1.99,w:.18,f:["meat"]},
 
 /* Dry Goods */
@@ -621,10 +622,10 @@ instPotato:{n:"Instant mashed potatoes",d:"Dry Goods",u:"pouch",p:1.09,w:.26,f:[
 instOats:{n:"Instant oatmeal packets",d:"Dry Goods",u:"packet",p:.35,w:.09,f:["gluten"]},
 rolledOats:{n:"Rolled oats",d:"Dry Goods",u:"cup",p:.32,w:.19,f:["gluten"]},
 grits:{n:"Instant grits packets",d:"Dry Goods",u:"packet",p:.32,w:.07,f:[]},
-macCheese:{n:"Boxed mac & cheese",d:"Dry Goods",u:"box",p:1.25,w:.48,f:["gluten","dairy"]},
+macCheese:{n:"Mac & cheese",d:"Dry Goods",u:"box",p:1.25,w:.48,f:["gluten","dairy"]},
 readyRice:{n:"Spanish style ready rice",d:"Dry Goods",u:"pouch",p:2.29,w:.55,f:[]},
 stuffing:{n:"Stuffing mix, 6 oz",d:"Dry Goods",u:"box",p:2.29,w:.42,f:["gluten"]},
-stuffing8:{n:"Chicken stuffing mix, 8 oz",d:"Dry Goods",u:"box",p:2.59,w:.55,f:["gluten"]},
+stuffing8:{n:"Chicken stuffing mix, 8 oz",d:"Dry Goods",u:"box",p:2.59,w:.55,f:["gluten","meat"]},
 biscuitMix:{n:"Biscuit / baking mix",d:"Dry Goods",u:"cup",p:.65,w:.3,f:["gluten"]},
 pancakeMix:{n:"Complete pancake mix",d:"Dry Goods",u:"cup",p:.45,w:.3,f:["gluten"]},
 cornbreadMix:{n:"Corn bread mix, 8.5 oz",d:"Dry Goods",u:"box",p:.79,w:.55,f:["gluten"]},
@@ -651,7 +652,7 @@ fritosBag:{n:"Single-serve corn chip bags",d:"Dry Goods",u:"bag",p:.55,w:.07,f:[
 tortChips:{n:"Tortilla chips",d:"Dry Goods",u:"oz",p:.26,w:.0625,f:[]},
 instPudding:{n:"Instant pudding mix",d:"Dry Goods",u:"box",p:1.09,w:.24,f:["dairy"]},
 cocoa:{n:"Hot cocoa packets",d:"Dry Goods",u:"packet",p:.30,w:.06,f:["dairy"]},
-marshmallow:{n:"Marshmallows",d:"Dry Goods",u:"cup",p:.45,w:.11,f:[]},
+marshmallow:{n:"Marshmallows",d:"Dry Goods",u:"cup",p:.45,w:.11,f:["gelatin"]},
 grahams:{n:"Graham crackers",d:"Dry Goods",u:"sheet",p:.14,w:.03,f:["gluten"]},
 chocBar:{n:"Chocolate bars",d:"Dry Goods",u:"bar",p:1.15,w:.10,f:["dairy"]},
 cereal:{n:"Cold cereal",d:"Dry Goods",u:"cup",p:.38,w:.09,f:["gluten"]},
@@ -666,7 +667,7 @@ orange:{n:"Oranges",d:"Produce",u:"orange",p:.85,w:.45,f:[]},
 cherryTom:{n:"Cherry tomatoes",d:"Produce",u:"cup",p:1.40,w:.38,f:[]},
 oreos:{n:"Chocolate sandwich cookies",d:"Dry Goods",u:"sleeve",p:1.79,w:.5,f:["gluten","dairy"]},
 gummyWorms:{n:"Gummy worms",d:"Dry Goods",u:"oz",p:.38,w:.0625,f:[]},
-marshCream:{n:"Marshmallow creme",d:"Dry Goods",u:"oz",p:.22,w:.0625,f:[]},
+marshCream:{n:"Marshmallow creme",d:"Dry Goods",u:"oz",p:.22,w:.0625,f:["gelatin"]},
 chocFrosting:{n:"Chocolate frosting",d:"Dry Goods",u:"oz",p:.19,w:.0625,f:["dairy"]},
 chexCereal:{n:"Corn or rice square cereal",d:"Dry Goods",u:"cup",p:.32,w:.07,f:["gluten"]},
 branCereal:{n:"Fruit and bran cereal",d:"Dry Goods",u:"cup",p:.42,w:.09,f:["gluten"]},
@@ -683,7 +684,7 @@ caramelDip:{n:"Caramel dip",d:"Canned & Jarred",u:"oz",p:.22,w:.0625,f:["dairy"]
 pretzels:{n:"Pretzels",d:"Dry Goods",u:"oz",p:.22,w:.0625,f:["gluten"]},
 spaghetti:{n:"Spaghetti",d:"Dry Goods",u:"lb",p:1.59,w:1,f:["gluten"]},
 gravySausageMix:{n:"Sausage gravy mix",d:"Spices & Baking",u:"packet",p:1.19,w:.17,f:["gluten","dairy","pork","meat"]},
-tunaCan:{n:"Tuna, 5 oz can",d:"Canned & Jarred",u:"can",p:1.09,w:.38,f:[]},
+tunaCan:{n:"Tuna, 5 oz can",d:"Canned & Jarred",u:"can",p:1.09,w:.38,f:["meat"]},
 chickenSoup:{n:"Cream of chicken soup",d:"Canned & Jarred",u:"can",p:1.49,w:.72,f:["dairy","meat"]},
 sloppyJoe:{n:"Sloppy joe sauce, 15 oz",d:"Canned & Jarred",u:"can",p:1.39,w:1.0,f:[]},
 bakedBeans:{n:"Baked beans, 28 oz",d:"Canned & Jarred",u:"can",p:2.19,w:1.95,f:[]},
@@ -726,9 +727,10 @@ garlicPwd:{n:"Garlic powder",d:"Spices & Baking",u:"tsp",p:.06,w:.006,f:[]},
 chiliPowder:{n:"Chili powder",d:"Spices & Baking",u:"tsp",p:.05,w:.005,f:[]},
 cinnamon:{n:"Cinnamon",d:"Spices & Baking",u:"tsp",p:.06,w:.005,f:[]},
 sage:{n:"Ground sage",d:"Spices & Baking",u:"tsp",p:.10,w:.004,f:[]},
-worcester:{n:"Worcestershire sauce",d:"Spices & Baking",u:"tsp",p:.08,w:.012,f:[]},
+worcester:{n:"Worcestershire sauce",d:"Spices & Baking",u:"tsp",p:.08,w:.012,f:["meat"]},
 basil:{n:"Dried basil",d:"Spices & Baking",u:"tsp",p:.09,w:.004,f:[]},
 oregano:{n:"Dried oregano",d:"Spices & Baking",u:"tsp",p:.09,w:.004,f:[]},
+ italSeas:{n:"Italian seasoning",d:"Spices & Baking",u:"tsp",p:.07,w:.004,f:[]},
 parsleyDry:{n:"Dried parsley flakes",d:"Spices & Baking",u:"tsp",p:.07,w:.003,f:[]},
 driedOnion:{n:"Dried minced onion",d:"Spices & Baking",u:"tbsp",p:.22,w:.015,f:[]},
 tarragon:{n:"Tarragon",d:"Spices & Baking",u:"tsp",p:.14,w:.004,f:[]},
@@ -740,16 +742,16 @@ tacoSeas:{n:"Taco seasoning",d:"Spices & Baking",u:"packet",p:1.09,w:.08,f:[]},
 ranchMix:{n:"Dry ranch dressing mix",d:"Spices & Baking",u:"packet",p:1.29,w:.06,f:["dairy"]},
 onionSoupMix:{n:"Dry onion soup mix",d:"Spices & Baking",u:"packet",p:1.19,w:.09,f:[]},
 gravyMix:{n:"Brown gravy mix",d:"Spices & Baking",u:"packet",p:.89,w:.06,f:["gluten"]},
-beefBouillon:{n:"Beef bouillon cubes",d:"Spices & Baking",u:"cube",p:.12,w:.01,f:[]},
-chickBouillon:{n:"Chicken bouillon cubes",d:"Spices & Baking",u:"cube",p:.12,w:.01,f:[]},
+beefBouillon:{n:"Beef bouillon cubes",d:"Spices & Baking",u:"cube",p:.12,w:.01,f:["meat"]},
+chickBouillon:{n:"Chicken bouillon cubes",d:"Spices & Baking",u:"cube",p:.12,w:.01,f:["meat"]},
 baconBits:{n:"Real bacon bits",d:"Spices & Baking",u:"tbsp",p:.28,w:.02,f:["meat","pork"]},
 maple:{n:"Maple syrup",d:"Spices & Baking",u:"tbsp",p:.45,w:.05,f:[]},
 syrup:{n:"Pancake syrup",d:"Spices & Baking",u:"cup",p:1.20,w:.70,f:[]},
-honey:{n:"Honey packets",d:"Spices & Baking",u:"packet",p:.22,w:.03,f:[]},
+honey:{n:"Honey packets",d:"Spices & Baking",u:"packet",p:.22,w:.03,f:["honey"]},
 soySauce:{n:"Soy sauce packets",d:"Spices & Baking",u:"packet",p:.10,w:.02,f:["gluten"]},
 mayoPacket:{n:"Mayo packets",d:"Spices & Baking",u:"packet",p:.15,w:.03,f:["egg"]},
 teriyaki:{n:"Teriyaki baste and glaze",d:"Spices & Baking",u:"cup",p:2.80,w:.65,f:["gluten"]},
-cider:{n:"Hard apple cider",d:"Spices & Baking",u:"cup",p:2.50,w:.52,f:["gluten"]},
+cider:{n:"Apple cider",d:"Canned & Jarred",u:"cup",p:.60,w:.52,f:[]},
 
 /* Camp Supplies */
 spray:{n:"Non-stick cooking spray",d:"Camp Supplies",u:"can",p:3.49,w:.5,f:[]},
@@ -830,6 +832,97 @@ const R=[
 {id:"pizzabiscuits",n:"Pizza Biscuits",src:"2013, 2015, 2016 BCH · 2014 DO",serv:8,gear:'12" Dutch oven',styles:["car","dutch"],meals:["dinner","lunch"],coals:{top:19,bot:10,size:'12"'},time:"25–30 min",
  ing:[i("pizzaSauce",1.25),i("onion",.5),i("mushCan",1),i("pepperoni",.2),i("biscuitsCan",2),i("mozz",.25),i("foil",.15),i("spray",.1)],
  steps:["Line Dutch oven with foil and spray.","Combine pizza sauce, onion, mushrooms and pepperoni.","Cut each biscuit into four wedges; toss with the sauce to coat. Place in the oven. Sprinkle with mozzarella.","Bake 25–30 minutes. Check between the rolls in the center. Serve warm.","Any toppings work — just make sure the meat is precooked."]},
+{id:"pizzamac",n:"Pizza Mac & Cheese",src:"Troop submission",serv:12,gear:'12" Dutch oven, or a pot plus a skillet',styles:["car","camp","dutch"],meals:["dinner","lunch"],coals:{top:17,bot:8,size:'12"'},time:"30 min",
+ ing:[i("macCheese",4),i("butter",.5),i("milk",1),i("pizzaSauce",1),i("mozz",1),i("cheddar",.5),i("turkeyPep",.5),i("italSeas",4),i("salt",1),i("pepper",1)],
+ steps:["Boil the macaroni until tender, then drain. In a Dutch oven, do this straight over the fire with the lid off, then lift it off the coals to finish.",
+ "Stir in the butter, milk and cheese packets as the boxes direct.",
+ "Off the heat, stir in the pizza sauce, Italian seasoning, half the pepperoni and half of both cheeses. Salt and pepper to taste.",
+ "Level the top and scatter the rest of the cheese and pepperoni over it.",
+ "Dutch oven: lid on, 17 coals on top and 8 underneath, 10 to 15 minutes until the cheese is bubbling and browning at the edges. Pot or skillet: cover with a lid or foil over a low burner or gentle coals, 5 to 8 minutes.",
+ "Go light on the bottom heat either way. Cheese and milk scorch onto a dry pot in a hurry, and scrubbing that off is the worst job on the roster.",
+ "Turkey pepperoni is listed because it keeps the dish pork-free. Regular pepperoni works the same way if nobody is avoiding pork."]},
+{id:"veganchili",n:"Three-Bean Campfire Chili",src:"Troop Mess",serv:12,gear:'12" Dutch oven or large pot',styles:["car","camp","dutch"],meals:["dinner"],time:"40 min",
+ ing:[i("onion",2),i("greenPepper",2),i("oil",2),i("pinto",2),i("black",2),i("kidney",2),i("diced32",1),i("tomSauce15",1),i("chiliPowder",4),i("garlicPwd",2),i("salt",2),i("pepper",1)],
+ steps:["Chop the onions and peppers. Soften them in the oil over the fire, about 5 minutes.",
+ "Drain and rinse the beans. Tip them in with the tomatoes, tomato sauce and seasonings.",
+ "Simmer gently 25 to 30 minutes, stirring now and then. In a Dutch oven, keep the coals underneath only — this is a simmer, not a bake.",
+ "Taste before serving. Chili powder varies a lot between brands.",
+ "No meat, no dairy, no gluten. One pot that the whole patrol can eat, whatever anyone's restriction is."]},
+{id:"veganpotatoes",n:"Skillet Breakfast Potatoes",src:"Troop Mess",serv:8,gear:"Large skillet",styles:["car","camp"],meals:["breakfast"],time:"25 min",
+ ing:[i("redPotato",3),i("onion",1),i("greenPepper",1),i("oil",4),i("chiliPowder",1),i("salt",2),i("pepper",1),i("salsa16",.5)],
+ steps:["Dice the potatoes small — half-inch at most, or they will not cook through before they burn.",
+ "Heat the oil in the skillet. Potatoes in first, spread out in one layer. Leave them alone 5 minutes so they brown.",
+ "Turn, add the onion and pepper, and cook another 10 to 15 minutes until a fork goes through easily.",
+ "Season, then pass the salsa separately.",
+ "Cutting the potatoes at home the night before saves twenty minutes of knife work in the cold. Keep them covered in water so they do not go brown."]},
+{id:"veganbowls",n:"Rice & Black Bean Bowls",src:"Troop Mess",serv:8,gear:"Pot with a lid",styles:["car","camp"],meals:["lunch","dinner"],time:"20 min",
+ ing:[i("instRice",4),i("black",2),i("cornCan",1),i("salsa16",1),i("chiliPowder",2),i("garlicPwd",1),i("salt",1)],
+ steps:["Cook the instant rice as the package directs. Lid on, off the heat, and leave it alone to steam.",
+ "Drain the beans and corn. Warm them through in a second pot, or stir them into the rice once it is done.",
+ "Stir in the salsa and seasonings.",
+ "Serve in bowls and let people add more salsa to taste.",
+ "Fast, cheap, and it reheats well for a second night."]},
+{id:"veganhummus",n:"Hummus & Dippers",src:"Troop Mess",serv:8,gear:"Bowl and a spoon",styles:["car","camp","nocook"],meals:["lunch","crackerbarrel"],time:"10 min",
+ ing:[i("hummusPowder",2),i("oliveOil",2),i("salt",1),i("babyCarrot",1),i("tortChips",12)],
+ steps:["Stir the hummus mix with water as the package directs. It thickens as it sits, so give it 5 minutes before deciding it is too thin.",
+ "Beat in the olive oil and salt.",
+ "Put it out with the carrots and chips and let people help themselves.",
+ "No cooking, no fire, nothing to wash but a bowl. Good as a Friday cracker barrel when everyone arrives hungry and nobody wants to cook."]},
+{id:"veganapples",n:"Foil Cinnamon Apples",src:"Troop Mess",serv:1,gear:"Foil, campfire coals",styles:["car","camp"],meals:["dessert"],time:"20 min",perPerson:true,pu:"packets",
+ ing:[i("apple",1),i("brownSugar",1),i("cinnamon",.5),i("oil",.5),i("raisins",.125),i("foil",.08)],
+ steps:["Core the apple and slice it thick. Pile it on a double square of foil.",
+ "Brown sugar, cinnamon, raisins and the oil over the top. Fold the foil into a sealed packet with room inside.",
+ "Set on medium coals — not flames — for 15 to 20 minutes, turning once.",
+ "Open carefully and away from your face. The steam inside will scald.",
+ "Everyone builds their own, so this works however many people you have and whatever they will or will not eat."]},
+{id:"veganbagbeans",n:"Backpacker Beans & Rice",src:"Troop Mess",serv:1,gear:"Freezer bag, boiling water",styles:["back","high"],meals:["dinner"],time:"15 min",perPerson:true,pu:"bags",bag:true,water:1.25,
+ ing:[i("instRice",.75),i("refriedFlakes",.5),i("driedOnion",.5),i("chiliPowder",.5),i("garlicPwd",.25),i("salt",.25),i("oilPacket",1)],
+ steps:["At home: put the rice, bean flakes, dried onion and seasonings in a quart freezer bag, one bag per person. Label it.",
+ "At camp: boil 1¼ cups of water and pour it into the bag.",
+ "Stir, seal, and leave it 10 minutes. Wrapping the bag in a jacket keeps it hot and speeds it up.",
+ "Squeeze in the oil packet, stir again, and eat out of the bag.",
+ "Hot, filling, no pot to scrub, and nothing in it that anyone's diet rules out."]},
+{id:"dobakedapples",n:"Dutch Oven Baked Apples",src:"Troop Mess",serv:10,gear:'12" Dutch oven',styles:["car","camp","dutch"],meals:["dessert"],coals:{top:17,bot:8,size:'12"'},time:"35 min bake",
+ ing:[i("apple",10),i("brownSugar",10),i("cinnamon",4),i("raisins",1),i("oil",3),i("cider",1)],
+ steps:["Core the apples and sit them upright in the oven. No need to peel.",
+ "Fill each core with brown sugar, cinnamon and raisins. Drizzle the oil over the tops.",
+ "Pour the cider into the bottom of the oven — it steams the apples and stops the sugar catching.",
+ "Lid on, 17 coals on top and 8 underneath, 30 to 35 minutes, until a knife goes through easily.",
+ "Spoon the syrup from the bottom of the oven over them. That is the best part and it gets thrown away more often than not."]},
+{id:"dospanishrice",n:"Dutch Oven Spanish Rice & Beans",src:"Troop Mess",serv:10,gear:'12" Dutch oven or large pot',styles:["car","camp","dutch"],meals:["dinner","lunch"],time:"35 min",
+ ing:[i("rice",3),i("onion",1),i("greenPepper",1),i("oil",3),i("diced145",2),i("black",2),i("cornCan",1),i("chiliPowder",3),i("garlicPwd",2),i("salt",2)],
+ steps:["Soften the onion and pepper in the oil, 5 minutes.",
+ "Stir in the dry rice and let it toast a minute — it keeps the grains separate instead of gluey.",
+ "Add the tomatoes with their juice, the drained beans and corn, the seasonings, and 3 cups of water.",
+ "Bring to a boil, then lid on and down to a bare simmer for 20 minutes. In a Dutch oven, coals underneath only.",
+ "Off the heat, lid still on, 5 minutes before you lift it. Rice finishes in its own steam.",
+ "Resist stirring it while it cooks. Every stir releases starch and moves it closer to porridge."]},
+{id:"trailapplerice",n:"Backpacker Apple Cinnamon Rice",src:"Troop Mess",serv:1,gear:"Freezer bag, boiling water",styles:["back","high"],meals:["breakfast"],time:"10 min",perPerson:true,pu:"bags",bag:true,water:1,
+ ing:[i("instRice",.75),i("driedApple",.25),i("raisins",.125),i("brownSugar",1.5),i("cinnamon",.5),i("salt",.125)],
+ steps:["At home: everything into a quart freezer bag, one per person. Label it.",
+ "At camp: 1 cup of boiling water into the bag, stir, seal.",
+ "Ten minutes inside a jacket and it is done. The dried apple rehydrates in that time.",
+ "Hot sweet breakfast with no pot to wash, which on a cold morning is worth more than it sounds."]},
+{id:"nocookbreakfast",n:"Fruit & Peanut Butter Breakfast Bowl",src:"Troop Mess",serv:1,gear:"Bowl and a spoon",styles:["nocook","back","high","car","camp"],meals:["breakfast"],time:"5 min",perPerson:true,pu:"bowls",
+ ing:[i("banana",1),i("driedApple",.25),i("raisins",.25),i("peanutButter",2),i("cinnamon",.25)],
+ steps:["Slice the banana into a bowl.",
+ "Dried apple, raisins and a good spoonful of peanut butter on top. Cinnamon over it.",
+ "Stir it about and eat.",
+ "No fire, no water, no washing up beyond a spoon. Good for the morning you are breaking camp in the rain and nobody wants to light anything."]},
+{id:"nocookbeansalad",n:"Black Bean & Corn Salad",src:"Troop Mess",serv:8,gear:"Bowl and a can opener",styles:["nocook","car","camp"],meals:["lunch","dinner"],time:"10 min",
+ ing:[i("black",2),i("cornCan",2),i("salsa16",1),i("cherryTom",2),i("greenOnion",1),i("oliveOil",3),i("chiliPowder",1),i("salt",1),i("pepper",.5),i("tortChips",12)],
+ steps:["Drain and rinse the beans and corn.",
+ "Halve the tomatoes, slice the green onions, and tip everything into a bowl with the salsa and oil.",
+ "Season and leave it 10 minutes if you can. It is better once it has sat.",
+ "Scoop it with the tortilla chips, or eat it with a fork.",
+ "No cooking at all, and it holds up for hours in a cooler — the one thing that genuinely works as a cold dinner rather than a sad one."]},
+{id:"hotcider",n:"Hot Spiced Cider",src:"Cracker barrel standard",serv:10,gear:"Pot, or a Dutch oven over the fire",styles:["car","camp","dutch"],meals:["crackerbarrel"],time:"15 min",
+ ing:[i("cider",10),i("cinnamon",4),i("brownSugar",4),i("apple",2)],
+ steps:["Cider into the pot with the cinnamon and brown sugar.",
+ "Slice the apples thin and drop them in.",
+ "Heat gently until steaming. Do not boil it — boiling turns the flavour flat and sharp.",
+ "Ladle it out and leave the pot at the edge of the fire for anyone who comes back for more.",
+ "A Friday night arrival in the cold is what cracker barrel is for, and a hot drink does more for morale than anything you can eat."]},
 {id:"pizzastew",n:"Pizza Stew",src:"Scout's Large Groups Cookbook",serv:20,gear:"Large pot, camp stove",styles:["car","camp"],meals:["dinner"],time:"30 min",
  ing:[i("rotini",2),i("beef",2),i("onion",2),i("garlicPwd",1),i("pizzaSauce14",4),i("pepperoni",.375),i("mushCan",2),i("mozz",2)],
  steps:["Boil pasta and drain. Return to pot.","Brown ground beef with onions and garlic powder.","Add hamburger mixture, pizza sauce, pepperoni, mushrooms and any other toppings.","Heat over medium, stirring occasionally.","Off heat, stir in cheese — save some for the top."]},
@@ -1213,7 +1306,9 @@ const MEALS=[{k:"breakfast",n:"Breakfast"},{k:"lunch",n:"Lunch"},{k:"dinner",n:"
 const DIETS=[
  {k:"nuts",n:"Nut allergy",s:"No peanut or tree nut ingredients"},
  {k:"veg", n:"Vegetarian", s:"No meat or seafood"},
- {k:"pork",n:"Pork free",  s:"No pork, bacon or ham"}
+ {k:"pork",n:"Pork free",  s:"No pork, bacon or ham"},
+ {k:"vegan",n:"Vegan",      s:"No animal products at all"},
+ {k:"gf",   n:"Gluten free", s:"No wheat, barley or rye"}
 ];
 const FACTOR={car:1.0,dutch:1.0,camp:1.0,back:1.2,nocook:1.1,high:1.4};
 const DEPT_ORDER=["Produce","Meat & Seafood","Dairy & Eggs","Frozen","Canned & Jarred","Dry Goods","Bakery","Spices & Baking","Camp Supplies"];
@@ -1244,6 +1339,10 @@ function passesDiet(r){
   if(S.diets.has("veg")&&(f.has("meat")||f.has("shellfish")))return false;
   if(S.diets.has("pork")&&f.has("pork"))return false;
   if(S.diets.has("nuts")&&f.has("nuts"))return false;
+  /* Vegan is vegetarian plus dairy and eggs, and the two that hide in plain sight:
+     gelatin in marshmallows, and honey. */
+  if(S.diets.has("vegan")&&["meat","shellfish","dairy","egg","gelatin","honey"].some(g=>f.has(g)))return false;
+  if(S.diets.has("gf")&&f.has("gluten"))return false;
   return true;
 }
 function costPerServing(r){
@@ -1334,6 +1433,8 @@ function cardHTML(r){
     if(r.bag)tags.push(`<span class="tag do">Freezer bag · ${r.water} cup water</span>`);
     if(cps<=THRIFTY)tags.push(`<span class="tag thrift">Thrifty · ${money(cps)}/serving</span>`);
     if(r.prep)tags.push('<span class="tag prep">Prep at home</span>');
+    const cl=coalLead(r);
+    if(cl)tags.push(`<span class="tag fit">${cl.tag}</span>`);
     if(isCustomRecipe(r))tags.push('<span class="tag mine-tag">Ours</span>');
     const fa=fitAdvice(r);
     if(on&&fa&&fa.level!=="ok")tags.push(`<span class="tag fit">${fa.head}</span>`);
@@ -1505,6 +1606,22 @@ function ovenDia(r){
 const isDeep=r=>/deep/i.test(r.gear||"");
 
 /* returns {level, head, body} — level: ok | stretch | split */
+/* A Dutch oven does not cook slowly — a 30-minute bake is 30 minutes. What costs the
+   time is the charcoal, which needs 30 to 45 minutes to ash over before it is usable.
+   At dinner nobody notices. At breakfast, or at a Friday cracker barrel after a late
+   arrival, it decides whether the meal happens at all. */
+function coalLead(r){
+  if(!needsDutch(r))return null;
+  const early=r.meals.includes("breakfast"), late=r.meals.includes("crackerbarrel");
+  if(!early&&!late)return null;
+  return {
+    tag:"Coals 45 min ahead",
+    head:early?"Light the coals before you start cooking.":"Light the coals on arrival.",
+    body:early
+      ? " Charcoal takes 30 to 45 minutes to ash over, and that is on top of the cook time. For a 7am breakfast somebody is lighting a chimney at 6. Put it on the duty roster the night before — it is a real job and it is nobody's favourite. On a Sunday with camp to strike, a skillet breakfast is usually the wiser call."
+      : " Charcoal takes 30 to 45 minutes to be ready. Get it going as soon as you have the tents up, or this lands at bedtime."
+  };
+}
 function fitAdvice(r){
   const sc=scaleOf(r);
   if(r.perPerson) return null;                    /* built one at a time, no pot limit */
@@ -1702,6 +1819,12 @@ function coalChartBlock(){
   return h;
 }
 
+/* "box" pluralises to "boxes", not "boxs". Abbreviations never pluralise at all. */
+const NOPLURAL=["lb","oz","tsp","tbsp"];
+function unitPlural(u,many){
+  if(!many||NOPLURAL.includes(u))return "";
+  return /(s|x|z|ch|sh)$/.test(u)?"es":"s";
+}
 function renderList(){
   const picks=pickedRecipes();
   if(eaters()===0){
@@ -1751,7 +1874,7 @@ function renderList(){
     const sub=rows.reduce((a,b)=>a+b.cost,0);
     html+=`<div class="dept"><h3>${d}<em>${money(sub)}</em></h3>`+rows.map(r=>{
       const done=S.checked.has(r.key);
-      const plural=r.buy!==1&&!["lb","cup","oz","tbsp","tsp"].includes(r.unit)?"s":"";
+      const plural=r.unit==="cup"?(r.buy!==1?"s":""):unitPlural(r.unit,r.buy!==1);
       return `<div class="item ${done?"done":""}">
         <button class="box" role="checkbox" aria-checked="${done}" data-check="${r.key}" aria-label="Mark ${r.name} bought"></button>
         <span class="iname">${r.name}</span>
@@ -1774,6 +1897,8 @@ function renderList(){
     html+=tempBlock(r);
     const fa=fitAdvice(r);
     if(fa)html+=`<div class="fitbox ${fa.level==="ok"?"ok":""}"><b>${fa.head}</b>${fa.body}</div>`;
+    const lead=coalLead(r);
+    if(lead)html+=`<div class="fitbox"><b>${lead.head}</b>${lead.body}</div>`;
     if(r.water)html+=`<div class="waterbox"><b>Water per serving</b>${r.water} cup${r.water===1?"":"s"} — ${fmtQty(r.water*perUnitMul()*unitCount())} cups total, boiled for the whole group</div>`;
     if(r.coals){
       const t=Math.round(r.coals.top),b=Math.round(r.coals.bot);
@@ -1792,7 +1917,7 @@ function renderList(){
       const hand=handMeasure(shown,u,x.p);
       const many=shown>1.001;   /* ½ cup, not ½ cups */
       /* "cup" is a word and pluralizes; lb, oz, tsp and tbsp are abbreviations and do not. */
-      const plural=many&&!["lb","oz","tsp","tbsp"].includes(u)?"s":"";
+      const plural=unitPlural(u,many);
       /* Don't write "10 eggs eggs" — skip the unit when the name already carries it. */
       const carries=new RegExp("\\b"+u+"s?\\b").test(nm);
       const unitWord=carries?"":`${u}${plural} `;
@@ -1951,7 +2076,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.4";
+const APP_BASE="3.10";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");

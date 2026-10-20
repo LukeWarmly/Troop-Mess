@@ -41,8 +41,8 @@ Mostly, it is pretty obvious. A bunch of recipes, and a tool to add more.
 
 **The Trip.** Enter the number of scouts and leaders if they are being cooked for — both
 start at zero, because patrols usually cook for scouts alone. Pick the type of camping,
-which is really the type of cooking. Pick which meals you are doing. There are carve-outs
-for vegetarians, nut allergies, and pork.
+which is really the type of cooking. Pick which meals you are doing. There are five carve-outs:
+nut allergy, vegetarian, pork free, vegan, and gluten free.
 
 **The Menu.** Recipes are generated and grouped by meal, in the order the weekend happens
 — cracker barrel Friday night, then Saturday breakfast, lunch and dinner, then Sunday
@@ -63,14 +63,14 @@ app again with your recipes baked into it.
 
 ## What's in it
 
-**135 recipes.** Thirty-five came from the troop cookbook found in that storage area.
+**148 recipes.** Thirty-five came from the troop cookbook found in that storage area.
 Eighteen more came from the Cub Grub Cookbook used in Baloo training, adapted for
 Troop-age scouts. The rest cover the gaps those had — backpacking, no-cook, breakfasts
-and desserts.
+and desserts — plus recipes sent in by the troop.
 
 **Five ways of cooking:** car camping, Dutch oven, backpacking (freezer bag), no-cook, and
 high adventure — plus a tick box to exclude Dutch oven recipes entirely, for the trip
-where nobody wants to haul cast iron. Seventy-four of the recipes need no Dutch oven.
+where nobody wants to haul cast iron. One hundred and fourteen of the recipes need no Dutch oven.
 
 **Five meals:** breakfast, lunch, dinner, dessert, and cracker barrel.
 
@@ -79,6 +79,14 @@ written for a 10-inch Dutch oven, the app says so, names the oven size that will
 looks up the correct coal count for that oven at the same temperature, and tells you to
 add time and check the center. Scaling the food without scaling the cookware is how a
 patrol ends up with a raw middle.
+
+**The coals, and the time they really cost.** A Dutch oven does not cook slowly — a
+thirty-minute bake takes thirty minutes. What costs the time is the charcoal, which needs
+thirty to forty-five minutes to ash over before you can use it. At dinner nobody notices.
+At breakfast it decides whether the meal happens. So any recipe that needs a Dutch oven
+and is on the menu for breakfast or cracker barrel carries a warning, on screen and on the
+printed card: light the coals first, put it on the duty roster the night before, and think
+twice about it on a Sunday with camp to strike.
 
 **The coal chart, built in.** The app works out what temperature a recipe's coal count
 represents, so it can hold that temperature in a different sized oven. The full chart
@@ -91,8 +99,8 @@ nobody walks to the water spigot alone.
 Saturday breakfast, lunch, dinner. Sunday breakfast and break camp.
 
 **Lunch either way.** Saturday lunch is often built after breakfast and carried, because
-the patrol is out at an activity — there are three sack lunches for exactly that. But
-plenty of trips have the patrol in camp at midday, so there are sixteen cooked lunches for
+the patrol is out at an activity — there are fifteen no-cook lunches for exactly that. But
+plenty of trips have the patrol in camp at midday, so there are twenty-three cooked lunches for
 car camping as well, from grilled cheese and tomato soup to Dutch oven pizza.
 
 **Amounts you can actually measure.** Scaling a recipe produces awkward numbers, so the
@@ -113,6 +121,12 @@ with the packet. You cannot tell doneness by looking, so pack a thermometer.
 so. Sack lunches carry the real rule: perishable fillings are unsafe after two hours above
 40°F, one hour above 90°F — so freeze the sandwiches the night before, or use the
 shelf-stable version.
+
+**Something for everyone, in one pot where possible.** Fifteen recipes are vegan and
+twelve of those are also gluten free, covering every meal and every way of cooking —
+Dutch oven, skillet, freezer bag and nothing at all. Forty-six recipes in total are
+gluten free. The three-bean chili feeds a whole patrol regardless of who is avoiding
+what, which beats cooking two dinners.
 
 **Thrift, measured.** Every recipe shows its cost per serving, and anything at or under
 $2.25 gets a Thrifty badge. Campfire popcorn comes out at 17 cents.
@@ -157,7 +171,12 @@ a browser, so the link is the better route on a phone.
 - **More recipes from the cookbook** as they're added.
 - Prices in the app are rough national averages, not quotes. Treat the totals as a budget.
 - Dietary filters check ingredients, not manufacturing lines. For a real allergy, confirm
-  labels at the store.
+  labels at the store. This matters most for two of them. **Gluten free** cannot know
+  whether a product was made on shared equipment, which is the thing that actually catches
+  people with coeliac disease — oats are flagged as gluten here for exactly that reason,
+  even though the grain itself has none. **Vegan** cannot see milk solids in a cake mix or
+  a seasoning packet, which vary by brand. Both filters get you to a short, sensible
+  shopping list. The label still has to be read in the aisle.
 
 ---
 
