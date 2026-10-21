@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.13** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.14** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,28 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.14
+- **The Install button now works.** It never could on the published site. The manifest
+  listed two ordinary icons, icon-192.png and icon-512.png, that were never uploaded, and
+  the one icon that was uploaded is marked "maskable" only. Chrome needs an ordinary icon
+  of at least 144 pixels before it will install anything, so it refused — Chromium's own
+  check reported "no-acceptable-icon". The manifest now points at the icon that exists,
+  marked for both uses, and Chrome reports the app installable.
+- This was a wrong call in v3.3's rollout: when the manifest edit went sideways, the advice
+  was to leave the old manifest in place on the theory that Chrome would use whichever
+  icon loaded. It does not; it needs one of the right kind.
+- **The service worker's cache name moves from v3.3 to v3.14.** It had not changed since
+  v3.3, which was harmless for the page itself but meant phones that already had the app
+  would keep serving the old manifest from cache indefinitely. A new name makes every
+  installed copy refetch everything, including the corrected manifest, on its next open
+  with signal. It also stops trying to cache three icon files that do not exist.
+- iPhone's home-screen icon and the browser tab icon now point at the real icon file
+  instead of two that were never there, so iPhones get the Dutch oven rather than a
+  screenshot of the page.
+- Tested as an upgrade from the live version in the same browser: not installable before,
+  installable after, offline still intact with all 148 recipes. A brand-new visitor loads
+  with no errors and can install on the first visit.
 
 ### v3.13
 - **The new-trip bar stopped claiming things that were not true.** It said "Carried over
