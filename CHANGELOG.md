@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.14** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.15** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -287,7 +287,37 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
 
-### v3.14
+### v3.15 — Install strip and download button fixes (October 21, 2026)
+
+Found while Rob reinstalled the app on his phone.
+
+- **"Not now" really hides the strip now.** The page's styling had been overriding the
+  hidden setting, so the install strip (and the Start a new trip strip on an empty plan)
+  could stay on screen after being dismissed. One style rule now makes hidden mean hidden
+  everywhere.
+- **The install strip comes back if someone removes the app.** v3.14 and earlier
+  remembered installing forever, so after uninstalling, the strip never returned. Now only
+  "Not now" is remembered, and only for two weeks. The old setting is cleared
+  automatically, so leaders who hit this get the strip back with no action.
+- **Clearer label.** The strip now says "Install the Troop Mess app" with an "Install
+  Troop Mess app" button (iPhone: "Install Troop Mess on your iPhone"), so nobody mistakes
+  it for adding recipes.
+- **The big bottom button on the Add tab no longer downloads anything.** It said
+  "Download" and saved a copy of the whole app, which then opened as a file with a "not
+  secure" warning and couldn't be installed. It now says "See recipes" and goes to the
+  menu.
+- **"Save your work" renamed "Keeper's tools."** It explains that most leaders don't need
+  it, the button reads "Download master copy (keeper)", and it asks for confirmation
+  before downloading.
+- Service worker cache renamed to troop-mess-v3.15 so installed copies update.
+
+Tested: no installability errors; strip shows for a v3.14 user who had installed before;
+Not now hides it and it returns after 14 days; install doesn't suppress it; Add-tab
+button goes to the menu with no download; keeper download cancels cleanly and works on
+OK; Start a new trip strip hidden on an empty plan and shown with a plan; offline load
+with all 148 recipes; no page errors.
+
+## v3.14
 - **The Install button now works.** It never could on the published site. The manifest
   listed two ordinary icons, icon-192.png and icon-512.png, that were never uploaded, and
   the one icon that was uploaded is marked "maskable" only. Chrome needs an ordinary icon

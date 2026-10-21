@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.14</title>
+<title>Troop Mess — Camp Meal Planner v3.15</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -75,7 +75,7 @@ body{
 .tab:focus-visible{outline:2px solid var(--ember-hot);outline-offset:-3px}
 
 main{max-width:760px;margin:0 auto;padding:22px 18px 0}
-section[hidden]{display:none}
+[hidden]{display:none!important}
 .block{margin-bottom:30px}
 .block-head{display:flex;align-items:baseline;gap:10px;margin:0 0 4px}
 .block-head h2{font-family:var(--display);font-weight:700;font-size:1.3rem;text-transform:uppercase;margin:0}
@@ -357,7 +357,7 @@ section[hidden]{display:none}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.14</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.15</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -379,11 +379,11 @@ section[hidden]{display:none}
     </div>
     <div class="installbar" id="installBar" hidden>
       <div class="ib-txt">
-        <b id="ibHead">Put this on your phone</b>
+        <b id="ibHead">Install the Troop Mess app</b>
         <p id="ibBody">Install it once with signal and it opens from your home screen afterwards — recipes, coal counts and the shopping list all work at camp with no bars.</p>
       </div>
       <div class="ib-btns">
-        <button id="ibGo" hidden>Install</button>
+        <button id="ibGo" hidden>Install Troop Mess app</button>
         <button class="ib-no" id="ibNo">Not now</button>
       </div>
     </div>
@@ -489,7 +489,7 @@ section[hidden]{display:none}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.14 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.15 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -501,7 +501,7 @@ section[hidden]{display:none}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.14","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.15","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -2045,7 +2045,7 @@ function renderDock(){
   }
   else if(S.tab==="menu"){go.textContent="Build list";go.disabled=S.picked.size===0;}
   else if(S.tab==="roster"){go.textContent="Print";go.disabled=false;}
-  else if(S.tab==="add"){go.textContent="Download";go.disabled=false;}
+  else if(S.tab==="add"){go.textContent="See recipes";go.disabled=false;}
   else{go.textContent="Edit menu";go.disabled=false;}
 }
 function setTab(t){
@@ -2208,11 +2208,11 @@ document.addEventListener("click",e=>{
   if(t.dataset.store){openStores(t.dataset.store);return;}
   if(t.dataset.check){const k=t.dataset.check;S.checked.has(k)?S.checked.delete(k):S.checked.add(k);renderList();return;}
   if(t.classList.contains("tab")){setTab(t.id.replace("tab-",""));return;}
-  if(t.id==="dGo"){if(S.tab==="add"){exportApp();return;}if(S.tab==="roster"){printRoster();return;}setTab(S.tab==="trip"?"menu":S.tab==="menu"?"list":"menu");}
+  if(t.id==="dGo"){if(S.tab==="add"){setTab("menu");return;}if(S.tab==="roster"){printRoster();return;}setTab(S.tab==="trip"?"menu":S.tab==="menu"?"list":"menu");}
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.14";
+const APP_BASE="3.15";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2402,10 +2402,10 @@ function renderAdd(){
   let h="";
   if(FLASH)h+=`<div class="${FLASH.bad?"err":"ok"}">${FLASH.msg}</div>`;
 
-  h+=`<div class="block"><div class="block-head"><h2>Save your work</h2><span class="rule"></span></div>
-    <p class="hint">This app can't save on its own. Download a fresh copy with your recipes baked in, then upload that file to your project — that's what makes them stick.</p>
+  h+=`<div class="block"><div class="block-head"><h2>Keeper's tools</h2><span class="rule"></span></div>
+    <p class="hint"><b>Most leaders don't need these.</b> Your trip plan saves itself. These buttons are for whoever keeps the master copy of Troop Mess: they download the whole app with new recipes baked in, to upload to GitHub. Don't open a downloaded copy on a phone — it can't be installed and won't update.</p>
     <div class="btnrow">
-      <button class="btn warn" id="btnExportApp">Download app + my recipes</button>
+      <button class="btn warn" id="btnExportApp">Download master copy (keeper)</button>
       <button class="btn alt" id="btnExportJSON">Recipes only (JSON)</button>
       <button class="btn alt" id="btnImport">Import recipes</button>
     </div>
@@ -2615,7 +2615,7 @@ document.addEventListener("click",e=>{
   if(t.id==="btnBulk"){const b=document.getElementById("f-bulk");D.bulkText=b?b.value:"";runBulkImport();return;}
   if(t.id==="btnSaveRecipe"){saveRecipe();return;}
   if(t.id==="btnClear"){D.ing=[];D.name="";D.src="";D.steps="";D.prep="";D.gear="";D.time="";D.ctop="";D.cbot="";D.csize="";D.water="";D.pu="";renderAdd();return;}
-  if(t.id==="btnExportApp"){exportApp();return;}
+  if(t.id==="btnExportApp"){if(confirm("This downloads a copy of the whole app for the person who keeps the master copy on GitHub. Your trip plan already saves itself, so most leaders don\u2019t need this. Download anyway?"))exportApp();return;}
   if(t.id==="btnExportJSON"){exportJSON();return;}
   if(t.id==="btnImport"){document.getElementById("fileImport").click();return;}
 });
@@ -2666,14 +2666,20 @@ renderTripTop();renderChips();renderDock();
                    || navigator.standalone === true;
   if(standalone) return;
 
-  var DISMISS="tm_install_dismissed";
-  var dismissed=false;
-  try{ dismissed = localStorage.getItem(DISMISS)==="1"; }catch(e){}
-  if(dismissed) return;
+  /* Only "Not now" is remembered, and only for two weeks. Installing is not
+     remembered: an installed app never shows this bar anyway, and if someone
+     removes the app later the bar should come back. (v3.14 and earlier used
+     the key tm_install_dismissed and set it on install too; that key is ignored.) */
+  var NOTNOW="tm_install_notnow", WAIT=14*24*60*60*1000;
+  try{
+    localStorage.removeItem("tm_install_dismissed");
+    var t=Number(localStorage.getItem(NOTNOW)||0);
+    if(t && Date.now()-t < WAIT) return;
+  }catch(e){}
 
   function hide(remember){
     bar.hidden=true;
-    if(remember){ try{ localStorage.setItem(DISMISS,"1"); }catch(e){} }
+    if(remember){ try{ localStorage.setItem(NOTNOW,String(Date.now())); }catch(e){} }
   }
   no.addEventListener("click",function(){ hide(true); });
 
@@ -2682,7 +2688,7 @@ renderTripTop();renderChips();renderDock();
 
   if(isiOS){
     /* Safari has no install prompt; the user does it from the Share menu. */
-    head.textContent="Put this on your phone";
+    head.textContent="Install Troop Mess on your iPhone";
     body.textContent='Tap the Share button at the bottom of Safari, then "Add to Home Screen". It opens from your home screen afterwards and works at camp with no signal.';
     bar.hidden=false;
     return;
@@ -2700,10 +2706,10 @@ renderTripTop();renderChips();renderDock();
   go.addEventListener("click",function(){
     if(!deferred) return;
     deferred.prompt();
-    deferred.userChoice.then(function(){ deferred=null; hide(true); });
+    deferred.userChoice.then(function(){ deferred=null; hide(false); });
   });
 
-  window.addEventListener("appinstalled",function(){ hide(true); });
+  window.addEventListener("appinstalled",function(){ hide(false); });
 })();
 </script>
 </body>
