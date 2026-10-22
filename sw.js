@@ -1,6 +1,6 @@
 /* Troop Mess service worker.
    Bump CACHE when the app changes — that is what makes installed copies update. */
-const CACHE = "troop-mess-v3.17";
+const CACHE = "troop-mess-v3.18";
 
 /* Everything the app needs to run with no signal. */
 const SHELL = [
@@ -36,17 +36,29 @@ self.addEventListener("fetch", e => {
   const isFont = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
   if (!sameOrigin && !isFont) return;
 
-  /* The page itself: try the network so a new version is picked up, fall back to cache. */
+  /* The page itself: try the network so a new version is picked up, but give it
+     only a few seconds. One bar of signal at camp means requests that hang rather
+     than fail, and the old code waited for the phone's own timeout (15–60 s) before
+     showing the saved copy. Now the saved copy appears after 3 s and the network
+     fetch carries on in the background, so the next open has the new version. */
   if (req.mode === "navigate") {
+    /* cache:"no-cache" makes the browser check with the server instead of serving
+       its own stale copy for up to ten minutes — the reason a fresh upload could
+       still show the old version on the first open. */
+    const net = fetch(req, { cache: "no-cache" }).then(res => {
+      if (res && res.ok) caches.open(CACHE).then(c => c.put("./index.html", res.clone()));
+      return res;
+    });
+    const cached = caches.match("./index.html").then(r => r || caches.match("./"));
+    const slow = new Promise(resolve => setTimeout(() => resolve("slow"), 3000));
     e.respondWith(
-      fetch(req)
-        .then(res => {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put("./index.html", copy));
-          return res;
-        })
-        .catch(() => caches.match("./index.html").then(r => r || caches.match("./")))
+      Promise.race([net.catch(() => "fail"), slow]).then(r => {
+        if (r !== "slow" && r !== "fail") return r;
+        return cached.then(c => c || net);
+      })
     );
+    /* Keep the worker alive until the background fetch settles (or fails). */
+    if (e.waitUntil) e.waitUntil(net.catch(() => {}));
     return;
   }
 

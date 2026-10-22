@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.17** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.18** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,48 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.18 — Camp-signal, Back button, readability (October 22, 2026)
+
+The first release from the v3.17 diagnostic. Eleven items from the report's "Fix first"
+and "Fix soon" lists, plus the iPhone safe-area fix.
+
+- **One bar of signal no longer freezes the open.** The app gives the network three
+  seconds, then shows the saved copy and keeps checking in the background. Tested
+  against a server that hangs: 3.3 seconds to a working app, down from 15–25.
+- **New versions show on the first open.** The open now asks the server whether the
+  page changed instead of trusting the phone's own copy for up to ten minutes. This was
+  why a fresh upload could still show the old version once.
+- **Fonts no longer block the first paint.** With the font server unreachable, the page
+  drew after 84 ms instead of 15 seconds. System fonts show until the web fonts arrive.
+- **Android Back button steps through tabs** instead of closing the installed app. Back
+  from the first tab still leaves, as expected.
+- **Tap anywhere on a shopping row to tick it.** The small box still works; rows are a
+  little taller.
+- **"Bigger oven needed" reads as one sentence.** A heading style was hitting the bold
+  words in the body and pushing each onto its own line.
+- **Readability.** Small captions and labels have a 12 px floor on phones (were 9–11 px).
+  The light grey text is darker; a lighter grey is used on dark backgrounds (tabs,
+  totals, masthead); the orange accent is one step deeper. Contrast failures in the
+  accessibility check went from 121 to 0.
+- **Plurals:** loaves and tomatoes, not loafs and tomatos.
+- **Tiny patrols:** amounts that scale below the smallest measure now read "a pinch of
+  pepper" or "a little butter" instead of "0 tsp" and "0 lb". "Scaled for 1 person", not
+  "1 people".
+- **Smallest phones (320 px):** the coal chart and temperature table scroll inside their
+  box; meal headings wrap; the roster scrolls sideways instead of pushing the page.
+- **Screen readers:** the import-file control and the ingredient picker have labels.
+- **Android tablets can rotate** the installed app (orientation lock removed from the
+  manifest).
+- **iPhone:** masthead keeps clear of the clock and notch when installed.
+- Service worker cache renamed to troop-mess-v3.18.
+
+Full retest: device matrix (9 sizes, 5 tabs, no overflow, no errors); lie-fi and font
+outage; install check; offline with 148 recipes; data integrity; 36 style/diet
+combinations; every recipe at 5 head counts scanned for text oddities (none remaining
+except the shopping-list spoon counts, planned for v3.19); roster suite; meal-order
+suite; install-strip suite; axe accessibility (0 contrast failures); upgrade from an
+older cache with a saved plan.
 
 ### v3.17 — Cracker barrel first (October 22, 2026)
 

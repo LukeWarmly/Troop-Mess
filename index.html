@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.17</title>
+<title>Troop Mess — Camp Meal Planner v3.18</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -14,12 +14,14 @@
 <link rel="icon" href="icon-maskable-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Fonts load without blocking: with one bar of signal the page draws in system
+     fonts at once and swaps when (if) the web fonts arrive. -->
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 :root{
-  --ink:#14232B; --ink-2:#1D3540; --slate:#4A6470; --slate-2:#7A929C;
+  --ink:#14232B; --ink-2:#1D3540; --slate:#4A6470; --slate-2:#5B737E; --mist:#A9B9C0;
   --enamel:#EDF0EF; --enamel-2:#E0E6E4; --enamel-3:#D3DBD9;
-  --ember:#D9542B; --ember-hot:#F08A3C; --pine:#1F5D4C; --thrift:#8A6D1F;
+  --ember:#C4461E; --ember-hot:#F08A3C; --pine:#1F5D4C; --thrift:#8A6D1F;
   --rule:rgba(20,35,43,.16); --speck:rgba(20,35,43,.10);
   --shadow:0 1px 0 rgba(20,35,43,.10), 0 6px 18px -12px rgba(20,35,43,.5);
   --display:'Saira Condensed','Arial Narrow',sans-serif;
@@ -35,12 +37,12 @@ body{
   background-size:19px 19px,31px 31px; background-position:0 0,11px 7px;
   padding-bottom:96px;
 }
-.masthead{background:var(--ink);color:var(--enamel);padding:20px 18px 16px;border-bottom:5px solid var(--ember);position:relative;overflow:hidden}
+.masthead{background:var(--ink);color:var(--enamel);padding:calc(20px + env(safe-area-inset-top)) 18px 16px;border-bottom:5px solid var(--ember);position:relative;overflow:hidden}
 .masthead::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(237,240,239,.10) .8px,transparent .9px);background-size:22px 22px;pointer-events:none}
 .mast-eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ember-hot);margin:0 0 4px}
 .masthead h1{font-family:var(--display);font-weight:800;font-size:2.35rem;line-height:.94;text-transform:uppercase;margin:0}
-.masthead h1 span{color:var(--slate-2)}
-.mast-sub{font-size:.82rem;color:var(--slate-2);margin:7px 0 0;max-width:34em}
+.masthead h1 span{color:var(--mist)}
+.mast-sub{font-size:.82rem;color:var(--mist);margin:7px 0 0;max-width:34em}
 .mast-byline{font-family:var(--mono);font-size:.63rem;letter-spacing:.06em;color:var(--enamel-3);margin:0 0 9px;line-height:1.55;max-width:40em;opacity:.85}
 .triptop{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--enamel-2);border:1px solid var(--rule);border-radius:3px;padding:9px 12px;margin:0 0 18px}
 .triptop p{margin:0;font-size:.78rem;color:var(--slate);line-height:1.4}
@@ -54,6 +56,12 @@ body{
 .installbar button{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.84rem;padding:8px 13px;border:0;border-radius:3px;background:var(--ember);color:#fff;cursor:pointer}
 .installbar button.ib-no{background:transparent;color:var(--slate);font-size:.72rem;padding:3px}
 @media (max-width:520px){.installbar{flex-direction:column;gap:9px}.installbar .ib-btns{flex-direction:row;align-items:center;gap:10px}}
+/* On phones nothing drops below 12px: captions, labels, tags and table heads were 9–11px. */
+@media (max-width:520px){
+  .mast-eyebrow,.counter label,.field label,.rhead .lbl,.rtable th.slot,.ttable th,.chip .sub,.dock .k,.tag,.mwhen,.rmeta,.batch,.lblnote,.fitbox>b:first-child,.tempbox b,.rjob small,.tnum,.n,.src,.shopnote,small,
+  .foot,.mcount,.totals .k,.sbtn span,.dept h3 em,.iqty span,.tnote,.coalinfo b,.prepbox b,.ctable th,.ctable td,.ctable td b,.fhint,label{font-size:12px!important}
+  .dock .k{letter-spacing:.08em}
+}
 .readme{border:1px solid var(--rule);background:var(--enamel-2);border-radius:3px;margin:0 0 30px}
 .readme>summary{font-family:var(--display);font-weight:700;font-size:1.12rem;text-transform:uppercase;letter-spacing:.03em;padding:11px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;color:var(--ink)}
 .readme>summary::-webkit-details-marker{display:none}
@@ -69,9 +77,9 @@ body{
 .readme-body em{color:var(--slate)}
 
 .tabs{display:flex;position:sticky;top:0;z-index:40;background:var(--ink-2);border-bottom:1px solid rgba(237,240,239,.14)}
-.tab{flex:1;appearance:none;border:0;background:transparent;cursor:pointer;font-family:var(--display);font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-2);padding:13px 4px 11px;border-bottom:3px solid transparent;transition:color .18s,border-color .18s}
+.tab{flex:1;appearance:none;border:0;background:transparent;cursor:pointer;font-family:var(--display);font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mist);padding:13px 4px 11px;border-bottom:3px solid transparent;transition:color .18s,border-color .18s}
 .tab[aria-selected="true"]{color:var(--enamel);border-bottom-color:var(--ember)}
-.tab .tnum{font-family:var(--mono);font-size:.62rem;opacity:.7;display:block;letter-spacing:.14em}
+.tab .tnum{font-family:var(--mono);font-size:.62rem;opacity:.85;display:block;letter-spacing:.14em}
 .tab:focus-visible{outline:2px solid var(--ember-hot);outline-offset:-3px}
 
 main{max-width:760px;margin:0 auto;padding:22px 18px 0}
@@ -99,7 +107,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .chip .sub{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;opacity:.65;text-transform:uppercase}
 
 .rlist{display:flex;flex-direction:column;gap:10px}
-.mgroup{display:flex;align-items:center;gap:12px;margin:30px 0 4px}
+.mgroup{display:flex;align-items:center;gap:12px;margin:30px 0 4px;flex-wrap:wrap}
 .mgroup:first-child{margin-top:0}
 .mgroup h3{font-family:var(--display);font-weight:800;font-size:1.18rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin:0;white-space:nowrap}
 .mgroup .mrule{flex:1;height:20px;background:var(--ember);opacity:1;border-radius:2px}
@@ -130,7 +138,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--ink);color:var(--enamel);border-top:3px solid var(--ember);padding:11px 18px calc(11px + env(safe-area-inset-bottom));display:flex;gap:14px;align-items:center;justify-content:space-between}
 .dock-stats{display:flex;gap:18px}
-.dstat .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-2);display:block}
+.dstat .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);display:block}
 .dstat .v{font-family:var(--display);font-weight:700;font-size:1.15rem;line-height:1.1;font-variant-numeric:tabular-nums}
 .dock button{appearance:none;border:0;background:var(--ember);color:#fff;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.95rem;padding:11px 18px;border-radius:2px;cursor:pointer}
 .dock button:disabled{background:var(--slate);cursor:not-allowed;opacity:.6}
@@ -139,7 +147,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .dept{margin-bottom:22px}
 .dept h3{font-family:var(--display);font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:.12em;color:var(--slate);margin:0 0 8px;padding-bottom:5px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between}
 .dept h3 em{font-family:var(--mono);font-style:normal;font-size:.7rem;letter-spacing:.05em}
-.item{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px dotted var(--rule)}
+.item{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dotted var(--rule);cursor:pointer;-webkit-tap-highlight-color:rgba(217,84,43,.15)}
 .item:last-child{border-bottom:0}
 .box{width:17px;height:17px;border:1.5px solid var(--slate-2);border-radius:2px;cursor:pointer;background:#fff;align-self:center;position:relative;padding:0}
 .box[aria-checked="true"]{background:var(--pine);border-color:var(--pine)}
@@ -151,9 +159,9 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 
 .totals{background:var(--ink);color:var(--enamel);border-radius:3px;padding:16px;margin-bottom:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .totals .t{border-left:2px solid var(--ember);padding-left:10px}
-.totals .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-2);display:block;margin-bottom:2px}
+.totals .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);display:block;margin-bottom:2px}
 .totals .v{font-family:var(--display);font-weight:800;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
-.totals .n{font-size:.68rem;color:var(--slate-2);display:block;margin-top:3px}
+.totals .n{font-size:.68rem;color:var(--mist);display:block;margin-top:3px}
 
 .cook{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:15px;margin-bottom:14px;box-shadow:var(--shadow)}
 .cook h3{font-family:var(--display);font-weight:700;font-size:1.15rem;text-transform:uppercase;margin:0 0 2px}
@@ -209,11 +217,12 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .sbtn:hover{border-color:var(--pine)}
 .sbtn:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
 .sbtn b{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.92rem;letter-spacing:.02em}
-.sbtn span{display:block;font-size:.72rem;color:var(--slate-2);margin-top:1px}
+.sbtn span{display:block;font-size:.72rem;color:var(--slate);margin-top:1px}
 .shopnote{font-size:.76rem;color:var(--slate-2);margin:12px 0 0;padding-top:10px;border-top:1px dotted var(--rule)}
 
-.fitbox{background:rgba(217,84,43,.08);border-left:3px solid var(--ember);padding:9px 11px;margin:0 0 12px;font-size:.83rem}
-.fitbox b{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;display:block;color:var(--ember);margin-bottom:2px}
+.fitbox{background:rgba(196,70,30,.06);border-left:3px solid var(--ember);padding:9px 11px;margin:0 0 12px;font-size:.83rem}
+.fitbox>b:first-child{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;display:block;color:var(--ember);margin-bottom:2px}
+.fitbox b:not(:first-child){color:var(--ember)}
 .fitbox.ok{background:rgba(31,93,76,.08);border-left-color:var(--pine)}
 .fitbox.ok b{color:var(--pine)}
 .tag.fit{color:var(--ember);border-color:rgba(217,84,43,.45)}
@@ -299,6 +308,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 }
 
 .rosterwrap{margin-bottom:26px}
+#rgrid{overflow-x:auto}
 .rtable{width:100%;border-collapse:collapse;margin-bottom:18px;background:#fff;border:1px solid var(--rule)}
 .rtable caption{font-family:var(--display);font-weight:700;font-size:1.05rem;text-transform:uppercase;
   text-align:left;padding:9px 11px;background:var(--ink);color:var(--enamel);letter-spacing:.04em}
@@ -348,6 +358,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .cbrow .lab{font-size:.9rem;font-weight:500;line-height:1.3}
 .cbrow .lab small{display:block;font-weight:400;font-size:.76rem;color:var(--slate-2);margin-top:2px}
 
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px}
 .ctable{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.72rem;background:#fff;
   border:1px solid var(--rule);margin-bottom:10px}
 .ctable th,.ctable td{border:1px solid var(--rule);padding:5px 4px;text-align:center}
@@ -357,7 +368,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .ctable td b{color:var(--ember);font-weight:600}
 .ctable td small{display:block;color:var(--slate-2);font-size:.64rem}
 
-.tempbox{background:rgba(217,84,43,.07);border-left:3px solid var(--ember);padding:9px 11px;margin:0 0 12px;font-size:.83rem}
+.tempbox{background:rgba(196,70,30,.05);border-left:3px solid var(--ember);padding:9px 11px;margin:0 0 12px;font-size:.83rem}
 .tempbox b{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;display:block;color:var(--ember);margin-bottom:4px}
 .tempbox .trow{display:block;margin-bottom:2px}
 .tempbox .trow em{font-family:var(--display);font-weight:800;font-style:normal;font-size:.95rem;
@@ -380,7 +391,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.17</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.18</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -512,7 +523,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.17 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.18 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -524,7 +535,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.17","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.18","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1825,7 +1836,7 @@ function handMeasure(q,unit,key){
 function tempChartBlock(){
   return `<div class="block"><div class="block-head"><h2>Safe temperatures</h2><span class="rule"></span></div>
     <p class="hint">USDA minimums, trimmed to what a patrol actually cooks. Each cook card already carries the ones that recipe needs — this is the whole set for reference.</p>
-    <table class="ctable"><thead><tr><th class="ov">Food</th><th>Cook to</th></tr></thead><tbody>
+    <div class="tscroll"><table class="ctable"><thead><tr><th class="ov">Food</th><th>Cook to</th></tr></thead><tbody>
       <tr><th class="ov">Ground beef, pork, lamb</th><td><b>160°F</b></td></tr>
       <tr><th class="ov">Ground turkey or chicken</th><td><b>165°F</b></td></tr>
       <tr><th class="ov">Chicken and turkey, any cut</th><td><b>165°F</b></td></tr>
@@ -1836,7 +1847,7 @@ function tempChartBlock(){
       <tr><th class="ov">Egg dishes</th><td><b>160°F</b><small>eggs alone: yolk and white firm</small></td></tr>
       <tr><th class="ov">Fish</th><td><b>145°F</b><small>or opaque, flakes with a fork</small></td></tr>
       <tr><th class="ov">Shrimp, scallops, crab</th><td><b>—</b><small>pearly, opaque and firm</small></td></tr>
-    </tbody></table>
+    </tbody></table></div>
     <p class="hint" style="margin-bottom:0">You cannot tell by looking. Pink meat can be perfectly safe, and brown meat can still be undercooked — put a thermometer in the thickest part, away from bone. Pack one; it costs about five dollars and settles every argument.</p>
   </div>`;
 }
@@ -1844,7 +1855,7 @@ function tempChartBlock(){
 function coalChartBlock(){
   let h=`<div class="block"><div class="block-head"><h2>Coal chart</h2><span class="rule"></span></div>
     <p class="hint">Briquettes for a target oven temperature. Top number is coals on the lid, bottom is coals underneath. These assume decent conditions — cold or wind means more.</p>
-    <table class="ctable"><thead><tr><th class="ov">Oven</th>`+
+    <div class="tscroll"><table class="ctable"><thead><tr><th class="ov">Oven</th>`+
     COAL_TEMPS.map(t=>`<th>${t}°</th>`).join("")+`</tr></thead><tbody>`;
   Object.keys(COAL_CHART).map(Number).sort((a,b)=>a-b).forEach(d=>{
     const row=COAL_CHART[d];
@@ -1854,7 +1865,7 @@ function coalChartBlock(){
          return `<td><b>${a+b}</b><small>${a} / ${b}</small></td>`;
        }).join("")+`</tr>`;
   });
-  h+=`</tbody></table>
+  h+=`</tbody></table></div>
     <p class="hint" style="margin-bottom:0">Large number is the total. Small numbers are top / bottom. Baking wants most of the heat on the lid; simmering and frying want it underneath.</p>
   </div>`;
   return h;
@@ -1862,6 +1873,9 @@ function coalChartBlock(){
 
 /* "box" pluralises to "boxes", not "boxs". Abbreviations never pluralise at all. */
 const NOPLURAL=["lb","oz","tsp","tbsp"];
+const IRREG={loaf:"loaves",tomato:"tomatoes",potato:"potatoes",leaf:"leaves"};
+/* The whole unit word, plural when it should be: "loaves", "boxes", "tbsp". */
+function unitWord(u,many){ return many ? (IRREG[u]||u+unitPlural(u,true)) : u; }
 function unitPlural(u,many){
   if(!many||NOPLURAL.includes(u))return "";
   return /(s|x|z|ch|sh)$/.test(u)?"es":"s";
@@ -1915,11 +1929,11 @@ function renderList(){
     const sub=rows.reduce((a,b)=>a+b.cost,0);
     html+=`<div class="dept"><h3>${d}<em>${money(sub)}</em></h3>`+rows.map(r=>{
       const done=S.checked.has(r.key);
-      const plural=r.unit==="cup"?(r.buy!==1?"s":""):unitPlural(r.unit,r.buy!==1);
-      return `<div class="item ${done?"done":""}">
+      const unitTxt=r.unit==="cup"?(r.buy!==1?"cups":"cup"):unitWord(r.unit,r.buy!==1);
+      return `<div class="item ${done?"done":""}" data-checkrow="${r.key}">
         <button class="box" role="checkbox" aria-checked="${done}" data-check="${r.key}" aria-label="Mark ${r.name} bought"></button>
         <span class="iname">${r.name}</span>
-        <span class="iqty">${fracText(r.buy)} ${r.unit}${plural}<span>${money(r.cost)}</span></span>
+        <span class="iqty">${fracText(r.buy)} ${unitTxt}<span>${money(r.cost)}</span></span>
       </div>`;}).join("")+`</div>`;
   });
   html+=`</div>`;
@@ -1932,7 +1946,7 @@ function renderList(){
     <p class="hint" style="margin-top:-8px">Prints the shopping list and every cook card, one recipe per page. Choose "Save as PDF" in the print dialog to email it or keep it on a phone for a campsite with no signal.</p></div>`;
 
   html+=`<div class="block"><div class="block-head"><h2>Cook cards</h2><span class="rule"></span></div>
-    <p class="hint">Amounts below are already scaled for ${eaters()} people.</p>`;
+    <p class="hint">Amounts below are already scaled for ${eaters()} ${eaters()===1?"person":"people"}.</p>`;
   picks.forEach(r=>{
     const s=scaleOf(r);
     html+=`<div class="cook"><h3>${r.n}</h3><p class="src">${r.src} · ${batchLabel(r)} · ${money(costPerServing(r))} per serving</p>`;
@@ -1957,17 +1971,18 @@ function renderList(){
       const m=fmtMeasure(raw,it.u), u=m.u;
       /* 3 tsp shown as 1 tbsp needs the tablespoon hand measure, not the teaspoon one. */
       const shown=snapQty(u===it.u?raw:(u==="tbsp"?raw/3:raw/16),u);
+      /* A tiny patrol scales some amounts below the smallest measure. Say so instead of "0 tsp". */
+      if(raw>0&&shown<=0)return (u==="tsp"||u==="tbsp")?`a pinch of ${nm}`:`a little ${nm}`;
       const hand=handMeasure(shown,u,x.p);
       const many=shown>1.001;   /* ½ cup, not ½ cups */
       /* "cup" is a word and pluralizes; lb, oz, tsp and tbsp are abbreviations and do not. */
-      const plural=unitPlural(u,many);
       /* Don't write "10 eggs eggs" — skip the unit when the name already carries it. */
       const carries=new RegExp("\\b"+u+"s?\\b").test(nm);
-      const unitWord=carries?"":`${u}${plural} `;
+      const unitTxt=carries?"":`${unitWord(u,many)} `;
       /* With the unit dropped, pluralize the name instead: "2 yellow onions". */
       /* Only pluralize when the name ends in a word — not `tortillas, 8"`. */
-      const shownName=(carries&&many&&/[a-z]$/.test(nm)&&!/s$/.test(nm))?nm+"s":nm;
-      return `${m.q} ${unitWord}${shownName}${hand?` <i>(${hand})</i>`:""}`;
+      const shownName=(carries&&many&&/[a-z]$/.test(nm)&&!/s$/.test(nm))?nm.replace(new RegExp("\\b"+u+"\\b"),unitWord(u,true)):nm;
+      return `${m.q} ${unitTxt}${shownName}${hand?` <i>(${hand})</i>`:""}`;
     }).join(" · ")}</p>`;
     html+=`<ol class="steps">${r.steps.map(x=>`<li>${x}</li>`).join("")}</ol></div>`;
   });
@@ -2193,7 +2208,14 @@ function renderDock(){
   else if(S.tab==="add"){go.textContent="See recipes";go.disabled=false;}
   else{go.textContent="Edit menu";go.disabled=false;}
 }
-function setTab(t){
+/* Tabs go into the phone's history, so Android's Back button steps back through
+   tabs instead of closing the installed app. The first tab is replaced, not pushed,
+   so Back from where you started still leaves as expected. */
+let tabHistory=false;
+function setTab(t,fromHistory){
+  if(!fromHistory){
+    try{ if(tabHistory)history.pushState({tab:t},""); else {history.replaceState({tab:t},"");tabHistory=true;} }catch(e){}
+  }
   S.tab=t;
   ["trip","menu","list","roster","add"].forEach(k=>{$("#tab-"+k).setAttribute("aria-selected",String(k===t));$("#p-"+k).hidden=(k!==t);});
   if(t==="menu")renderRecipes();
@@ -2343,6 +2365,9 @@ function newTrip(){
 function refresh(){renderTripTop();renderChips();if(S.tab==="menu")renderRecipes();if(S.tab==="list")renderList();renderDock();}
 
 document.addEventListener("click",e=>{
+  /* Anywhere on a shopping row ticks it, not just the little box. */
+  const row=e.target.closest("[data-checkrow]");
+  if(row&&!e.target.closest("button")){const k=row.dataset.checkrow;S.checked.has(k)?S.checked.delete(k):S.checked.add(k);renderList();return;}
   const t=e.target.closest("button");if(!t)return;
   if(t.dataset.step){
     const[k,d]=t.dataset.step.split(":");
@@ -2377,7 +2402,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.17";
+const APP_BASE="3.18";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2574,7 +2599,7 @@ function renderAdd(){
       <button class="btn alt" id="btnExportJSON">Recipes only (JSON)</button>
       <button class="btn alt" id="btnImport">Import recipes</button>
     </div>
-    <input type="file" id="fileImport" accept=".json,application/json" style="position:absolute;left:-9999px">
+    <input type="file" id="fileImport" accept=".json,application/json" aria-label="Choose a recipes file to import" style="position:absolute;left:-9999px">
     <p class="hint" style="margin-top:10px">${mine.length} of your own recipe${mine.length===1?"":"s"} loaded · next download will be v${bumpVersion(CUSTOM.version)}</p>
   </div>`;
 
@@ -2676,7 +2701,7 @@ Add hot water, wait 5 minutes.">${D.bulkText||""}</textarea>
         <span class="q">${fmtQty(x.q)} ${P[x.p]?P[x.p].u:""}</span>
         <button class="xbtn" data-ding="${n}" aria-label="Remove">×</button></div>`).join(""):`<p class="fhint">Nothing added yet.</p>`}
       <div class="frow" style="margin-top:10px">
-        <select id="f-ingsel">${pantryOptions()}</select>
+        <select id="f-ingsel" aria-label="Ingredient">${pantryOptions()}</select>
         <input id="f-ingqty" type="number" min="0" step="0.05" placeholder="Amount">
       </div>
       <div class="btnrow"><button class="btn alt" id="btnAddIng">Add ingredient</button>
@@ -2800,6 +2825,10 @@ document.addEventListener("change",e=>{
 
 /* Runs after the handlers above, so the state it saves is already updated. */
 document.addEventListener("click",()=>savePlan());
+window.addEventListener("popstate",e=>{
+  const t=e.state&&e.state.tab;
+  if(t&&["trip","menu","list","roster","add"].includes(t))setTab(t,true);
+});
 
 const sharedLost=planFromLink();
 if(sharedLost===null){ loadPlan(); }
