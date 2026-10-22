@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.15</title>
+<title>Troop Mess — Camp Meal Planner v3.17</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -253,6 +253,12 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   .rjob small{color:#333}
   .rhead{border:1pt solid #000!important;border-top:2pt solid #000!important;page-break-inside:avoid}
   .rhead .rule2{border-bottom:.75pt solid #000}
+  .rhead .rin{border-bottom:.75pt solid #000;color:#000;font-size:10.5pt}
+  .rsel{display:none!important}
+  .rtable .rprint{display:block!important;text-align:center;font-size:10.5pt;padding:2pt;color:#000}
+  body.print-roster #p-roster .chips,body.print-roster #p-roster .counters{display:none!important}
+  .rtable td.changed::after{display:none}
+  .crewfield,.tally{display:none!important}
   html,body{background:#fff!important;color:#000;font-size:10.5pt;padding:0;margin:0}
   body{background-image:none!important}
   .masthead,.tabs,.dock,.foot,#p-trip,#p-menu,#p-add,.shop,.btnrow,.hint{display:none!important}
@@ -312,6 +318,23 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .rhead .line:last-child{margin-bottom:0}
 .rhead .lbl{font-family:var(--mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);padding-bottom:3px}
 .rhead .rule2{border-bottom:1px solid var(--ink);height:19px}
+.rhead .rin{border:0;border-bottom:1px solid var(--ink);background:transparent;font:inherit;font-size:.92rem;color:var(--ink);padding:2px 2px 3px;min-width:0;width:100%;border-radius:0}
+.rhead .rin:focus{outline:none;border-bottom:2px solid var(--ember)}
+.lblnote{font-weight:400;text-transform:none;letter-spacing:0;color:var(--slate-2);font-size:.74rem;margin-left:4px}
+.crewfield textarea{width:100%;min-height:120px;font:inherit;font-size:.95rem}
+.rtable td.named{padding:0;position:relative}
+.rsel{-webkit-appearance:none;appearance:none;width:100%;height:100%;min-height:38px;border:0;background:transparent;
+  font:inherit;font-size:.86rem;color:var(--ink);padding:4px 6px;text-align:center;text-align-last:center;cursor:pointer;border-radius:0}
+.rsel:focus{outline:2px solid var(--ember);outline-offset:-2px}
+.rtable td.changed::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--ember)}
+.rprint{display:none}
+.rtable td.dupe .rsel{color:#B3261E;font-weight:700}
+.warnline{color:#B3261E;font-size:.82rem;font-weight:600;margin:4px 0}
+.tally{margin:6px 0 26px}
+.ttable{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--rule);font-size:.82rem;margin-bottom:8px}
+.ttable th,.ttable td{border:1px solid var(--rule);padding:5px 6px;text-align:center}
+.ttable th{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;background:var(--enamel-2);color:var(--slate)}
+.ttable td:first-child{text-align:left}
 
 .cbrow{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--rule);
   border-radius:3px;padding:11px 12px;margin-bottom:12px;cursor:pointer;width:100%;text-align:left;
@@ -357,7 +380,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.15</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.17</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -489,7 +512,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.15 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.17 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -501,7 +524,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.15","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.17","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1310,7 +1333,8 @@ const STYLES=[
    can see what still needs covering instead of holding it in their head. */
 const MEALWHEN={breakfast:"Saturday and Sunday morning",lunch:"Saturday midday",
   dinner:"Saturday night",dessert:"Saturday night, after dinner",crackerbarrel:"Friday night, on arrival"};
-const MEALS=[{k:"breakfast",n:"Breakfast"},{k:"lunch",n:"Lunch"},{k:"dinner",n:"Dinner"},{k:"dessert",n:"Dessert"},{k:"crackerbarrel",n:"Cracker barrel"}];
+/* Weekend order: cracker barrel is Friday night, so it comes first. */
+const MEALS=[{k:"crackerbarrel",n:"Cracker barrel"},{k:"breakfast",n:"Breakfast"},{k:"lunch",n:"Lunch"},{k:"dinner",n:"Dinner"},{k:"dessert",n:"Dessert"}];
 const DIETS=[
  {k:"nuts",n:"Nut allergy",s:"No peanut or tree nut ingredients"},
  {k:"veg", n:"Vegetarian", s:"No meat or seafood"},
@@ -1322,7 +1346,8 @@ const FACTOR={car:1.0,dutch:1.0,camp:1.0,back:1.2,nocook:1.1,high:1.4};
 const DEPT_ORDER=["Produce","Meat & Seafood","Dairy & Eggs","Frozen","Canned & Jarred","Dry Goods","Bakery","Spices & Baking","Camp Supplies"];
 const THRIFTY=2.25; /* $/serving threshold */
 
-const S={scouts:0,adults:0,days:2,pattern:'weekend',style:null,noDutch:false,meals:new Set(),diets:new Set(),picked:new Set(),checked:new Set(),tab:"trip"};
+const S={scouts:0,adults:0,days:2,pattern:'weekend',style:null,noDutch:false,meals:new Set(),diets:new Set(),picked:new Set(),checked:new Set(),tab:"trip",
+  crew:[],rhead:{patrol:"",campout:"",grub:"",pl:""},swaps:{},seed:0};
 
 const $=s=>document.querySelector(s);
 const eaters=()=>S.scouts+S.adults;
@@ -1363,7 +1388,15 @@ const matchesStyle=r=>!!S.style&&(r.styles.includes(S.style)||(S.style==="car"&&
 /* A Dutch oven is only truly required when the recipe offers no alternative vessel. */
 const needsDutch=r=>!!r.coals&&!/\bor\b/i.test(r.gear||"");
 const visibleRecipes=()=>R.filter(r=>matchesStyle(r)&&r.meals.some(m=>S.meals.has(m))&&passesDiet(r)&&!(S.noDutch&&needsDutch(r)));
-const pickedRecipes=()=>R.filter(r=>S.picked.has(r.id));
+/* Cook cards in the order the weekend happens: each recipe sits under the earliest
+   chosen meal it serves. Stable sort, so book order holds within a meal. */
+const mealRank=r=>{
+  const ks=MEALS.map(m=>m.k);
+  const mine=(r.meals||[]).filter(k=>S.meals.has(k));
+  const use=mine.length?mine:(r.meals||[]);
+  return use.length?Math.min(...use.map(k=>{const i=ks.indexOf(k);return i<0?99:i;})):99;
+};
+const pickedRecipes=()=>R.filter(r=>S.picked.has(r.id)).map((r,i)=>[r,i]).sort((a,b)=>mealRank(a[0])-mealRank(b[0])||a[1]-b[1]).map(x=>x[0]);
 
 function roundBuy(q,unit){
   const counts=["can","jar","egg","chop","onion","carrot","apple","banana","tomato","head","stalk","bunch","clove","pepper","loaf","noodle","pouch","box","packet","cube","sleeve","tortilla","bun","slice","roll","pack","pita","bagel","stick","bag","sheet","bar"];
@@ -1867,7 +1900,7 @@ function renderList(){
   }
 
   const styleNm=(STYLES.find(x=>x.k===S.style)||{n:"Camp"}).n;
-  const mealNm=[...S.meals].map(m=>MEALS.find(x=>x.k===m).n).join(", ");
+  const mealNm=MEALS.filter(m=>S.meals.has(m.k)).map(m=>m.n).join(", ");
   html=`<div class="printhead">
       <h1>Troop Mess — Menu &amp; Shopping List</h1>
       <div class="meta">${S.scouts} scout${S.scouts===1?"":"s"}${S.adults?" · "+S.adults+" leader"+(S.adults===1?"":"s"):""} · ${styleNm} · ${mealNm} · printed ${new Date().toLocaleDateString()}</div>
@@ -1948,14 +1981,41 @@ function renderList(){
 
 
 /* ================= DUTY ROSTER =================
-   Blank grid, standard BSA jobs. Filled in by hand at camp —
-   who cooks is a patrol decision, not the app's. */
+   Standard BSA jobs. Leave the names empty and it prints a blank grid to fill in by
+   hand. Type the patrol's names and the app fills a fair rotation, which anyone can
+   change by tapping a slot. The app suggests; the patrol decides. */
 const DUTY_JOBS=[
-  {n:"Cook",         s:"Runs the meal from the cook card",             pair:true},
-  {n:"Fire / Stove", s:"Lights and tends coals, counts briquettes",    pair:true},
-  {n:"Water",        s:"Hauls and treats water — never goes alone",    pair:true},
-  {n:"Cleanup",      s:"Three pots: wash, rinse, sanitize, then air dry", pair:true}
+  {k:"cook",  n:"Cook",         s:"Runs the meal from the cook card",             pair:true},
+  {k:"fire",  n:"Fire / Stove", s:"Lights and tends coals, counts briquettes",    pair:true},
+  {k:"water", n:"Water",        s:"Hauls and treats water — never goes alone",    pair:true},
+  {k:"clean", n:"Cleanup",      s:"Three pots: wash, rinse, sanitize, then air dry", pair:true}
 ];
+/* The order slots get filled when the patrol is too small for all eight. A cook and
+   a cleaner first, then both water carriers so nobody fetches water alone, then fire,
+   then the second cook and cleaner, then the second on fire. */
+const FILL_ORDER=[["cook",0],["clean",0],["water",0],["water",1],["fire",0],["cook",1],["clean",1],["fire",1]];
+/* Never send one person for water alone: if the patrol is too small for the pair,
+   that spot goes to the next job instead. */
+function fillSlots(n){
+  const list=FILL_ORDER.slice(0,Math.min(n,FILL_ORDER.length));
+  const has=(j,k)=>list.some(x=>x[0]===j&&x[1]===k);
+  if(has("water",0)&&!has("water",1)){
+    const next=FILL_ORDER.slice(list.length).find(x=>x[0]!=="water");
+    const i=list.findIndex(x=>x[0]==="water");
+    if(next)list[i]=next; else list.splice(i,1);
+  }
+  return list;
+}
+const MAX_CREW=30, MAX_NAME=24;
+const escH=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function cleanName(x){return String(x||"").replace(/\s+/g," ").trim().slice(0,MAX_NAME);}
+function parseCrew(text){
+  const seen=new Set(),out=[];
+  String(text||"").split(/[\n,;]+/).map(cleanName).forEach(n=>{
+    const k=n.toLowerCase(); if(n&&!seen.has(k)&&out.length<MAX_CREW){seen.add(k);out.push(n);}
+  });
+  return out;
+}
 function rosterSlots(){
   const order=["breakfast","lunch","dinner","dessert","crackerbarrel"];
   const picked=order.filter(m=>S.meals.has(m));
@@ -1974,11 +2034,59 @@ function rosterDays(){
   for(let k=1;k<=(S.days||2);k++) out.push({d:"Day "+k, cols:slots});
   return out;
 }
+const slotKey=(di,ci,job,k)=>di+"|"+ci+"|"+job+"|"+k;
+/* Fair rotation, worked out fresh each time from the names, so it never goes stale.
+   For each meal, each open slot goes to whoever has done that job least so far,
+   then whoever has worked least overall, then the next in a shuffled order — so
+   everybody cooks, everybody cleans, and the bench rotates in on big patrols. */
+function autoRoster(){
+  const crew=S.crew, out={};
+  if(!crew.length)return out;
+  let x=(S.seed||0)*2654435761>>>0;
+  const rnd=()=>{x=(x*1103515245+12345)>>>0;return x/4294967296;};
+  const order=crew.map((n,i)=>({n,r:S.seed?rnd():i}));
+  order.sort((a,b)=>a.r-b.r);
+  const rank=new Map(order.map((o,i)=>[o.n,i]));
+  const jobCount={},total={};
+  crew.forEach(n=>{total[n]=0;jobCount[n]={};DUTY_JOBS.forEach(j=>jobCount[n][j.k]=0);});
+  let turn=0;
+  rosterDays().forEach((day,di)=>day.cols.forEach((col,ci)=>{
+    const used=new Set();
+    fillSlots(crew.length).forEach(([job,k])=>{
+      let best=null,bestScore=null;
+      crew.forEach(n=>{
+        if(used.has(n))return;
+        const score=[jobCount[n][job],total[n],(rank.get(n)-turn+crew.length*99)%crew.length];
+        if(!best||score[0]<bestScore[0]||(score[0]===bestScore[0]&&(score[1]<bestScore[1]||(score[1]===bestScore[1]&&score[2]<bestScore[2])))){best=n;bestScore=score;}
+      });
+      if(best){used.add(best);jobCount[best][job]++;total[best]++;out[slotKey(di,ci,job,k)]=best;}
+    });
+    turn++;
+  }));
+  return out;
+}
+/* What actually goes in a slot: the patrol's own change if there is one and the name
+   still exists, otherwise the suggestion. An empty string means "leave it blank". */
+function rosterFinal(){
+  const auto=autoRoster(),out={};
+  const names=new Set(S.crew);
+  rosterDays().forEach((day,di)=>day.cols.forEach((c,ci)=>DUTY_JOBS.forEach(j=>[0,1].forEach(k=>{
+    const key=slotKey(di,ci,j.k,k);
+    const sw=S.swaps[key];
+    out[key]=(sw===""||(sw&&names.has(sw)))?sw:(auto[key]||"");
+  }))));
+  return out;
+}
+function rosterTally(fin){
+  const t={};S.crew.forEach(n=>{t[n]={total:0};DUTY_JOBS.forEach(j=>t[n][j.k]=0);});
+  Object.entries(fin).forEach(([key,n])=>{if(n&&t[n]){const job=key.split("|")[2];t[n][job]++;t[n].total++;}});
+  return t;
+}
 function renderRoster(){
-  const days=rosterDays(), weekend=S.pattern==="weekend";
+  const weekend=S.pattern==="weekend";
   let h=`<div class="block">
     <div class="block-head"><h2>Duty roster</h2><span class="rule"></span></div>
-    <p class="hint">A blank grid for the grubmaster or patrol leader to fill in. Two lines per job, because scouts work in buddy pairs — and nobody walks to the water spigot alone. Print it and let the patrol assign names, rotating so the same scout isn't on cleanup every night.</p>
+    <p class="hint">Two people per job, because scouts work in buddy pairs — and nobody walks to the water spigot alone. Type the patrol's names below and the app suggests a fair rotation; tap any name on the grid to change it. Leave the names empty to print a blank grid and fill it in by hand.</p>
     <div class="chips" style="margin-bottom:16px">
       <button class="chip" data-pattern="weekend" aria-pressed="${weekend}">Standard weekend<span class="sub">Fri night · Sat B/L/D · Sun breakfast</span></button>
       <button class="chip" data-pattern="custom" aria-pressed="${!weekend}">Custom<span class="sub">Same meals every day</span></button>
@@ -1998,35 +2106,72 @@ function renderRoster(){
   } else {
     h+=`<p class="hint" style="margin-top:-6px">Friday has no cooked meal but still needs a water run and someone on cracker barrel. Sunday ends with striking camp. Saturday lunch is often packed after breakfast when the patrol is out at an activity, but it does not have to be — there are cooked lunches in the book too. Switch to Custom for longer trips or a different shape.</p>`;
   }
-  h+=`<div class="btnrow" style="margin-bottom:18px">
+  h+=`<div class="field crewfield">
+      <label for="f-crew">Patrol members <span class="lblnote">one per line, or separated by commas</span></label>
+      <textarea id="f-crew" rows="5" placeholder="Alex&#10;Ben&#10;Carlos&#10;Dev">${escH(S.crew.join("\n"))}</textarea>
+      <p class="hint" id="crewNote" style="margin-top:6px"></p>
+    </div>
+    <div class="btnrow" style="margin-bottom:18px">
+      <button class="btn alt" id="btnShuffle">Shuffle the rotation</button>
       <button class="btn warn" id="btnPrintRoster">Print the roster</button>
     </div></div>`;
-
+  const hv=k=>escH(S.rhead[k]||"");
   h+=`<div class="rosterwrap">`;
   h+=`<div class="rhead">
-    <div class="line"><span class="lbl">Patrol</span><span class="rule2"></span></div>
-    <div class="line"><span class="lbl">Campout &amp; dates</span><span class="rule2"></span></div>
-    <div class="line"><span class="lbl">Grubmaster</span><span class="rule2"></span></div>
-    <div class="line"><span class="lbl">Patrol leader</span><span class="rule2"></span></div>
-  </div>`;
-  days.forEach(day=>{
+    <div class="line"><label class="lbl" for="rh-patrol">Patrol</label><input class="rin" id="rh-patrol" data-rh="patrol" maxlength="40" value="${hv("patrol")}"></div>
+    <div class="line"><label class="lbl" for="rh-campout">Campout &amp; dates</label><input class="rin" id="rh-campout" data-rh="campout" maxlength="60" value="${hv("campout")}"></div>
+    <div class="line"><label class="lbl" for="rh-grub">Grubmaster</label><input class="rin" id="rh-grub" data-rh="grub" maxlength="40" value="${hv("grub")}"></div>
+    <div class="line"><label class="lbl" for="rh-pl">Patrol leader</label><input class="rin" id="rh-pl" data-rh="pl" maxlength="40" value="${hv("pl")}"></div>
+  </div><div id="rgrid"></div></div>`;
+  document.querySelector("#rosterBody").innerHTML=h;
+  renderRosterGrid();
+}
+function renderRosterGrid(){
+  const grid=document.querySelector("#rgrid"); if(!grid)return;
+  const days=rosterDays(), named=S.crew.length>0, fin=named?rosterFinal():{};
+  const note=document.querySelector("#crewNote");
+  if(note){
+    const perMeal=DUTY_JOBS.reduce((a,j)=>a+(j.pair?2:1),0);
+    note.textContent = !named ? "" :
+      S.crew.length<perMeal ? `${S.crew.length} names for ${perMeal} spots a meal — the app fills cook, cleanup and both water carriers first. Tap a blank to double someone up.`
+      : S.crew.length>perMeal ? `${S.crew.length} names for ${perMeal} spots a meal — the rest sit out each meal and rotate in.`
+      : `${S.crew.length} names, one for every spot.`;
+  }
+  /* Same person twice in one meal — usually a tap that needs a second tap. */
+  const twice=new Set(),seen={};
+  Object.entries(fin).forEach(([key,n])=>{if(!n)return;const m=key.split("|").slice(0,2).join("|");
+    seen[m]=seen[m]||{};if(seen[m][n])twice.add(m+"|"+n);seen[m][n]=1;});
+  const opts=sel=>`<option value=""${sel===""?" selected":""}>—</option>`+S.crew.map(n=>`<option${n===sel?" selected":""}>${escH(n)}</option>`).join("");
+  let h="";
+  days.forEach((day,di)=>{
     h+=`<table class="rtable"><caption>${day.d}</caption>
       <thead><tr><th class="slot" style="text-align:left">Job</th>
       ${day.cols.map(x=>`<th class="slot">${x}</th>`).join("")}</tr></thead><tbody>`;
     DUTY_JOBS.forEach(j=>{
       const rows=j.pair?2:1;
-      h+=`<tr><th class="job rjob" rowspan="${rows}">${j.n}<small>${j.s}</small></th>`+
-         day.cols.map(()=>`<td class="write${j.pair?" buddy":""}"></td>`).join("")+`</tr>`;
-      for(let k=1;k<rows;k++){
-        h+=`<tr>`+day.cols.map(()=>`<td class="write"></td>`).join("")+`</tr>`;
+      for(let k=0;k<rows;k++){
+        h+=`<tr>`+(k===0?`<th class="job rjob" rowspan="${rows}">${j.n}<small>${j.s}</small></th>`:"")+
+          day.cols.map((c,ci)=>{
+            const cls=`write${j.pair&&k===0?" buddy":""}`;
+            if(!named)return `<td class="${cls}"></td>`;
+            const key=slotKey(di,ci,j.k,k), v=fin[key]||"";
+            const mine=Object.prototype.hasOwnProperty.call(S.swaps,key)&&(S.swaps[key]===""||S.crew.includes(S.swaps[key]));
+            const dupe=v&&twice.has(di+"|"+ci+"|"+v);
+            return `<td class="${cls} named${mine?" changed":""}${dupe?" dupe":""}"${dupe?` title="${escH(v)} has two jobs this meal"`:""}><select class="rsel" data-slot="${key}" aria-label="${escH(day.d+" "+c+" "+j.n+" "+(k+1))}">${opts(v)}</select><span class="rprint">${escH(v)}</span></td>`;
+          }).join("")+`</tr>`;
       }
     });
     h+=`</tbody></table>`;
   });
-  h+=`</div>`;
-  document.querySelector("#rosterBody").innerHTML=h;
+  if(named){
+    const t=rosterTally(fin);
+    h+=`<div class="tally"><div class="block-head"><h2>Who does what</h2><span class="rule"></span></div>
+      <table class="ttable"><thead><tr><th>Name</th>${DUTY_JOBS.map(j=>`<th>${j.n.split(" ")[0]}</th>`).join("")}<th>Total</th></tr></thead><tbody>`+
+      S.crew.map(n=>`<tr><td>${escH(n)}</td>${DUTY_JOBS.map(j=>`<td>${t[n][j.k]||"·"}</td>`).join("")}<td><b>${t[n].total}</b></td></tr>`).join("")+
+      `</tbody></table>${twice.size?`<p class="warnline">Red names have two jobs in the same meal.</p>`:""}<p class="hint">Changed slots are marked with a dot. Shuffle starts over with a new rotation and drops your changes.</p></div>`;
+  }
+  grid.innerHTML=h;
 }
-
 function printRoster(){
   document.body.classList.add("print-roster");
   window.print();
@@ -2073,7 +2218,8 @@ const b64u={
 };
 function planToLink(){
   const data=b64u.enc({v:1,s:S.scouts,a:S.adults,d:S.days,pt:S.pattern,st:S.style,
-    nd:S.noDutch?1:0,m:[...S.meals],di:[...S.diets],p:[...S.picked]});
+    nd:S.noDutch?1:0,m:[...S.meals],di:[...S.diets],p:[...S.picked],
+    ...(S.crew.length||Object.values(S.rhead).some(Boolean)?{c:S.crew,rh:S.rhead,sw:S.swaps,sd:S.seed}:{})});
   return location.origin+location.pathname+"#p="+data;
 }
 /* Returns the number of recipes the receiving copy did not recognise, or null if the
@@ -2086,7 +2232,7 @@ function planFromLink(){
   if(!d||d.v!==1)return null;
   const n=(x,lo,hi,dflt)=>Number.isFinite(x)&&x>=lo&&x<=hi?x:dflt;
   S.scouts=n(d.s,0,99,0); S.adults=n(d.a,0,99,0); S.days=n(d.d,1,14,2);
-  if(["weekend","week"].includes(d.pt))S.pattern=d.pt;
+  if(["weekend","week","custom"].includes(d.pt))S.pattern=d.pt;
   if(STYLES.some(x=>x.k===d.st))S.style=d.st;
   S.noDutch=!!d.nd;
   S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
@@ -2094,6 +2240,7 @@ function planFromLink(){
   (d.di||[]).forEach(k=>{if(DIETS.some(x=>x.k===k))S.diets.add(k);});
   let lost=0;
   (d.p||[]).forEach(id=>{ R.some(r=>r.id===id) ? S.picked.add(id) : lost++; });
+  restoreRoster(d.c,d.rh,d.sw,d.sd);
   S.tab = S.picked.size ? "list" : "trip";
   return lost;
 }
@@ -2121,6 +2268,7 @@ function savePlan(){
       scouts:S.scouts,adults:S.adults,days:S.days,pattern:S.pattern,
       style:S.style,noDutch:S.noDutch,
       meals:[...S.meals],diets:[...S.diets],picked:[...S.picked],checked:[...S.checked],
+      crew:S.crew,rhead:S.rhead,swaps:S.swaps,seed:S.seed,
       tab:S.tab==="add"?"trip":S.tab}));
   }catch(e){}
 }
@@ -2130,7 +2278,7 @@ function loadPlan(){
   if(!d||d.v!==1)return;
   const n=(x,lo,hi,dflt)=>Number.isFinite(x)&&x>=lo&&x<=hi?x:dflt;
   S.scouts=n(d.scouts,0,99,0); S.adults=n(d.adults,0,99,0); S.days=n(d.days,1,14,2);
-  if(["weekend","week"].includes(d.pattern))S.pattern=d.pattern;
+  if(["weekend","week","custom"].includes(d.pattern))S.pattern=d.pattern;
   if(STYLES.some(x=>x.k===d.style))S.style=d.style;
   S.noDutch=!!d.noDutch;
   /* Only keep keys the app still knows about. A recipe deleted in a later version
@@ -2139,7 +2287,20 @@ function loadPlan(){
   (d.diets||[]).forEach(k=>{if(DIETS.some(x=>x.k===k))S.diets.add(k);});
   (d.picked||[]).forEach(id=>{if(R.some(r=>r.id===id))S.picked.add(id);});
   (d.checked||[]).forEach(k=>S.checked.add(k));
+  restoreRoster(d.crew,d.rhead,d.swaps,d.seed);
   if(["trip","menu","list","roster"].includes(d.tab))S.tab=d.tab;
+}
+/* Shared by saved plans and shared links. Everything is checked, because a link can
+   come from anywhere: names are trimmed and capped, swaps must point at a real name. */
+function restoreRoster(crew,rhead,swaps,seed){
+  S.crew=Array.isArray(crew)?parseCrew(crew.filter(x=>typeof x==="string").join("\n")):[];
+  S.rhead={patrol:"",campout:"",grub:"",pl:""};
+  if(rhead&&typeof rhead==="object")Object.keys(S.rhead).forEach(k=>{if(typeof rhead[k]==="string")S.rhead[k]=rhead[k].slice(0,60);});
+  S.swaps={};
+  if(swaps&&typeof swaps==="object")Object.entries(swaps).slice(0,800).forEach(([k,v])=>{
+    if(/^\d+\|\d+\|[a-z]+\|[01]$/.test(k)&&typeof v==="string"&&(v===""||S.crew.includes(v)))S.swaps[k]=v;
+  });
+  S.seed=Number.isInteger(seed)&&seed>=0&&seed<10000?seed:0;
 }
 function planSig(){
   return JSON.stringify([S.scouts,S.adults,S.style,S.noDutch,
@@ -2172,8 +2333,11 @@ function renderTripTop(){
 function newTrip(){
   S.scouts=0;S.adults=0;S.days=2;S.pattern="weekend";S.style=null;S.noDutch=false;
   S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
+  /* Same patrol, new campout: keep the names and patrol name, drop the rest. */
+  S.rhead={patrol:S.rhead.patrol||"",campout:"",grub:"",pl:""};S.swaps={};S.seed=0;
   newTripArmed=false; restoredSig=null;
   try{ localStorage.removeItem(PLAN_KEY); }catch(e){}
+  savePlan();
   setTab("trip"); refresh();
 }
 function refresh(){renderTripTop();renderChips();if(S.tab==="menu")renderRecipes();if(S.tab==="list")renderList();renderDock();}
@@ -2203,7 +2367,8 @@ document.addEventListener("click",e=>{
   if(t.id==="btnPrint"){document.body.classList.remove("print-roster");window.print();return;}
   if(t.id==="btnShare"){SHAREMSG=null;sharePlan();return;}
   if(t.id==="btnPrintRoster"){printRoster();return;}
-  if(t.dataset.pattern){S.pattern=t.dataset.pattern;renderRoster();return;}
+  if(t.id==="btnShuffle"){S.seed=((S.seed||0)%9973)+1;S.swaps={};renderRosterGrid();return;}
+  if(t.dataset.pattern){if(S.pattern!==t.dataset.pattern)S.swaps={};S.pattern=t.dataset.pattern;renderRoster();return;}
   if(t.dataset.days){S.days=Math.min(14,Math.max(1,(S.days||2)+Number(t.dataset.days)));renderRoster();return;}
   if(t.dataset.store){openStores(t.dataset.store);return;}
   if(t.dataset.check){const k=t.dataset.check;S.checked.has(k)?S.checked.delete(k):S.checked.add(k);renderList();return;}
@@ -2212,7 +2377,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.15";
+const APP_BASE="3.17";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2619,7 +2784,17 @@ document.addEventListener("click",e=>{
   if(t.id==="btnExportJSON"){exportJSON();return;}
   if(t.id==="btnImport"){document.getElementById("fileImport").click();return;}
 });
+/* Roster typing: update the grid as names are typed without redrawing the box
+   being typed in, and save as you go — no click needed to keep the names. */
+document.addEventListener("input",e=>{
+  const el=e.target;
+  if(el.id==="f-crew"){S.crew=parseCrew(el.value);renderRosterGrid();savePlan();return;}
+  if(el.dataset&&el.dataset.rh){S.rhead[el.dataset.rh]=el.value.slice(0,60);savePlan();return;}
+});
 document.addEventListener("change",e=>{
+  if(e.target.classList&&e.target.classList.contains("rsel")){
+    S.swaps[e.target.dataset.slot]=e.target.value;renderRosterGrid();savePlan();return;
+  }
   if(e.target.id==="fileImport"&&e.target.files&&e.target.files[0])importJSON(e.target.files[0]);
 });
 

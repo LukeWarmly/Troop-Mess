@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.15** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.17** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -287,6 +287,57 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
 
+### v3.17 — Cracker barrel first (October 22, 2026)
+
+Rob: cracker barrel is a Friday night thing, so it should come before breakfast.
+
+- **Cracker barrel now leads** the meal buttons on The Trip, the recipe groups on The Menu,
+  and the meal picker on the Add form, followed by breakfast, lunch, dinner and dessert.
+- **Cook cards on The List follow the weekend too.** They used to come out in recipe-book
+  order; now each recipe sits under the earliest meal you chose that it serves, so the
+  packet reads Friday night to Sunday morning.
+- The Custom roster (same meals every day) keeps cracker barrel as the last column, since
+  on a multi-day trip it is the evening snack.
+- Service worker cache renamed to troop-mess-v3.17.
+
+Tested: chip and menu order; five recipes picked in reverse order come out cracker barrel →
+dessert; list renders; roster unchanged; installable; offline with 148 recipes; no errors.
+
+### v3.16 — Names on the duty roster (October 22, 2026)
+
+Rob expected the roster to fill in on the phone. It couldn't; now it can.
+
+- **Patrol members box on the Roster tab.** One name per line, or comma-separated. Up to
+  30 names, duplicates and blanks dropped. Saves as you type.
+- **Fair rotation, filled automatically.** Each slot goes to whoever has done that job
+  least, then whoever has worked least overall, so everyone cooks and everyone cleans.
+  Checked for patrols of 2 to 12 on both the weekend and custom shapes: nobody doubled in
+  a meal, totals within one of each other.
+- **Water is never one person.** For a patrol too small to fill every spot, cook,
+  cleanup and both water carriers are filled first; if there's only room for one on
+  water, that spot goes to the next job instead.
+- **Tap a name to change it.** Each slot is a picker; "—" leaves it blank. Changed slots
+  get a dot. If someone ends up with two jobs in the same meal, the name turns red with a
+  note.
+- **Shuffle the rotation** starts over with a different fair rotation and drops the
+  changes.
+- **Who does what** tally under the grid: counts per job and total per scout.
+- **Header fields are typeable:** patrol, campout & dates, grubmaster, patrol leader.
+- **Printing** shows the names in the grid; the names box, tally, chips and pickers stay
+  off the paper. With no names, it prints the blank grid as before.
+- **Names save with the trip and travel on the share link.** Start a new trip keeps the
+  names and patrol name and clears the rest. Names from a link are trimmed, capped, and
+  HTML-escaped.
+- Fixed: the Custom roster shape was not remembered between opens (it saved as "custom"
+  but only "week" was accepted on load).
+- Service worker cache renamed to troop-mess-v3.16.
+
+Tested: rotation fairness 2–12 names both shapes; blank grid with no names; parsing
+(commas, newlines, duplicates, HTML in a name shows as text); typing doesn't lose focus;
+swap kept over reload; share link round-trip in a fresh browser; hostile link (script in
+a name, 200-char name, bogus swaps) comes through harmless; print PDF checked by eye;
+shuffle; new trip keeps names; offline with all 148 recipes; installable; no page errors.
+
 ### v3.15 — Install strip and download button fixes (October 21, 2026)
 
 Found while Rob reinstalled the app on his phone.
@@ -317,7 +368,7 @@ button goes to the menu with no download; keeper download cancels cleanly and wo
 OK; Start a new trip strip hidden on an empty plan and shown with a plan; offline load
 with all 148 recipes; no page errors.
 
-## v3.14
+### v3.14
 - **The Install button now works.** It never could on the published site. The manifest
   listed two ordinary icons, icon-192.png and icon-512.png, that were never uploaded, and
   the one icon that was uploaded is marked "maskable" only. Chrome needs an ordinary icon

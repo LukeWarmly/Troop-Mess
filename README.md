@@ -54,7 +54,7 @@ want.
 servings actually needed, with a cost estimate and total food weight. Cooking instructions
 are provided for every recipe you picked, including Dutch oven coal counts.
 
-**Roster.** A blank duty roster for the patrol to fill in.
+**Roster.** The duty roster. Type the patrol's names and the app suggests a fair rotation (everyone cooks, everyone cleans, water always in pairs); tap any name to change it. Leave the names empty for a blank grid to fill in by hand. Names stay with the trip and travel on the share link.
 
 **Share a menu without a server.** The List has a *Share this menu* button. On a phone it
 opens the normal share sheet — Messages, email, whatever you use — and sends a link with
