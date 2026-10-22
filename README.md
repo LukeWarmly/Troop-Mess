@@ -64,6 +64,12 @@ rather than live collaboration, so later changes do not follow, but it means the
 survives the grubmaster coming down with flu on the Friday. Nothing is uploaded anywhere;
 the plan travels inside the link and nowhere else.
 
+**On iPhone, install it.** Safari clears a website's saved data if the site isn't opened
+for seven days, so a plan kept only in Safari can vanish between the meeting and the
+campout. The home-screen app is exempt. Install it once and plans stay put. The
+home-screen app also keeps its own copy, separate from Safari; to load a shared menu
+into it, use **Have a shared menu link?** on The Trip.
+
 **It remembers where you left off.** Plan at Thursday's meeting, close the app, open it at
 camp with no signal — the head count, the cooking style and every recipe you picked are
 still there. A "Start a new trip" button on The Trip clears it when you want a fresh

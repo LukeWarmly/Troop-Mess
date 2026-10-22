@@ -1,13 +1,14 @@
 /* Troop Mess service worker.
    Bump CACHE when the app changes — that is what makes installed copies update. */
-const CACHE = "troop-mess-v3.18";
+const CACHE = "troop-mess-v3.19";
 
 /* Everything the app needs to run with no signal. */
 const SHELL = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./icon-maskable-512.png"
+  "./icon-maskable-512.png",
+  "./apple-touch-icon.png"
 ];
 
 self.addEventListener("install", e => {

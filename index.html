@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.18</title>
+<title>Troop Mess — Camp Meal Planner v3.19</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Troop Mess">
-<link rel="apple-touch-icon" href="icon-maskable-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-maskable-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,10 +43,32 @@ body{
 .masthead h1{font-family:var(--display);font-weight:800;font-size:2.35rem;line-height:.94;text-transform:uppercase;margin:0}
 .masthead h1 span{color:var(--mist)}
 .mast-sub{font-size:.82rem;color:var(--mist);margin:7px 0 0;max-width:34em}
+/* Phones, after the first visit: one compact header so the tabs and the plan are on the
+   first screen. Tap the header to see the full title again. */
+@media (max-width:520px){
+  body.compact .masthead{padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:10px;cursor:pointer}
+  body.compact .masthead h1{font-size:1.5rem;line-height:1}
+  body.compact .masthead h1 br,body.compact .masthead h1 span,body.compact .mast-sub{display:none}
+  body.compact .mast-byline{margin:0 0 5px}
+  body.compact .mast-eyebrow{margin-bottom:2px}
+}
 .mast-byline{font-family:var(--mono);font-size:.63rem;letter-spacing:.06em;color:var(--enamel-3);margin:0 0 9px;line-height:1.55;max-width:40em;opacity:.85}
 .triptop{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--enamel-2);border:1px solid var(--rule);border-radius:3px;padding:9px 12px;margin:0 0 18px}
 .triptop p{margin:0;font-size:.78rem;color:var(--slate);line-height:1.4}
 .triptop button{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.76rem;padding:7px 12px;border:1px solid var(--slate-2);border-radius:3px;background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.pastelink{background:#fff;border:1px solid var(--rule);border-radius:3px;margin:0 0 18px}
+.pastelink summary{cursor:pointer;padding:11px 14px;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.88rem;color:var(--ink);list-style:none}
+.pastelink summary::-webkit-details-marker{display:none}
+.pastelink summary::before{content:"▸ ";color:var(--ember)}
+.pastelink[open] summary::before{content:"▾ "}
+.pl-body{padding:0 14px 14px}
+.pl-body p{margin:0 0 10px;font-size:.84rem;color:var(--slate);line-height:1.45}
+.pl-row{display:flex;gap:8px;flex-wrap:wrap}
+.pl-row input{flex:1 1 220px;min-width:0;font:inherit;font-size:.9rem;padding:9px 10px;border:1px solid var(--rule);border-radius:2px;background:var(--enamel)}
+.pl-row .btn{flex:0 0 auto}
+.pl-msg{color:var(--ember)!important;font-weight:600;margin-top:8px!important}
+.pl-msg:empty{display:none}
+.triptop.undo{background:#FFF4EE;border-color:var(--ember)}
 .triptop button.arm{background:var(--ember);border-color:var(--ember);color:#fff}
 .installbar{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--ember);border-left-width:5px;background:#FFF4EE;border-radius:3px;padding:12px 14px;margin:0 0 18px}
 .installbar .ib-txt{flex:1;min-width:0}
@@ -140,7 +162,9 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .dock-stats{display:flex;gap:18px}
 .dstat .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);display:block}
 .dstat .v{font-family:var(--display);font-weight:700;font-size:1.15rem;line-height:1.1;font-variant-numeric:tabular-nums}
-.dock button{appearance:none;border:0;background:var(--ember);color:#fff;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.95rem;padding:11px 18px;border-radius:2px;cursor:pointer}
+.dock button{appearance:none;border:0;background:var(--ember);color:#fff;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.95rem;padding:11px 18px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.dstat .k,.dstat .v{white-space:nowrap}
+@media (max-width:400px){.dock{padding-left:14px;padding-right:14px;gap:10px}.dock-stats{gap:13px}.dock button{padding:11px 13px;font-size:.9rem}.dstat .wide{display:none}}
 .dock button:disabled{background:var(--slate);cursor:not-allowed;opacity:.6}
 .dock button:focus-visible{outline:2px solid var(--ember-hot);outline-offset:2px}
 
@@ -153,6 +177,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .box[aria-checked="true"]{background:var(--pine);border-color:var(--pine)}
 .box[aria-checked="true"]::after{content:"";position:absolute;left:4.5px;top:1px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
 .item.done .iname{text-decoration:line-through;color:var(--slate-2)}
+.iname .buy{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;color:var(--slate);margin-top:2px;text-decoration:none}
 .iname{font-size:.92rem}
 .iqty{font-family:var(--mono);font-size:.82rem;font-weight:500;white-space:nowrap;text-align:right}
 .iqty span{display:block;font-size:.65rem;color:var(--slate-2)}
@@ -283,7 +308,9 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   .totals .t{border-left:2pt solid #000}
   .notice{border:1pt solid #000!important;border-top:2pt solid #000!important;page-break-inside:avoid;break-inside:avoid}
   .notice p{color:#000}
-  .dept{page-break-inside:avoid;break-inside:avoid}
+  .dept{page-break-inside:auto;break-inside:auto}
+  .dept h3{page-break-after:avoid;break-after:avoid}
+  .item{page-break-inside:avoid;break-inside:avoid}
   .dept h3{border-bottom:1pt solid #000;color:#000}
   .item{border-bottom:.5pt dotted #777}
   .box{border:1pt solid #000!important;background:#fff!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
@@ -390,8 +417,8 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 </head>
 <body>
 
-<header class="masthead">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.18</p>
+<header class="masthead" id="mast">
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.19</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -411,6 +438,18 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
       <p id="tripTopTxt"></p>
       <button id="btnNewTrip">Start a new trip</button>
     </div>
+    <details class="pastelink" id="pasteLink">
+      <summary>Have a shared menu link?</summary>
+      <div class="pl-body">
+        <p>Paste the link someone sent you and this copy opens their menu. On iPhone this is how a shared menu gets into the home-screen app, which keeps its own copy separate from Safari.</p>
+        <div class="pl-row">
+          <input id="plInput" type="url" inputmode="url" autocomplete="off" placeholder="https://lukewarmly.github.io/Troop-Mess/#p=…" aria-label="Shared menu link">
+          <button class="btn alt" id="btnPasteLink">Paste</button>
+          <button class="btn warn" id="btnLoadLink">Open</button>
+        </div>
+        <p class="pl-msg" id="plMsg" role="status"></p>
+      </div>
+    </details>
     <div class="installbar" id="installBar" hidden>
       <div class="ib-txt">
         <b id="ibHead">Install the Troop Mess app</b>
@@ -523,19 +562,19 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.18 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.19 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
   <div class="dock-stats">
     <div class="dstat"><span class="k">Feeding</span><span class="v" id="dEat">0</span></div>
     <div class="dstat"><span class="k">Recipes</span><span class="v" id="dRec">0</span></div>
-    <div class="dstat"><span class="k">Est. cost</span><span class="v" id="dCost">$0</span></div>
+    <div class="dstat"><span class="k"><span class="wide">Est. </span>cost</span><span class="v" id="dCost">$0</span></div>
   </div>
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.18","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.19","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1415,12 +1454,47 @@ function roundBuy(q,unit){
   return Math.ceil(q*4-1e-9)/4;
 }
 
+/* The shopping list is for buying, not measuring. A cook card says "2 tbsp"; the
+   list should say "1½ cups", not "25 tbsp". Display only: cost and weight still
+   come from the exact amount. */
+function shopAmount(q,u){
+  const up=(x,st)=>Math.ceil(x/st-1e-9)*st;
+  if(u==="tsp"&&q>=6){const t=up(q/3,.5); if(t>=8)return{q:up(t/16,.25),u:"cup"}; return{q:t,u:"tbsp"};}
+  if(u==="tbsp"&&q>=8)return{q:up(q/16,.25),u:"cup"};
+  return{q,u};
+}
+/* What to pick up off the shelf. Sizes are common US packages, smallest first.
+   Amounts are in the item's own unit (cups or tbsp). */
+const PKG={
+  milk:[["quart","",4],["half gallon","",8],["gallon","",16]],
+  halfHalf:[["pint","",2],["quart","",4]], cream:[["half pint","",1],["pint","",2],["quart","",4]],
+  stock:[["carton","32 oz",4]], cider:[["half gallon","",8],["gallon","",16]],
+  pizzaSauce:[["jar","14 oz",1.75]], bbqSauce:[["bottle","18 oz",2.25]], syrup:[["bottle","24 oz",3]],
+  caesar:[["bottle","16 oz",2]], teriyaki:[["bottle","10 oz",1.25]],
+  rice:[["bag","2 lb",5]], instRice:[["box","14 oz",4]], rolledOats:[["canister","18 oz",6]],
+  biscuitMix:[["box","40 oz",9]], pancakeMix:[["box","32 oz",7]], marshmallow:[["bag","10 oz",5]],
+  chocChips:[["bag","12 oz",2]], raisins:[["box","12 oz",2]], parm:[["canister","8 oz",2]],
+  cereal:[["box","12 oz",10]], granola:[["bag","12 oz",3]], elbow:[["box","1 lb",4]], couscous:[["box","10 oz",1.5]],
+  peanutButter:[["jar","16 oz",28]], jelly:[["jar","18 oz",24]], maple:[["bottle","12 oz",24]],
+  oil:[["bottle","16 oz",32],["bottle","48 oz",96]], oliveOil:[["bottle","16 oz",32]],
+  flour:[["bag","2 lb",112],["bag","5 lb",280]], brownSugar:[["box","1 lb",36],["bag","2 lb",72]]
+};
+const pkgPlural=w=>/(s|x|ch|sh)$/.test(w)?w+"es":w+"s";
+/* "1 half gallon", "1 jar (14 oz)", "5 jars (14 oz)" */
+function buyHint(key,q){
+  const opts=PKG[key]; if(!opts||!(q>0))return "";
+  const say=(o,n)=>{const w=o[0].split(" "),noun=w.pop();return n+" "+w.concat(n===1?noun:pkgPlural(noun)).join(" ")+(o[1]?` (${o[1]})`:"");};
+  const one=opts.find(o=>o[2]>=q-1e-9);
+  if(one)return say(one,1);
+  const big=opts[opts.length-1];
+  return say(big,Math.ceil(q/big[2]-1e-9));
+}
 function buildList(){
   const agg={};
   pickedRecipes().forEach(r=>{const s=scaleOf(r);r.ing.forEach(x=>{if(P[x.p])agg[x.p]=(agg[x.p]||0)+x.q*s;});});
   const rows=Object.entries(agg).map(([k,raw])=>{
     const it=P[k],buy=roundBuy(raw,it.u);
-    return{key:k,name:it.n,dept:it.d,unit:it.u,buy,cost:buy*it.p,weight:buy*it.w};
+    return{key:k,name:it.n,dept:it.d,unit:it.u,buy,cost:buy*it.p,weight:buy*it.w,hint:buyHint(k,buy)};
   });
   const byDept={};rows.forEach(r=>(byDept[r.dept]=byDept[r.dept]||[]).push(r));
   Object.values(byDept).forEach(a=>a.sort((x,y)=>x.name.localeCompare(y.name)));
@@ -1929,11 +2003,12 @@ function renderList(){
     const sub=rows.reduce((a,b)=>a+b.cost,0);
     html+=`<div class="dept"><h3>${d}<em>${money(sub)}</em></h3>`+rows.map(r=>{
       const done=S.checked.has(r.key);
-      const unitTxt=r.unit==="cup"?(r.buy!==1?"cups":"cup"):unitWord(r.unit,r.buy!==1);
+      const sa=shopAmount(r.buy,r.unit);
+      const unitTxt=sa.u==="cup"?(sa.q!==1?"cups":"cup"):unitWord(sa.u,sa.q!==1);
       return `<div class="item ${done?"done":""}" data-checkrow="${r.key}">
         <button class="box" role="checkbox" aria-checked="${done}" data-check="${r.key}" aria-label="Mark ${r.name} bought"></button>
-        <span class="iname">${r.name}</span>
-        <span class="iqty">${fracText(r.buy)} ${unitTxt}<span>${money(r.cost)}</span></span>
+        <span class="iname">${r.name}${r.hint?`<small class="buy">buy ${r.hint}</small>`:""}</span>
+        <span class="iqty">${fracText(sa.q)} ${unitTxt}<span>${money(r.cost)}</span></span>
       </div>`;}).join("")+`</div>`;
   });
   html+=`</div>`;
@@ -1942,6 +2017,7 @@ function renderList(){
       <button class="btn warn" id="btnPrint">Print / save as PDF</button>
       <button class="btn alt" id="btnShare">Share this menu</button>
     </div>
+    ${!SHAREMSG&&planToLink().length>1500?`<p class="hint" style="margin-top:-8px">This menu makes a long link (${planToLink().length.toLocaleString()} characters). Send it by iMessage, WhatsApp or email; a plain text message can break it.</p>`:""}
     ${SHAREMSG?`<p class="hint" style="margin-top:-8px">${SHAREMSG.ok?`<b>${SHAREMSG.msg}</b>`:`Copy this link and send it:<br><span style="word-break:break-all;font-family:var(--mono);font-size:.72rem">${SHAREMSG.msg}</span>`}</p>`:""}
     <p class="hint" style="margin-top:-8px">Prints the shopping list and every cook card, one recipe per page. Choose "Save as PDF" in the print dialog to email it or keep it on a phone for a campsite with no signal.</p></div>`;
 
@@ -2246,8 +2322,8 @@ function planToLink(){
 }
 /* Returns the number of recipes the receiving copy did not recognise, or null if the
    link carried nothing usable. */
-function planFromLink(){
-  const m=/[#&]p=([A-Za-z0-9\-_]+)/.exec(location.hash||"");
+function planFromLink(src){
+  const m=/[#&]p=([A-Za-z0-9\-_]+)/.exec(src===undefined?(location.hash||""):String(src));
   if(!m)return null;
   let d=null;
   try{ d=b64u.dec(m[1]); }catch(e){ return null; }
@@ -2267,6 +2343,9 @@ function planFromLink(){
   return lost;
 }
 let SHAREMSG=null;
+/* Plain SMS splits a message at about 1,600 characters, and some carriers break a
+   link that is split. iMessage, WhatsApp, RCS and email are fine. */
+const LONGLINK=" It's a long link, so send it by iMessage, WhatsApp or email rather than a plain text message.";
 async function sharePlan(){
   const url=planToLink();
   const share={title:"Troop Mess menu",
@@ -2278,7 +2357,7 @@ async function sharePlan(){
   }catch(e){ if(e&&e.name==="AbortError")return; }
   try{
     await navigator.clipboard.writeText(url);
-    SHAREMSG={ok:true,msg:"Link copied. Paste it into a text or an email."};
+    SHAREMSG={ok:true,msg:"Link copied. Paste it into a text or an email."+(url.length>1500?LONGLINK:"")};
   }catch(e){
     SHAREMSG={ok:false,msg:url};
   }
@@ -2334,10 +2413,19 @@ let restoredSig=null;
 function planHasAnything(){
   return !!(S.scouts||S.adults||S.style||S.meals.size||S.picked.size||S.diets.size);
 }
-let newTripArmed=false;
+/* One tap clears; an Undo button stays for eight seconds. Friendlier than a second
+   tap, and the pattern is familiar from email apps. */
+let undoSnap=null, undoTimer=null;
 function renderTripTop(){
   const bar=$("#tripTop"); if(!bar)return;
-  if(!planHasAnything()){ bar.hidden=true; newTripArmed=false; return; }
+  const b=$("#btnNewTrip");
+  if(undoSnap){
+    bar.hidden=false; bar.classList.add("undo");
+    $("#tripTopTxt").textContent="Trip cleared. Patrol names kept.";
+    b.textContent="Undo"; b.classList.add("arm"); return;
+  }
+  bar.classList.remove("undo"); b.classList.remove("arm");
+  if(!planHasAnything()){ bar.hidden=true; return; }
   bar.hidden=false;
   const untouched = restoredSig!==null && planSig()===restoredSig;
   const bits=[];
@@ -2348,19 +2436,31 @@ function renderTripTop(){
   }
   /* Once you are building your own plan the button speaks for itself. */
   $("#tripTopTxt").textContent = bits.length ? "Carried over: "+bits.join(" · ")+"." : "";
-  const b=$("#btnNewTrip");
-  b.textContent = newTripArmed ? "Tap again to clear" : "Start a new trip";
-  b.classList.toggle("arm", newTripArmed);
+  b.textContent = "Start a new trip";
 }
 function newTrip(){
+  let snap=null; try{ snap=localStorage.getItem(PLAN_KEY); }catch(e){}
+  if(!snap){ savePlan(); try{ snap=localStorage.getItem(PLAN_KEY); }catch(e){} }
+  undoSnap={plan:snap,state:JSON.stringify({scouts:S.scouts,adults:S.adults,days:S.days,pattern:S.pattern,style:S.style,noDutch:S.noDutch,
+    meals:[...S.meals],diets:[...S.diets],picked:[...S.picked],checked:[...S.checked],crew:S.crew,rhead:S.rhead,swaps:S.swaps,seed:S.seed})};
+  clearTimeout(undoTimer); undoTimer=setTimeout(()=>{undoSnap=null;renderTripTop();},8000);
   S.scouts=0;S.adults=0;S.days=2;S.pattern="weekend";S.style=null;S.noDutch=false;
   S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
   /* Same patrol, new campout: keep the names and patrol name, drop the rest. */
   S.rhead={patrol:S.rhead.patrol||"",campout:"",grub:"",pl:""};S.swaps={};S.seed=0;
-  newTripArmed=false; restoredSig=null;
+  restoredSig=null;
   try{ localStorage.removeItem(PLAN_KEY); }catch(e){}
   savePlan();
   setTab("trip"); refresh();
+}
+function undoNewTrip(){
+  if(!undoSnap)return;
+  const d=JSON.parse(undoSnap.state);
+  Object.assign(S,{scouts:d.scouts,adults:d.adults,days:d.days,pattern:d.pattern,style:d.style,noDutch:d.noDutch,
+    meals:new Set(d.meals),diets:new Set(d.diets),picked:new Set(d.picked),checked:new Set(d.checked),
+    crew:d.crew,rhead:d.rhead,swaps:d.swaps,seed:d.seed});
+  undoSnap=null; clearTimeout(undoTimer);
+  savePlan(); refresh();
 }
 function refresh(){renderTripTop();renderChips();if(S.tab==="menu")renderRecipes();if(S.tab==="list")renderList();renderDock();}
 
@@ -2375,9 +2475,8 @@ document.addEventListener("click",e=>{
     $("#c-"+k).textContent=S[k];refresh();return;
   }
   if(t.id==="btnNewTrip"){
-    if(newTripArmed){newTrip();return;}
-    newTripArmed=true;renderTripTop();
-    setTimeout(()=>{if(newTripArmed){newTripArmed=false;renderTripTop();}},5000);
+    if(undoSnap){undoNewTrip();return;}
+    newTrip();
     return;
   }
   if(t.id==="cbNoDutch"){S.noDutch=!S.noDutch;S.picked.clear();S.checked.clear();refresh();return;}
@@ -2402,7 +2501,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.18";
+const APP_BASE="3.19";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2825,6 +2924,32 @@ document.addEventListener("change",e=>{
 
 /* Runs after the handlers above, so the state it saves is already updated. */
 document.addEventListener("click",()=>savePlan());
+(function(){
+  let seen=false; try{ seen=localStorage.getItem("tm_seen")==="1"; localStorage.setItem("tm_seen","1"); }catch(e){}
+  if(seen) document.body.classList.add("compact");
+  const m=document.getElementById("mast");
+  if(m) m.addEventListener("click",()=>document.body.classList.toggle("compact"));
+})();
+/* Load a pasted share link into this copy. Same rules as opening one: the link's
+   plan replaces the current one, unknown recipes are counted and left out. */
+function loadPastedLink(text){
+  const msg=$("#plMsg");
+  if(!/[#&]p=[A-Za-z0-9\-_]+/.test(text||"")){ msg.textContent="That doesn't look like a Troop Mess menu link. It should contain #p= near the end."; return; }
+  const lost=planFromLink(text);
+  if(lost===null){ msg.textContent="That link is damaged or incomplete — ask for it to be sent again."; return; }
+  savePlan(); restoredSig=planSig();
+  SHAREMSG={ok:true,msg:"Menu loaded from the pasted link."+(lost?` ${lost} recipe${lost===1?" was":"s were"} left out — whoever sent this has recipes your copy does not.`:"")};
+  $("#plInput").value=""; msg.textContent=""; $("#pasteLink").open=false;
+  setTab(S.tab||"list"); refresh();
+}
+document.addEventListener("click",async e=>{
+  const t=e.target.closest("button"); if(!t)return;
+  if(t.id==="btnLoadLink"){ loadPastedLink($("#plInput").value.trim()); return; }
+  if(t.id==="btnPasteLink"){
+    try{ const txt=await navigator.clipboard.readText(); $("#plInput").value=txt.trim(); loadPastedLink(txt.trim()); }
+    catch(err){ $("#plMsg").textContent="This phone didn't allow reading the clipboard. Press and hold in the box above, tap Paste, then tap Open."; $("#plInput").focus(); }
+  }
+});
 window.addEventListener("popstate",e=>{
   const t=e.state&&e.state.tab;
   if(t&&["trip","menu","list","roster","add"].includes(t))setTab(t,true);
@@ -2838,6 +2963,12 @@ else {
   history.replaceState(null,"",location.pathname);
   savePlan();
   if(sharedLost)SHAREMSG={ok:true,msg:`Menu loaded. ${sharedLost} recipe${sharedLost===1?" was":"s were"} left out — whoever sent this has recipes your copy does not.`};
+  const iOS=/iPad|iPhone|iPod/.test(navigator.userAgent||"")||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  const standalone=(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+  if(iOS&&!standalone){
+    const note="On iPhone, this opened in Safari. If you use the Troop Mess app on your home screen, copy the link from your message, open the app, and paste it under \u201cHave a shared menu link?\u201d on The Trip.";
+    SHAREMSG={ok:true,msg:(SHAREMSG?SHAREMSG.msg+" ":"Menu loaded. ")+note};
+  }
 }
 if(planHasAnything())restoredSig=planSig();
 setTab(S.tab||"trip");

@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.18** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.19** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,45 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.19 — Shopping list, shared links on iPhone, phone screen space (October 22, 2026)
+
+The second release from the diagnostic report: the rest of "Fix soon", the two iPhone
+items, and four of the phone interface ideas.
+
+- **Shopping list speaks in what you buy.** Anything over 8 tbsp shows in cups and over
+  6 tsp in tablespoons, rounded up ("Peanut butter 1¾ cups", not "25 tbsp"). Cook cards
+  keep exact measures. Costs still come from the exact amount.
+- **Buy-size hints.** Common items say what to pick up: "Milk — buy 1 half gallon",
+  "Pizza sauce — buy 5 jars (14 oz)", "Peanut butter — buy 4 jars (16 oz)". 33 items have
+  package sizes; the rest show the amount only.
+- **Printed shopping list packs tighter.** A store department no longer jumps whole to the
+  next page; only its heading is kept with its first item.
+- **Long share links get a warning.** Over 1,500 characters, the List says to send it by
+  iMessage, WhatsApp or email rather than a plain text message.
+- **"Have a shared menu link?" on The Trip.** Paste a link (or tap Paste to read the
+  clipboard) and this copy opens that menu. This is how a shared menu gets into the
+  home-screen app on iPhone, which keeps its own copy separate from Safari. When a link
+  opens in Safari on an iPhone, the app now says so and points here.
+- **iPhone home-screen icon** is its own 180 px file, so the Dutch oven fills the tile
+  instead of sitting small in the middle. New file: apple-touch-icon.png.
+- **Compact header on phones.** After the first visit, the header shrinks to one line of
+  title plus the byline, so the tabs and the plan are on the first screen (header 291 px →
+  123 px on a Galaxy). Tap the header to see the full title.
+- **Start a new trip is one tap with Undo.** The trip clears at once and an Undo button
+  stays for eight seconds. Patrol names are kept, as before.
+- **Dock fits on one line** on narrow phones: "Cost" instead of "Est. cost" under 400 px,
+  and the button never wraps.
+- README: why to install on iPhone (Safari clears unused sites after seven days).
+- Service worker cache renamed to troop-mess-v3.19; the new icon is in the offline set.
+
+Not needed: sticky tabs (they already were).
+
+Full retest: every v3.19 change; v3.18 suite; lie-fi against a hanging server (3.3 s);
+device matrix (9 sizes, no overflow, no errors); 12 px text floor; data integrity; cook
+packet scan; shopping lists at 4–20 people over 60 menus (no spoon counts over the
+limits); roster suite; meal-order suite; install-strip suite; axe (no contrast or label
+failures); installable; offline with 148 recipes.
 
 ### v3.18 — Camp-signal, Back button, readability (October 22, 2026)
 
