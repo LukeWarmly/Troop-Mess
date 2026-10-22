@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.19</title>
+<title>Troop Mess — Camp Meal Planner v3.20</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -418,7 +418,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.19</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.20</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -562,7 +562,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.19 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.20 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -574,7 +574,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.19","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.20","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -2180,10 +2180,11 @@ function renderRoster(){
     <p class="hint">Two people per job, because scouts work in buddy pairs — and nobody walks to the water spigot alone. Type the patrol's names below and the app suggests a fair rotation; tap any name on the grid to change it. Leave the names empty to print a blank grid and fill it in by hand.</p>
     <div class="chips" style="margin-bottom:16px">
       <button class="chip" data-pattern="weekend" aria-pressed="${weekend}">Standard weekend<span class="sub">Fri night · Sat B/L/D · Sun breakfast</span></button>
-      <button class="chip" data-pattern="custom" aria-pressed="${!weekend}">Custom<span class="sub">Same meals every day</span></button>
+      <button class="chip" data-pattern="custom" aria-pressed="${!weekend}">Longer trip<span class="sub">1–14 days · same mealtimes each day</span></button>
     </div>`;
   if(!weekend){
-    h+=`<div class="counters" style="margin-bottom:18px">
+    h+=`<p class="hint" style="margin-top:-6px">Every day gets a column for each meal you chose on The Trip. The roster only says who cooks, tends the fire, fetches water and cleans up at each mealtime; what you eat comes from your menu, so every meal can be different.</p>
+    <div class="counters" style="margin-bottom:18px">
       <div class="counter"><label for="c-days">Days</label>
         <div class="cbar">
           <button class="cbtn" data-days="-1" aria-label="One fewer day">–</button>
@@ -2195,7 +2196,7 @@ function renderRoster(){
         <span style="font-size:.74rem;color:var(--slate-2)">Set by the meals you chose on The Trip.</span></p>
       </div></div>`;
   } else {
-    h+=`<p class="hint" style="margin-top:-6px">Friday has no cooked meal but still needs a water run and someone on cracker barrel. Sunday ends with striking camp. Saturday lunch is often packed after breakfast when the patrol is out at an activity, but it does not have to be — there are cooked lunches in the book too. Switch to Custom for longer trips or a different shape.</p>`;
+    h+=`<p class="hint" style="margin-top:-6px">Friday has no cooked meal but still needs a water run and someone on cracker barrel. Sunday ends with striking camp. Saturday lunch is often packed after breakfast when the patrol is out at an activity, but it does not have to be — there are cooked lunches in the book too. Switch to Longer trip for a trip of any length from 1 to 14 days.</p>`;
   }
   h+=`<div class="field crewfield">
       <label for="f-crew">Patrol members <span class="lblnote">one per line, or separated by commas</span></label>
@@ -2501,7 +2502,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.19";
+const APP_BASE="3.20";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");

@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.19** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.20** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,25 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.20 — "Longer trip" instead of "Custom" (October 22, 2026)
+
+Rob read "Custom · Same meals every day" as "the same food every day". It meant the same
+mealtimes: each day gets a Breakfast, Lunch and Dinner column for the duty roster, while
+what is cooked comes from the menu and can differ at every meal.
+
+- The roster's second option is now **Longer trip · 1–14 days · same mealtimes each day**.
+- A line under it explains that the roster assigns jobs at each mealtime and the food comes
+  from the menu.
+- The Standard weekend note now points to "Longer trip" instead of "Custom".
+- Saved plans that used Custom open as Longer trip with nothing to redo.
+- Service worker cache renamed to troop-mess-v3.20.
+
+Considered and set aside: choosing different mealtimes for each day. The Standard weekend
+already covers the common uneven shape; Rob does not expect troops to need it.
+
+Retest: label and note on phone and laptop; roster suite (patrols of 2–12, both shapes,
+saved shape restores); v3.19 suite; device matrix at 9 sizes; installable; offline.
 
 ### v3.19 — Shopping list, shared links on iPhone, phone screen space (October 22, 2026)
 
