@@ -64,6 +64,13 @@ rather than live collaboration, so later changes do not follow, but it means the
 survives the grubmaster coming down with flu on the Friday. Nothing is uploaded anywhere;
 the plan travels inside the link and nowhere else.
 
+**Your own recipes.** Recipes added on the Add tab are saved on that phone and survive
+updates. The **Share** button next to each one sends a link that adds it to anyone's
+Troop Mess with one tap; send it to the keeper to get it into the master copy.
+
+**Visit counter.** Opens with signal are counted at troopmess.goatcounter.com (installed
+app or browser). No cookies, no names, nothing personal; skipped with no signal.
+
 **On iPhone, install it.** Safari clears a website's saved data if the site isn't opened
 for seven days, so a plan kept only in Safari can vanish between the meeting and the
 campout. The home-screen app is exempt. Install it once and plans stay put. The

@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.20** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.21** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,37 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.21 — Recipes stay on the phone, recipes can be shared, visit counter (October 24, 2026)
+
+- **Recipes you add are kept on your phone.** Until now an added recipe lasted only until
+  the app was closed unless the keeper downloaded a copy. Now recipes, and any new
+  ingredients they use, are saved on the phone like the trip plan. They survive closing
+  the app, going offline and every update. Tested: saved, closed, reopened, offline, cache
+  wiped (an update), deleted.
+- **Share a recipe.** Each recipe under "Your recipes" on the Add tab has a **Share**
+  button. It sends a link; whoever taps it sees the recipe and chooses **Add to my
+  recipes** or **No thanks**. Send it to the keeper to get it into the master copy for
+  everyone. A link opened twice says "You already have it". Links work whether the app is
+  closed or already open.
+- **Everything from outside is checked.** Shared recipes, imported recipe files and
+  anything read back from the phone's storage go through the same check: names, steps and
+  ingredients are cleaned, unknown ingredients, styles and meals are dropped, and nothing
+  can reach the page as markup. Tested with deliberately hostile links.
+- **Visit counter.** Each open with signal is counted at troopmess.goatcounter.com,
+  marked as the installed app or a browser visit. GoatCounter uses no cookies and
+  collects no personal data. It is skipped with no signal, so it never slows camp use, and
+  it never counts the keeper's local test copies.
+- Keeper's tools text updated: trip plans and your own recipes save themselves.
+- Also: a menu link tapped while the app is already open in that tab now loads, instead
+  of doing nothing.
+- Service worker cache renamed to troop-mess-v3.21.
+
+Full retest: new recipe tests (save, survive, share, receive, hostile input, tampered
+storage); counter with a stand-in script, both installed and browser, and offline; every
+earlier suite (lie-fi 3.2 s, v3.18, v3.19, v3.20, roster, meal order, install strip,
+device matrix at 9 sizes, 12 px floor, data integrity, accessibility); installable;
+offline with 148 recipes; no page errors.
 
 ### v3.20 — "Longer trip" instead of "Custom" (October 22, 2026)
 

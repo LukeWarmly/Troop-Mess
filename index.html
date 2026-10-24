@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.20</title>
+<title>Troop Mess — Camp Meal Planner v3.21</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -56,6 +56,11 @@ body{
 .triptop{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--enamel-2);border:1px solid var(--rule);border-radius:3px;padding:9px 12px;margin:0 0 18px}
 .triptop p{margin:0;font-size:.78rem;color:var(--slate);line-height:1.4}
 .triptop button{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.76rem;padding:7px 12px;border:1px solid var(--slate-2);border-radius:3px;background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.recvbar{background:#FFF4EE;border:1px solid var(--ember);border-left-width:5px;border-radius:3px;padding:12px 14px;margin:0 0 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.recvbar p{margin:0;font-size:.88rem;color:var(--ink);line-height:1.45;flex:1 1 240px}
+.rb-btns{display:flex;gap:8px;flex-wrap:wrap}
+.mine-btns{display:flex;gap:8px;align-items:center;flex:none}
+.sharebtn{appearance:none;border:1px solid var(--slate-2);background:#fff;color:var(--ink);font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.78rem;padding:7px 11px;border-radius:2px;cursor:pointer;min-height:36px}
 .pastelink{background:#fff;border:1px solid var(--rule);border-radius:3px;margin:0 0 18px}
 .pastelink summary{cursor:pointer;padding:11px 14px;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.88rem;color:var(--ink);list-style:none}
 .pastelink summary::-webkit-details-marker{display:none}
@@ -418,7 +423,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.20</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.21</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -433,6 +438,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 </nav>
 
 <main>
+  <div class="recvbar" id="recvBar" role="status" hidden></div>
   <section id="p-trip" role="tabpanel" aria-labelledby="tab-trip">
     <div class="triptop" id="tripTop" hidden>
       <p id="tripTopTxt"></p>
@@ -562,7 +568,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.20 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.21 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -574,7 +580,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.20","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.21","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -2502,17 +2508,83 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.20";
+const APP_BASE="3.21";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
   if(raw&&raw.textContent.trim())CUSTOM=Object.assign({version:APP_BASE,pantry:{},recipes:[]},JSON.parse(raw.textContent));
 }catch(e){console.warn("Custom data unreadable:",e);}
+const slug=t=>"c_"+t.toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,22)+"_"+Math.random().toString(36).slice(2,6);
+/* What the keeper baked into this copy. Recipes added on this phone are kept apart from
+   these, so a recipe the keeper later removes from the master copy cannot come back. */
+const BAKED_IDS=new Set((CUSTOM.recipes||[]).map(r=>r.id));
+const BAKED_PANTRY=new Set(Object.keys(CUSTOM.pantry||{}));
 /* merge saved custom data into the live tables */
 Object.entries(CUSTOM.pantry||{}).forEach(([k,v])=>{P[k]=v;});
 (CUSTOM.recipes||[]).forEach(r=>{if(!R.some(x=>x.id===r.id))R.push(Object.assign({},r,{custom:true}));});
 
-const slug=t=>"c_"+t.toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,22)+"_"+Math.random().toString(36).slice(2,6);
+/* ---------- Recipes from outside: a shared link, a file, or this phone's storage ----------
+   Anything that did not come baked into the app is checked field by field before it is
+   used. A link can come from anyone; nothing in it may reach the page as markup. */
+const FLAGS=["meat","pork","shellfish","dairy","egg","gluten","nuts","gelatin","honey"];
+const numIn=(x,lo,hi,d)=>{const n=Number(x);return Number.isFinite(n)&&n>=lo&&n<=hi?n:d;};
+const cleanTxt=(x,max,keepQuote)=>{let t=String(x==null?"":x).replace(/[<>`]/g,"").replace(/[\u0000-\u001f]/g," ").replace(/\s+/g," ").trim();
+  if(!keepQuote)t=t.replace(/"/g,"\u2033").replace(/'/g,"\u2019");return t.slice(0,max||120);};
+function cleanPantryItem(v){
+  if(!v||typeof v!=="object")return null;
+  const n=cleanTxt(v.n,60),u=cleanTxt(v.u,20);
+  if(!n||!u)return null;
+  return {n,d:DEPT_ORDER.includes(v.d)?v.d:"Dry Goods",u,p:numIn(v.p,0,500,0),w:numIn(v.w,0,50,0),
+    f:(Array.isArray(v.f)?v.f:[]).filter(f=>FLAGS.includes(f))};
+}
+function cleanRecipe(r,extraPantry){
+  if(!r||typeof r!=="object")return null;
+  const n=cleanTxt(r.n,80); if(!n)return null;
+  const own=(o,k)=>!!o&&Object.prototype.hasOwnProperty.call(o,k);
+  const has=k=>typeof k==="string"&&/^[A-Za-z0-9_]{1,40}$/.test(k)&&k!=="__proto__"&&(own(P,k)||own(extraPantry,k));
+  const ing=(Array.isArray(r.ing)?r.ing:[]).slice(0,60)
+    .map(x=>x&&has(x.p)?{p:x.p,q:numIn(x.q,0.001,1000,0)}:null).filter(x=>x&&x.q>0);
+  const styles=(Array.isArray(r.styles)?r.styles:[]).filter(k=>STYLES.some(o=>o.k===k));
+  const meals=(Array.isArray(r.meals)?r.meals:[]).filter(k=>MEALS.some(o=>o.k===k));
+  if(!ing.length||!styles.length||!meals.length)return null;
+  const id=(typeof r.id==="string"&&/^c_[a-z0-9_]{1,40}$/.test(r.id))?r.id:slug(n);
+  const out={id,n,src:cleanTxt(r.src,80)||"Added by troop",serv:Math.round(numIn(r.serv,1,200,8)),
+    gear:cleanTxt(r.gear,80,true)||"Camp kitchen",time:cleanTxt(r.time,40,true)||"—",styles,meals,ing,
+    steps:(Array.isArray(r.steps)?r.steps:[]).slice(0,40).map(x=>cleanTxt(x,600,true)).filter(Boolean)};
+  if(!out.steps.length)out.steps=["No steps recorded."];
+  if(r.perPerson){out.perPerson=true;out.pu=cleanTxt(r.pu,30)||"portions";}
+  if(r.coals&&typeof r.coals==="object"){
+    const top=Math.round(numIn(r.coals.top,0,80,0)),bot=Math.round(numIn(r.coals.bot,0,80,0));
+    const size=/^\d{1,2}"$/.test(r.coals.size||"")?r.coals.size:'12"';
+    if(top&&bot)out.coals={top,bot,size};
+  }
+  if(r.water!==undefined){const w=numIn(r.water,0,20,0);if(w)out.water=w;if(r.bag)out.bag=true;}
+  if(r.prep)out.prep=cleanTxt(r.prep,400,true);
+  return out;
+}
+/* Recipes added on this phone are kept on this phone, so they survive closing the app
+   and every update. (Before v3.21 they lasted only until the app was closed.) */
+const LOCAL_RECIPES="troopmess_recipes";
+function persistCustom(){
+  try{
+    const recipes=CUSTOM.recipes.filter(r=>!BAKED_IDS.has(r.id));
+    const pantry={};Object.entries(CUSTOM.pantry).forEach(([k,v])=>{if(!BAKED_PANTRY.has(k))pantry[k]=v;});
+    localStorage.setItem(LOCAL_RECIPES,JSON.stringify({v:1,pantry,recipes}));
+  }catch(e){}
+}
+(function loadLocalRecipes(){
+  let d=null; try{ d=JSON.parse(localStorage.getItem(LOCAL_RECIPES)||"null"); }catch(e){}
+  if(!d||d.v!==1)return;
+  Object.entries(d.pantry||{}).forEach(([k,v])=>{
+    if(!/^x_[a-z0-9]{1,24}$/.test(k)||P[k])return;
+    const c=cleanPantryItem(v); if(c){P[k]=c;CUSTOM.pantry[k]=c;}
+  });
+  (d.recipes||[]).forEach(r=>{
+    const c=cleanRecipe(r);
+    if(c&&!R.some(x=>x.id===c.id)){CUSTOM.recipes.push(c);R.push(Object.assign({},c,{custom:true}));}
+  });
+})();
+
 const isCustomRecipe=r=>r.custom===true||(CUSTOM.recipes||[]).some(c=>c.id===r.id);
 
 function bumpVersion(v){
@@ -2555,10 +2627,14 @@ function importJSON(file){
     try{
       const d=JSON.parse(fr.result);
       let added=0;
-      Object.entries(d.pantry||{}).forEach(([k,v])=>{if(!P[k]){P[k]=v;CUSTOM.pantry[k]=v;}});
-      (d.recipes||[]).forEach(r=>{
-        if(!R.some(x=>x.id===r.id)){R.push(Object.assign({},r,{custom:true}));CUSTOM.recipes.push(r);added++;}
+      Object.entries(d.pantry||{}).forEach(([k,v])=>{
+        if(!P[k]&&/^x_[a-z0-9]{1,24}$/.test(k)){const c=cleanPantryItem(v);if(c){P[k]=c;CUSTOM.pantry[k]=c;}}
       });
+      (d.recipes||[]).forEach(r0=>{
+        const r=cleanRecipe(r0);
+        if(r&&!R.some(x=>x.id===r.id)){R.push(Object.assign({},r,{custom:true}));CUSTOM.recipes.push(r);added++;}
+      });
+      if(added)persistCustom();
       flash(added?("Imported "+added+" recipe"+(added===1?"":"s")+"."):"Nothing new — those recipes were already here.");
     }catch(e){flash("Couldn't read that file. It needs to be a recipes JSON exported from this app.",true);}
     renderAdd();
@@ -2667,8 +2743,10 @@ function runBulkImport(){
   const el=document.getElementById("f-bulk");
   const text=el?el.value:"";
   if(!text.trim()){flash("Paste some recipes into the box first.",true);return;}
-  const {recipes,problems}=parseBulk(text);
+  const parsed=parseBulk(text), problems=parsed.problems;
+  const recipes=parsed.recipes.map(r=>{const c=cleanRecipe(r,CUSTOM.pantry);if(c)Object.assign(r,c);return c?r:null;}).filter(Boolean);
   recipes.forEach(r=>{CUSTOM.recipes.push(r);R.push(Object.assign({},r,{custom:true}));});
+  if(recipes.length)persistCustom();
   let msg=recipes.length?`Imported ${recipes.length} recipe${recipes.length===1?"":"s"}: ${recipes.map(r=>r.n).join(", ")}.`:"Nothing imported.";
   if(problems.length)msg+=" "+problems.length+" line"+(problems.length===1?"":"s")+" had trouble — see below.";
   D.bulkProblems=problems;
@@ -2693,7 +2771,7 @@ function renderAdd(){
   if(FLASH)h+=`<div class="${FLASH.bad?"err":"ok"}">${FLASH.msg}</div>`;
 
   h+=`<div class="block"><div class="block-head"><h2>Keeper's tools</h2><span class="rule"></span></div>
-    <p class="hint"><b>Most leaders don't need these.</b> Your trip plan saves itself. These buttons are for whoever keeps the master copy of Troop Mess: they download the whole app with new recipes baked in, to upload to GitHub. Don't open a downloaded copy on a phone — it can't be installed and won't update.</p>
+    <p class="hint"><b>Most leaders don't need these.</b> Your trip plan and your own recipes save themselves. These buttons are for whoever keeps the master copy of Troop Mess: they download the whole app with new recipes baked in, to upload to GitHub. Don't open a downloaded copy on a phone — it can't be installed and won't update.</p>
     <div class="btnrow">
       <button class="btn warn" id="btnExportApp">Download master copy (keeper)</button>
       <button class="btn alt" id="btnExportJSON">Recipes only (JSON)</button>
@@ -2747,8 +2825,9 @@ Add hot water, wait 5 minutes.">${D.bulkText||""}</textarea>
     h+=`<div class="block"><div class="block-head"><h2>Your recipes</h2><span class="rule"></span></div>`;
     h+=mine.map(r=>`<div class="mine"><span><span class="rname">${r.n}</span>
       <span class="rmeta">${r.gear||"—"} · ${r.perPerson?("1 per person"):("serves "+r.serv)} · ${r.meals.join(", ")}</span></span>
-      <button class="xbtn" data-del="${r.id}" aria-label="Delete ${r.n}">×</button></div>`).join("");
-    h+=`</div>`;
+      <span class="mine-btns"><button class="sharebtn" data-sharerec="${r.id}" aria-label="Share ${r.n}">Share</button>
+      <button class="xbtn" data-del="${r.id}" aria-label="Delete ${r.n}">×</button></span></div>`).join("");
+    h+=`<p class="hint" style="margin-top:8px">Saved on this phone. <b>Share</b> sends a link that adds the recipe to anyone\u2019s Troop Mess with one tap \u2014 send it to whoever keeps the master copy and they can add it for everyone.</p></div>`;
   }
 
   h+=`<div class="block"><div class="block-head"><h2>Add a recipe</h2><span class="rule"></span></div>
@@ -2863,11 +2942,15 @@ function saveRecipe(){
   if(D.water){rec.water=+D.water;if(D.perPerson)rec.bag=true;}
   if(D.prep)rec.prep=D.prep;
   if(!rec.steps.length)rec.steps=["No steps recorded."];
+  const clean=cleanRecipe(rec,CUSTOM.pantry);
+  if(!clean){flash("Something in that recipe didn't check out — make sure every ingredient has an amount.",true);return;}
+  Object.assign(rec,clean);
   CUSTOM.recipes.push(rec);
   R.push(Object.assign({},rec,{custom:true}));
+  persistCustom();
   D.ing=[];D.name="";D.src="";D.gear="";D.time="";D.steps="";D.prep="";
   D.ctop="";D.cbot="";D.csize="";D.water="";D.pu="";
-  flash('"'+rec.n+'" saved. Download the app to keep it — nothing is stored automatically.');
+  flash('"'+rec.n+'" saved on this phone. It stays through updates. To get it into everyone\u2019s app, tap Share next to it under Your recipes and send it to whoever keeps the master copy.');
 }
 
 /* ---------- Builder events ---------- */
@@ -2882,7 +2965,7 @@ document.addEventListener("click",e=>{
     const id=t.dataset.del;
     CUSTOM.recipes=CUSTOM.recipes.filter(r=>r.id!==id);
     const n=R.findIndex(r=>r.id===id);if(n>=0)R.splice(n,1);
-    S.picked.delete(id);flash("Recipe removed.");return;
+    S.picked.delete(id);persistCustom();flash("Recipe removed.");return;
   }
   if(t.id==="btnAddIng"){
     captureDraft();
@@ -2899,7 +2982,8 @@ document.addEventListener("click",e=>{
     if(!name||!unit){flash("New ingredients need a name and a purchase unit.",true);return;}
     const key="x_"+name.toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,20);
     const item={n:name,d:g("n-dept")||"Dry Goods",u:unit,p:isNaN(price)?0:price,w:isNaN(weight)?0:weight,f:[...(D.nflags||[])]};
-    P[key]=item;CUSTOM.pantry[key]=item;D.nflags=new Set();D.showNewIng=false;
+    const ci=cleanPantryItem(item)||item;
+    P[key]=ci;CUSTOM.pantry[key]=ci;persistCustom();D.nflags=new Set();D.showNewIng=false;
     flash('"'+name+'" added to the ingredient list.');return;
   }
   if(t.id==="btnBulk"){const b=document.getElementById("f-bulk");D.bulkText=b?b.value:"";runBulkImport();return;}
@@ -2956,6 +3040,76 @@ window.addEventListener("popstate",e=>{
   if(t&&["trip","menu","list","roster","add"].includes(t))setTab(t,true);
 });
 
+/* ---------- Sharing one recipe ----------
+   The recipe (and any ingredient it brings that the app doesn't know) is packed into a
+   link, the same way a menu is. Tapping it shows the recipe and asks before adding it. */
+function recipeToLink(id){
+  const r=CUSTOM.recipes.find(x=>x.id===id); if(!r)return null;
+  const pantry={}; r.ing.forEach(x=>{if(CUSTOM.pantry[x.p])pantry[x.p]=CUSTOM.pantry[x.p];});
+  return location.origin+location.pathname+"#r="+b64u.enc({v:1,r,p:pantry});
+}
+async function shareRecipe(id){
+  const r=CUSTOM.recipes.find(x=>x.id===id); const url=recipeToLink(id); if(!r||!url)return;
+  const serves=r.perPerson?"1 per person":"serves "+r.serv;
+  const share={title:"Troop Mess recipe: "+r.n,text:`Troop Mess recipe: ${r.n} (${serves}). Tap the link to add it to your Troop Mess app.`,url};
+  try{ if(navigator.share&&(!navigator.canShare||navigator.canShare(share))){ await navigator.share(share); return; } }
+  catch(e){ if(e&&e.name==="AbortError")return; }
+  try{ await navigator.clipboard.writeText(share.text+" "+url); flash('Link for "'+r.n+'" copied. Paste it into a text or an email.'); }
+  catch(e){ flash('Copy this link and send it: <span style="word-break:break-all;font-family:var(--mono);font-size:.72rem">'+url+'</span>'); }
+}
+let RECV=null;
+function recipeFromLink(){
+  const m=/[#&]r=([A-Za-z0-9\-_]+)/.exec(location.hash||""); if(!m)return null;
+  let d=null; try{ d=b64u.dec(m[1]); }catch(e){ return {bad:true}; }
+  if(!d||d.v!==1||!d.r)return {bad:true};
+  const pantry={};
+  Object.entries(d.p||{}).forEach(([k,v])=>{ if(/^x_[a-z0-9]{1,24}$/.test(k)){const c=cleanPantryItem(v);if(c)pantry[k]=c;} });
+  const r=cleanRecipe(d.r,pantry);
+  return r?{r,pantry}:{bad:true};
+}
+function renderRecv(){
+  const bar=$("#recvBar"); if(!bar)return;
+  if(!RECV){bar.hidden=true;bar.innerHTML="";return;}
+  bar.hidden=false;
+  if(RECV.bad){bar.innerHTML=`<p><b>That recipe link is damaged or incomplete.</b> Ask for it to be sent again.</p><div class="rb-btns"><button class="btn alt" id="rbClose">OK</button></div>`;return;}
+  if(RECV.done){bar.innerHTML=`<p><b>Added \u201c${RECV.r.n}.\u201d</b> It\u2019s on The Menu with the other ${RECV.r.meals.map(k=>(MEALS.find(m=>m.k===k)||{}).n).join(" and ").toLowerCase()} recipes, and under Your recipes on the Add tab.</p><div class="rb-btns"><button class="btn alt" id="rbClose">OK</button></div>`;return;}
+  const r=RECV.r, have=R.some(x=>x.id===r.id);
+  if(have){bar.innerHTML=`<p><b>You already have \u201c${r.n}.\u201d</b> Nothing to add.</p><div class="rb-btns"><button class="btn alt" id="rbClose">OK</button></div>`;return;}
+  const st=r.styles.map(k=>(STYLES.find(o=>o.k===k)||{}).n).join(", "), ml=r.meals.map(k=>(MEALS.find(o=>o.k===k)||{}).n).join(", ");
+  bar.innerHTML=`<p><b>Recipe shared with you: \u201c${r.n}\u201d</b><br>${r.perPerson?"1 per person":"Serves "+r.serv} · ${ml} · ${st} · ${r.ing.length} ingredient${r.ing.length===1?"":"s"}</p>
+    <div class="rb-btns"><button class="btn warn" id="rbAdd">Add to my recipes</button><button class="btn alt" id="rbNo">No thanks</button></div>`;
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button"); if(!t)return;
+  if(t.dataset.sharerec){shareRecipe(t.dataset.sharerec);return;}
+  if(t.id==="rbAdd"&&RECV&&RECV.r){
+    Object.entries(RECV.pantry).forEach(([k,v])=>{if(!P[k]){P[k]=v;CUSTOM.pantry[k]=v;}});
+    if(!R.some(x=>x.id===RECV.r.id)){CUSTOM.recipes.push(RECV.r);R.push(Object.assign({},RECV.r,{custom:true}));}
+    persistCustom(); RECV.done=true; renderRecv(); if(S.tab==="menu")renderRecipes(); return;
+  }
+  if(t.id==="rbNo"||t.id==="rbClose"){RECV=null;renderRecv();return;}
+});
+RECV=recipeFromLink();
+if(RECV)history.replaceState(null,"",location.pathname);
+renderRecv();
+
+/* ---------- Visit counter ----------
+   GoatCounter: free for non-commercial use, no cookies, no personal data. It records
+   that the page was opened, which kind of phone, and whether it was opened as the
+   installed app or in a browser. Off until GC_CODE is set to the counter's code (the
+   part before .goatcounter.com). Skipped when offline, so it never slows camp use. */
+const GC_CODE="troopmess";
+(function(){
+  if(!GC_CODE||!navigator.onLine||location.protocol==="file:"||/^(localhost|127\.|\[::1\])/.test(location.hostname))return;
+  const installed=(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+  window.goatcounter={no_onload:true};
+  const sc=document.createElement("script");
+  sc.async=true; sc.src="https://gc.zgo.at/count.js";
+  sc.setAttribute("data-goatcounter","https://"+GC_CODE+".goatcounter.com/count");
+  sc.onload=()=>{ try{ window.goatcounter.count({path:installed?"/installed-app":"/browser",title:"Troop Mess v"+APP_BASE}); }catch(e){} };
+  document.head.appendChild(sc);
+})();
+
 const sharedLost=planFromLink();
 if(sharedLost===null){ loadPlan(); }
 else {
@@ -2974,6 +3128,20 @@ else {
 if(planHasAnything())restoredSig=planSig();
 setTab(S.tab||"trip");
 renderTripTop();renderChips();renderDock();
+/* A link tapped while this page is already open only changes the part after #, so the
+   page does not reload. Catch that and handle the link the same way as on opening. */
+window.addEventListener("hashchange",()=>{
+  if(/[#&]r=/.test(location.hash)){
+    RECV=recipeFromLink(); history.replaceState(null,"",location.pathname); renderRecv(); window.scrollTo(0,0); return;
+  }
+  if(/[#&]p=/.test(location.hash)){
+    const lost=planFromLink(); history.replaceState(null,"",location.pathname);
+    if(lost===null)return;
+    savePlan(); restoredSig=planSig();
+    SHAREMSG={ok:true,msg:"Menu loaded."+(lost?` ${lost} recipe${lost===1?" was":"s were"} left out — whoever sent this has recipes your copy does not.`:"")};
+    setTab(S.tab||"list"); refresh();
+  }
+});
 
 /* ================= INSTALL TO HOME SCREEN =================
    Only meaningful on a hosted copy. A downloaded single file runs from
