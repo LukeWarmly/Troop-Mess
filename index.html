@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.21</title>
+<title>Troop Mess — Camp Meal Planner v3.22</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -61,6 +61,26 @@ body{
 .rb-btns{display:flex;gap:8px;flex-wrap:wrap}
 .mine-btns{display:flex;gap:8px;align-items:center;flex:none}
 .sharebtn{appearance:none;border:1px solid var(--slate-2);background:#fff;color:var(--ink);font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.78rem;padding:7px 11px;border-radius:2px;cursor:pointer;min-height:36px}
+.rplate{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:.78rem;color:var(--slate);line-height:1.3}
+.rplate .plate{flex:none}
+.cook .rplate{margin:2px 0 12px}
+.mptable{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--rule);font-size:.84rem}
+.mptable th,.mptable td{border:1px solid var(--rule);padding:7px 6px;text-align:center;vertical-align:middle}
+.mptable thead th{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);background:var(--enamel-2);font-weight:600}
+.mptable thead th .mpdot{display:block;margin:0 auto 4px}
+.mptable tbody th{text-align:left;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.88rem;letter-spacing:.02em;color:var(--ink)}
+.mptable tbody th small{display:block;font-family:var(--body);text-transform:none;font-weight:400;letter-spacing:0;font-size:.74rem;color:var(--slate);margin-top:2px}
+.mptable td.off{color:var(--slate-2)}
+.mptable tr.mptotal th,.mptable tr.mptotal td{border-top:2px solid var(--ink)}
+.mpdot{display:inline-block;width:14px;height:14px;border-radius:50%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mptable .short{display:none}
+.mptable td{position:relative}
+.mpnote,.mpnote2{font-size:.84rem;color:var(--slate);line-height:1.5;margin:0 0 12px}
+.mpnote2{margin:10px 0 0}
+.mpok{margin:10px 0 0;font-weight:600;color:var(--pine)}
+.mpgap{margin:10px 0 0;font-size:.86rem;line-height:1.5;color:var(--ink)}
+.mpgap b{color:var(--ember)}
 .pastelink{background:#fff;border:1px solid var(--rule);border-radius:3px;margin:0 0 18px}
 .pastelink summary{cursor:pointer;padding:11px 14px;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.88rem;color:var(--ink);list-style:none}
 .pastelink summary::-webkit-details-marker{display:none}
@@ -87,6 +107,10 @@ body{
 @media (max-width:520px){
   .mast-eyebrow,.counter label,.field label,.rhead .lbl,.rtable th.slot,.ttable th,.chip .sub,.dock .k,.tag,.mwhen,.rmeta,.batch,.lblnote,.fitbox>b:first-child,.tempbox b,.rjob small,.tnum,.n,.src,.shopnote,small,
   .foot,.mcount,.totals .k,.sbtn span,.dept h3 em,.iqty span,.tnote,.coalinfo b,.prepbox b,.ctable th,.ctable td,.ctable td b,.fhint,label{font-size:12px!important}
+  .mptable thead th,.mptable tbody th small,.rplate{font-size:12px!important}
+  .mptable th,.mptable td{padding:6px 3px}
+  .mptable thead th{letter-spacing:0!important}
+  .mptable .long{display:none}.mptable .short{display:inline}
   .dock .k{letter-spacing:.08em}
 }
 .readme{border:1px solid var(--rule);background:var(--enamel-2);border-radius:3px;margin:0 0 30px}
@@ -316,6 +340,12 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   .dept{page-break-inside:auto;break-inside:auto}
   .dept h3{page-break-after:avoid;break-after:avoid}
   .item{page-break-inside:avoid;break-inside:avoid}
+  .mpblock{page-break-inside:avoid;break-inside:avoid}
+  .block-head{page-break-after:avoid;break-after:avoid}
+  .mpdot,.plate path,.plate circle{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .mptable{border:1pt solid #000;font-size:9.5pt}
+  .mptable th,.mptable td{border:.75pt solid #000;padding:3pt}
+  .mpnote{display:block!important;color:#000;font-size:9pt}
   .dept h3{border-bottom:1pt solid #000;color:#000}
   .item{border-bottom:.5pt dotted #777}
   .box{border:1pt solid #000!important;background:#fff!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
@@ -390,7 +420,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .cbrow .lab{font-size:.9rem;font-weight:500;line-height:1.3}
 .cbrow .lab small{display:block;font-weight:400;font-size:.76rem;color:var(--slate-2);margin-top:2px}
 
-.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px}
+.tscroll{position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px}
 .ctable{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.72rem;background:#fff;
   border:1px solid var(--rule);margin-bottom:10px}
 .ctable th,.ctable td{border:1px solid var(--rule);padding:5px 4px;text-align:center}
@@ -423,7 +453,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.21</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.22</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -568,7 +598,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.21 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.22 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -580,7 +610,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.21","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.22","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1399,6 +1429,83 @@ const DIETS=[
  {k:"gf",   n:"Gluten free", s:"No wheat, barley or rye"}
 ];
 const FACTOR={car:1.0,dutch:1.0,camp:1.0,back:1.2,nocook:1.1,high:1.4};
+/* ================= MyPlate =================
+   Food group of each ingredient, by USDA MyPlate rules: F fruits, V vegetables,
+   G grains, P protein, D dairy. Butter, cream, cream cheese and sour cream are not
+   Dairy; beans and eggs are Protein; potatoes, corn and tomato sauce are Vegetables;
+   100% juice and pie filling are Fruit. Sweets, oils, spices and condiments have no
+   group. A number after the letters weights dried or powdered foods, since a little
+   of them stands for a lot more of the food (¼ cup raisins is ½ cup of fruit). */
+const MYPLATE={beef:"P",italSausage:"P",hotSausage:"P",sausageLinks:"P",smokedSausage:"P",bacon:"P",hotDogs:"P",pepperoni:"P",turkeyPep:"P",pepStick:"P",summerSausage:"P",jerky:"P",chickenCooked:"P",chickenRaw:"P",chickenThigh:"P",porkChop:"P",porkLoin:"P",porkTender:"P",stewMeat:"P",turkey:"P",imitCrab:"P",shrimp:"P",scallops:"P",eggs:"P",pinto:"P",black:"P",kidney:"P",chickpea:"P",refried:"P",tunaPouch:"P",chickenPouch:"P",peanutButter:"P",trailMix:"P",tunaCan:"P",bakedBeans:"P",deliTurkey:"P",deliHam:"P",refriedFlakes:"P4",hummusPowder:"P3",milk:"D",cheddar:"D",mozz:"D",mexBlend:"D",colbyJack:"D",parm:"D",ricotta:"D",cottage:"D",cheeseSlice:"D",americanCheese:"D",hardCheese:"D",stringCheese:"D",milkPowder:"D5",cheesePowder:"D3",celery:"V",onion:"V",greenOnion:"V",redPotato:"V",babyCarrot:"V",carrot:"V",cabbage:"V",mushroom:"V",portobello:"V",greenPepper:"V",tomato:"V",lettuce:"V",fzPeas:"V",fzCarrots:"V",fzCorn:"V",fzGreenBeans:"V",fzMixedVeg:"V",hashBrowns:"V",taterTots:"V",tomSauce15:"V",tomSauce8:"V",diced145:"V",diced32:"V",tomSoup:"V",cornCan:"V",salsa16:"V",picante24:"V",spag24:"V",spag28:"V",spag32:"V",pizzaSauce:"V",pizzaSauce14:"V",enchGreen:"V",enchRed:"V",mushCan:"V",cherryTom:"V",romaine:"V",sloppyJoe:"V",driedVeg:"V6",sunTomato:"V4",instPotato:"V4",apple:"F",banana:"F",orange:"F",pieFilling:"F",pineapple:"F",applesauce:"F",peaches29:"F",cherryFilling:"F",berryFilling:"F",cider:"F",raisins:"F3",driedCran:"F3",driedApple:"F4",bowtie:"G",spiral:"G",rotini:"G",elbow:"G",eggNoodle:"G",lasagnaNoodle:"G",noBoil:"G",rice:"G",instRice:"G",couscous:"G",ramen:"G",instOats:"G",rolledOats:"G",grits:"G",macCheese:"G",readyRice:"G",stuffing:"G",stuffing8:"G",biscuitMix:"G",pancakeMix:"G",cornbreadMix:"G",pizzaMix:"G",ritz:"G",crackers:"G",breadCrumbs:"G",panko:"G",granola:"G",fritos:"G",fritosBag:"G",tortChips:"G",grahams:"G",cereal:"G",popcorn:"G",englishMuffin:"G",chexCereal:"G",branCereal:"G",pretzels:"G",spaghetti:"G",subRolls:"G",hotDogBuns:"G",buns:"G",bread:"G",bagel:"G",pita:"G",biscuitsCan:"G",breadDough:"G",ravioli:"GD",tort10:"G",tort8:"G"};
+Object.entries(MYPLATE).forEach(([k,v])=>{ if(P[k]){ P[k].g=v.replace(/\d/g,""); const m=v.match(/\d+/); if(m)P[k].gx=+m[0]; } });
+const GROUPS=[
+  {k:"F",n:"Fruits",sn:"Fruit",c:"#C8243A",tip:"apples, oranges, bananas or raisins on the side"},
+  {k:"V",n:"Vegetables",sn:"Veg",c:"#3F8B3A",tip:"baby carrots, a bagged salad, or a can of corn or green beans"},
+  {k:"G",n:"Grains",sn:"Grain",c:"#C2670F",tip:"bread, tortillas, crackers or rice"},
+  {k:"P",n:"Protein",sn:"Protein",c:"#6B3E8E",tip:"eggs, peanut butter, jerky or a can of beans"},
+  {k:"D",n:"Dairy",sn:"Dairy",c:"#1F6FB2",tip:"milk at breakfast, string cheese, or cheese slices"}
+];
+/* A recipe counts for a group only when a serving holds a real share of a MyPlate
+   serving of it, roughly a third to a half, by weight:
+   Grains ½ oz dry (MyPlate: 1 oz dry pasta or 1 slice of bread = one serving)
+   Protein ½ oz (1 oz meat, 1 egg or 1 tbsp peanut butter = one serving)
+   Dairy ½ oz cheese, or about ⅓ cup milk (1½ oz cheese or 1 cup milk = one cup)
+   Fruits and Vegetables about 1 oz, a quarter cup or so.
+   A sprinkle of cheese or a spoon of onion doesn't make a dish Dairy or Vegetables. */
+const MP_MIN={F:.06,V:.06,G:.03,P:.03,D:.03}, MP_LIQUID={milk:.17,cider:.25};
+function plateOf(r){
+  const out=new Set(), per=r.perPerson?1:Math.max(1,r.serv||1);
+  (r.ing||[]).forEach(x=>{
+    const it=P[x.p]; if(!it||!it.g)return;
+    const lb=x.q*(it.w||0)*(it.gx||1)*(MP_LIQUID[x.p]||1)/per;
+    [...it.g].forEach(g=>{ if(lb>=MP_MIN[g]) out.add(g); });
+  });
+  return out;
+}
+/* A small MyPlate: fruits top left, vegetables bottom left, grains top right,
+   protein bottom right, dairy cup at the top right. Lit groups in MyPlate colours. */
+function plateSVG(set,size){
+  const z=size||26, off="#DDE3E2", col=k=>set.has(k)?GROUPS.find(g=>g.k===k).c:off;
+  const W=(a0,a1)=>{const r=10,cx=12,cy=13,p=a=>[(cx+r*Math.cos(a)).toFixed(2),(cy+r*Math.sin(a)).toFixed(2)];
+    const [x0,y0]=p(a0),[x1,y1]=p(a1);return `M${cx} ${cy}L${x0} ${y0}A${r} ${r} 0 0 1 ${x1} ${y1}Z`;};
+  const PI=Math.PI;
+  return `<svg class="plate" width="${z}" height="${z}" viewBox="0 0 26 26" aria-hidden="true">
+    <circle cx="12" cy="13" r="11.2" fill="#fff" stroke="#B9C4C7" stroke-width=".8"/>
+    <path d="${W(PI,1.5*PI)}" fill="${col("F")}" stroke="#fff" stroke-width=".9"/>
+    <path d="${W(.5*PI,PI)}" fill="${col("V")}" stroke="#fff" stroke-width=".9"/>
+    <path d="${W(1.5*PI,2*PI)}" fill="${col("G")}" stroke="#fff" stroke-width=".9"/>
+    <path d="${W(0,.5*PI)}" fill="${col("P")}" stroke="#fff" stroke-width=".9"/>
+    <circle cx="22.6" cy="3.6" r="3.2" fill="${col("D")}" stroke="#fff" stroke-width=".9"/>
+  </svg>`;
+}
+const groupNames=set=>GROUPS.filter(g=>set.has(g.k)).map(g=>g.n);
+function plateLine(r){
+  const set=plateOf(r), names=groupNames(set);
+  return `<span class="rplate">${plateSVG(set,24)}<span>${names.length?"MyPlate: "+names.join(" · "):"No MyPlate food group (a treat or a drink)"}</span></span>`;
+}
+/* The MyPlate check on The List. Each recipe is counted at the first chosen meal it
+   fits, the same way the cook cards are ordered. */
+function myPlateBlock(picks){
+  if(!picks.length)return "";
+  const byMeal={};
+  picks.forEach(r=>{const i=mealRank(r);const m=MEALS[i]||MEALS.find(x=>r.meals.includes(x.k));if(m)(byMeal[m.k]=byMeal[m.k]||[]).push(r);});
+  const all=new Set(); const rows=[];
+  MEALS.forEach(m=>{const rs=byMeal[m.k];if(!rs)return;const set=new Set();rs.forEach(r=>plateOf(r).forEach(g=>{set.add(g);all.add(g);}));rows.push({m,rs,set});});
+  let h=`<div class="block mpblock"><div class="block-head"><h2>MyPlate check</h2><span class="rule"></span></div>
+    <p class="mpnote">First Class requirement 2a asks a Scout to tell how the menu includes the foods from MyPlate. This is that answer: which food groups each meal covers. A recipe counts toward a group only when a serving holds a real amount of it. Not every meal needs all five \u2014 aim for all five across the day.</p>
+    <div class="tscroll"><table class="mptable"><thead><tr><th>Meal</th>${GROUPS.map(g=>`<th><span class="mpdot" style="background:${g.c}"></span><span class="long">${g.n}</span><span class="short">${g.sn}</span></th>`).join("")}</tr></thead><tbody>`;
+  rows.forEach(({m,rs,set})=>{
+    h+=`<tr><th>${m.n}<small>${rs.map(r=>r.n).join(", ")}</small></th>${GROUPS.map(g=>set.has(g.k)?`<td class="on"><span class="mpdot" style="background:${g.c}"></span><span class="sr">yes</span></td>`:`<td class="off">\u2014</td>`).join("")}</tr>`;
+  });
+  h+=`<tr class="mptotal"><th>Whole menu</th>${GROUPS.map(g=>all.has(g.k)?`<td class="on"><span class="mpdot" style="background:${g.c}"></span><span class="sr">yes</span></td>`:`<td class="off">\u2014</td>`).join("")}</tr></tbody></table></div>`;
+  const missing=GROUPS.filter(g=>!all.has(g.k));
+  if(!missing.length)h+=`<p class="mpok">Every MyPlate food group is on this menu.</p>`;
+  else h+=`<p class="mpgap"><b>Missing from the whole menu: ${missing.map(g=>g.n).join(", ")}.</b> ${missing.map(g=>`For ${g.n.toLowerCase()}, add ${g.tip}.`).join(" ")}</p>`;
+  const main=rows.filter(x=>["breakfast","lunch","dinner"].includes(x.m.k));
+  const gaps=main.map(({m,set})=>{const miss=GROUPS.filter(g=>!set.has(g.k)&&all.has(g.k)&&(g.k==="F"||g.k==="V"));return miss.length?`${m.n} has no ${miss.map(g=>g.n.toLowerCase()).join(" or ")}`:null;}).filter(Boolean);
+  if(gaps.length)h+=`<p class="mpnote2">${gaps.join("; ")}. Fruit and vegetables are the usual gaps at camp \u2014 an apple, an orange or a bag of baby carrots on the side fixes it.</p>`;
+  return h+`</div>`;
+}
 const DEPT_ORDER=["Produce","Meat & Seafood","Dairy & Eggs","Frozen","Canned & Jarred","Dry Goods","Bakery","Spices & Baking","Camp Supplies"];
 const THRIFTY=2.25; /* $/serving threshold */
 
@@ -1578,6 +1685,7 @@ function cardHTML(r){
       <span>
         <span class="rname">${r.n}</span>
         <span class="rmeta">${r.gear} · ${r.time} · serves ${r.serv}</span>
+        ${plateLine(r)}
         ${on?`<span class="batch">${batchLabel(r)}</span>`:""}
         <span class="rtags">${tags.join("")}</span>
       </span>
@@ -2027,11 +2135,12 @@ function renderList(){
     ${SHAREMSG?`<p class="hint" style="margin-top:-8px">${SHAREMSG.ok?`<b>${SHAREMSG.msg}</b>`:`Copy this link and send it:<br><span style="word-break:break-all;font-family:var(--mono);font-size:.72rem">${SHAREMSG.msg}</span>`}</p>`:""}
     <p class="hint" style="margin-top:-8px">Prints the shopping list and every cook card, one recipe per page. Choose "Save as PDF" in the print dialog to email it or keep it on a phone for a campsite with no signal.</p></div>`;
 
+  html+=myPlateBlock(picks);
   html+=`<div class="block"><div class="block-head"><h2>Cook cards</h2><span class="rule"></span></div>
     <p class="hint">Amounts below are already scaled for ${eaters()} ${eaters()===1?"person":"people"}.</p>`;
   picks.forEach(r=>{
     const s=scaleOf(r);
-    html+=`<div class="cook"><h3>${r.n}</h3><p class="src">${r.src} · ${batchLabel(r)} · ${money(costPerServing(r))} per serving</p>`;
+    html+=`<div class="cook"><h3>${r.n}</h3><p class="src">${r.src} · ${batchLabel(r)} · ${money(costPerServing(r))} per serving</p>${plateLine(r)}`;
     if(r.prep)html+=`<div class="prepbox"><b>Do this at home</b>${r.prep}</div>`;
     html+=tempBlock(r);
     const fa=fitAdvice(r);
@@ -2508,7 +2617,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.21";
+const APP_BASE="3.22";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -2535,7 +2644,9 @@ function cleanPantryItem(v){
   const n=cleanTxt(v.n,60),u=cleanTxt(v.u,20);
   if(!n||!u)return null;
   return {n,d:DEPT_ORDER.includes(v.d)?v.d:"Dry Goods",u,p:numIn(v.p,0,500,0),w:numIn(v.w,0,50,0),
-    f:(Array.isArray(v.f)?v.f:[]).filter(f=>FLAGS.includes(f))};
+    f:(Array.isArray(v.f)?v.f:[]).filter(f=>FLAGS.includes(f)),
+    ...(typeof v.g==="string"&&/^[FVGPD]{1,3}$/.test(v.g)?{g:v.g}:{}),
+    ...(v.gx!==undefined?{gx:numIn(v.gx,1,10,1)}:{})};
 }
 function cleanRecipe(r,extraPantry){
   if(!r||typeof r!=="object")return null;
@@ -2903,6 +3014,10 @@ Add hot water, wait 5 minutes.">${D.bulkText||""}</textarea>
           ${["meat","pork","shellfish","nuts","dairy","gluten","egg"].map(f=>`<button class="chip" data-nflag="${f}" aria-pressed="${(D.nflags||new Set()).has(f)}">${f}</button>`).join("")}
         </div>
         <p class="fhint">Flags drive the dietary filters. Mark pork on bacon, nuts on peanut butter — the filters only work if this is right.</p>
+        <p class="fhint" style="margin-top:10px">MyPlate food group (leave blank for oils, spices, sweets and drinks other than milk or 100% juice):</p>
+        <div class="chips" style="margin-bottom:8px">
+          ${GROUPS.map(g=>`<button class="chip" data-ngroup="${g.k}" aria-pressed="${(D.ngroups||new Set()).has(g.k)}">${g.n}</button>`).join("")}
+        </div>
         <div class="btnrow"><button class="btn" id="btnSaveIng">Save ingredient</button></div>
       </div>
     </div>
@@ -2960,7 +3075,10 @@ document.addEventListener("click",e=>{
   if(t.dataset.dstyle){captureDraft();const k=t.dataset.dstyle;D.styles.has(k)?D.styles.delete(k):D.styles.add(k);renderAdd();return;}
   if(t.dataset.dmeal){captureDraft();const k=t.dataset.dmeal;D.meals.has(k)?D.meals.delete(k):D.meals.add(k);renderAdd();return;}
   if(t.dataset.ding!==undefined){captureDraft();D.ing.splice(+t.dataset.ding,1);renderAdd();return;}
-  if(t.dataset.nflag){D.nflags=D.nflags||new Set();const f=t.dataset.nflag;D.nflags.has(f)?D.nflags.delete(f):D.nflags.add(f);renderAdd();return;}
+  /* Toggle in place: redrawing the tab here wiped the name, unit, price and weight
+     typed into the new-ingredient form (a bug since the form was added). */
+  if(t.dataset.ngroup){D.ngroups=D.ngroups||new Set();const k=t.dataset.ngroup;D.ngroups.has(k)?D.ngroups.delete(k):D.ngroups.add(k);t.setAttribute("aria-pressed",String(D.ngroups.has(k)));return;}
+  if(t.dataset.nflag){D.nflags=D.nflags||new Set();const f=t.dataset.nflag;D.nflags.has(f)?D.nflags.delete(f):D.nflags.add(f);t.setAttribute("aria-pressed",String(D.nflags.has(f)));return;}
   if(t.dataset.del){
     const id=t.dataset.del;
     CUSTOM.recipes=CUSTOM.recipes.filter(r=>r.id!==id);
@@ -2981,7 +3099,8 @@ document.addEventListener("click",e=>{
     const name=g("n-name"),unit=g("n-unit"),price=parseFloat(g("n-price")),weight=parseFloat(g("n-weight"));
     if(!name||!unit){flash("New ingredients need a name and a purchase unit.",true);return;}
     const key="x_"+name.toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,20);
-    const item={n:name,d:g("n-dept")||"Dry Goods",u:unit,p:isNaN(price)?0:price,w:isNaN(weight)?0:weight,f:[...(D.nflags||[])]};
+    const item={n:name,d:g("n-dept")||"Dry Goods",u:unit,p:isNaN(price)?0:price,w:isNaN(weight)?0:weight,f:[...(D.nflags||[])],g:[...(D.ngroups||[])].join("")};
+    D.ngroups=new Set();
     const ci=cleanPantryItem(item)||item;
     P[key]=ci;CUSTOM.pantry[key]=ci;persistCustom();D.nflags=new Set();D.showNewIng=false;
     flash('"'+name+'" added to the ingredient list.');return;

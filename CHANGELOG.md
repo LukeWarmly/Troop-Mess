@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.21** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.22** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,39 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.22 — MyPlate (October 24, 2026)
+
+For First Class requirement 2a ("Tell how the menu includes the foods from MyPlate or the
+current USDA nutritional model") and the Cooking merit badge's MyPlate menu requirements.
+
+- **Every ingredient has its MyPlate food group:** Fruits, Vegetables, Grains, Protein or
+  Dairy, following USDA's rules. Butter, cream, cream cheese and sour cream are not Dairy;
+  beans and eggs are Protein; potatoes, corn and tomato sauce are Vegetables; 100% juice
+  and pie filling are Fruit; sweets, oils, spices and condiments have no group. Dried and
+  powdered foods are weighted up (¼ cup raisins is ½ cup of fruit). 154 of 241 ingredients
+  have a group; the rest are seasonings, fats, sweets and supplies.
+- **A recipe counts toward a group only when a serving holds a real amount of it,**
+  roughly a third to a half of a MyPlate serving: about ½ oz of dry grain, meat or cheese,
+  ⅓ cup of milk, or a quarter cup of fruit or vegetables. A sprinkle of cheese doesn't
+  make a dish Dairy. Checked across all 148 recipes.
+- **A small plate on every recipe** on The Menu and on each cook card, with the groups it
+  covers lit in MyPlate colours and named in words.
+- **MyPlate check on The List:** a table of which groups each meal covers, plus the whole
+  menu. It names anything missing from the whole menu with easy fixes ("For fruits, add
+  apples, oranges, bananas or raisins on the side") and points out breakfast, lunch or
+  dinner with no fruit or vegetables. It prints with the packet, in colour, so a Scout can
+  hand it to the Scoutmaster for First Class 2a.
+- **New ingredients** added on the Add tab can be given a MyPlate group.
+- **Fixed (an older bug):** tapping a flag such as "nuts" in the new-ingredient form wiped
+  the name, unit, price and weight already typed. Taps now just toggle the button.
+- Printing: a section heading no longer sits alone at the bottom of a page.
+- Service worker cache renamed to troop-mess-v3.22.
+
+Full retest: MyPlate tests (cards, table, gaps, fixes, print, new-ingredient group, phone
+layout); every earlier suite (recipes and sharing, lie-fi 3.2 s, v3.18, v3.19, roster,
+meal order, install strip, device matrix at 9 sizes, 12 px floor, data integrity,
+accessibility, counter); installable; offline with 148 recipes; no page errors.
 
 ### v3.21 — Recipes stay on the phone, recipes can be shared, visit counter (October 24, 2026)
 
