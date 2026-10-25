@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.26** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.27** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,34 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.27 — No outside code runs in the app (October 25, 2026)
+
+Rob asked where the app could be used to reach every scout's phone. Users cannot change
+each other's copies: shared links and recipe files are data and are cleaned before use
+(the blind review in v3.26 threw hostile links and tampered storage at it). Two paths
+remained where code reaches every phone on its next open: the GitHub repository, which
+is protected by the account (two-factor authentication, see Security in the README), and
+the visit counter, which loaded GoatCounter's script from their server on every open. If
+that server were ever compromised, it could have run anything inside Troop Mess.
+
+- **The counter no longer runs anyone else's code.** It now counts with a one-pixel image
+  request to troopmess.goatcounter.com, which GoatCounter supports for exactly this. Same
+  numbers on the dashboard (installed app vs browser, version, screen size); no script.
+- **Content Security Policy.** The page now tells the browser to run one script only, the
+  one inside `index.html`, pinned by its sha256 fingerprint, and to load nothing executable
+  from any other site. Tested: a script injected into the page is refused, a script from
+  another site is refused, and a hostile shared recipe link does nothing.
+- The web-font stylesheet's inline `onload` handler (the one inline handler in the file)
+  moved into the main script so the policy can be strict.
+- The keeper's "Download master copy" still works: it changes only the recipe data, not
+  the script, so the fingerprint stays valid. Tested by downloading one and opening it.
+- README: new **Security** section, and **Editing the code** with the one-line command to
+  update the fingerprint after a hand edit to the script.
+
+Full regression passed with the policy enforced, served from the same /Troop-Mess/ path
+as GitHub Pages: no policy violations, install, offline, roster, sharing, MyPlate, nine
+screen sizes, accessibility. Service worker cache renamed to troop-mess-v3.27.
 
 ### v3.26 — Review fixes for the camp jobs (October 25, 2026)
 

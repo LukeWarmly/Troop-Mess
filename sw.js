@@ -1,6 +1,6 @@
 /* Troop Mess service worker.
    Bump CACHE when the app changes — that is what makes installed copies update. */
-const CACHE = "troop-mess-v3.26";
+const CACHE = "troop-mess-v3.27";
 
 /* Everything the app needs to run with no signal. */
 const SHELL = [

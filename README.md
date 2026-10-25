@@ -73,7 +73,9 @@ updates. The **Share** button next to each one sends a link that adds it to anyo
 Troop Mess with one tap; send it to the keeper to get it into the master copy.
 
 **Visit counter.** Opens with signal are counted at troopmess.goatcounter.com (installed
-app or browser). No cookies, no names, nothing personal; skipped with no signal.
+app or browser). No cookies, no names, nothing personal; skipped with no signal. It is
+counted with a one-pixel image request, not GoatCounter's script, so no code from any
+other site runs in the app.
 
 **On iPhone, install it.** Safari clears a website's saved data if the site isn't opened
 for seven days, so a plan kept only in Safari can vanish between the meeting and the
@@ -193,6 +195,43 @@ roster, all of it. That is the version to have in your pocket at a campsite with
 You can also download `index.html` and open it straight from a folder, if you would rather
 keep your own copy. Note that Android has no reliable way to open a downloaded HTML file in
 a browser, so the link is the better route on a phone.
+
+---
+
+## Security
+
+Every installed copy picks up the newest `index.html` from this GitHub repository each
+time it is opened with signal. That is how updates reach the troop, and it means **whoever
+can change this repository can change every scout's app.** Nothing a user does can change
+anyone else's copy: shared menu links, shared recipe links and imported recipe files are
+data, cleaned before use, and cannot carry code.
+
+So the protection that matters is the GitHub account:
+
+- Two-factor authentication on, with a passkey or an authenticator app (not text message).
+- A password used nowhere else.
+- No collaborators on the repository unless they are trusted to the same degree.
+- Now and then, look at the commit history. Every change should be an upload you made.
+
+Inside the app, a Content Security Policy (a line near the top of `index.html`) tells the
+browser to run exactly one script, the one in this file, identified by its sha256
+fingerprint, and nothing loaded from any other website. A script slipped in through a
+shared link, or pulled from a hacked third-party server, is refused. Fonts come from
+Google Fonts, which can only change how the text looks, never what the app does.
+
+### Editing the code
+
+Because the browser checks the script's fingerprint, **any edit to the `<script>` block
+must be followed by updating the fingerprint**, or the app will open as a blank page with
+nothing working. Recipe changes made in the app and the keeper's "Download master copy"
+do not touch the script and need nothing. For hand edits to the code, run this from the
+folder with `index.html` (Python 3, any computer):
+
+```
+python3 -c "import re,hashlib,base64;p='index.html';s=open(p,encoding='utf-8').read();h=base64.b64encode(hashlib.sha256(re.findall(r'<script>(.*?)</script>',s,re.S)[0].encode()).digest()).decode();open(p,'w',encoding='utf-8').write(re.sub(r\"script-src 'sha256-[^']*'\",\"script-src 'sha256-\"+h+\"'\",s));print(h)"
+```
+
+Then bump `CACHE` in `sw.js` so installed copies take the new version.
 
 ---
 

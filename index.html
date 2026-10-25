@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.26</title>
+<!-- Security policy. The browser runs only the one script in this file, checked against
+     its fingerprint (sha256), and nothing from any other site. If the script is edited,
+     the fingerprint must be updated or the app will not run: see "Editing the code" in
+     README.md. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-t+DxZJ543Y8+sggho8UHtffw7+i3c2g5nlkeuURFC9Y='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://troopmess.goatcounter.com; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Troop Mess — Camp Meal Planner v3.27</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -16,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Fonts load without blocking: with one bar of signal the page draws in system
      fonts at once and swaps when (if) the web fonts arrive. -->
-<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link id="webfonts" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print">
 <style>
 :root{
   --ink:#14232B; --ink-2:#1D3540; --slate:#4A6470; --slate-2:#5B737E; --mist:#A9B9C0;
@@ -456,7 +461,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.26</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.27</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -601,7 +606,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.26 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.27 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -613,7 +618,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.26","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.27","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -2939,7 +2944,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.26";
+const APP_BASE="3.27";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
@@ -3538,19 +3543,24 @@ renderRecv();
 
 /* ---------- Visit counter ----------
    GoatCounter: free for non-commercial use, no cookies, no personal data. It records
-   that the page was opened, which kind of phone, and whether it was opened as the
-   installed app or in a browser. Off until GC_CODE is set to the counter's code (the
-   part before .goatcounter.com). Skipped when offline, so it never slows camp use. */
+   that the page was opened, and whether as the installed app or in a browser.
+   Counted with a one-pixel image request rather than GoatCounter's script, so no code
+   from any other site ever runs in this app. Skipped when offline, so it never slows
+   camp use. Set GC_CODE to "" to turn it off. */
 const GC_CODE="troopmess";
 (function(){
   if(!GC_CODE||!navigator.onLine||location.protocol==="file:"||/^(localhost|127\.|\[::1\])/.test(location.hostname))return;
   const installed=(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-  window.goatcounter={no_onload:true};
-  const sc=document.createElement("script");
-  sc.async=true; sc.src="https://gc.zgo.at/count.js";
-  sc.setAttribute("data-goatcounter","https://"+GC_CODE+".goatcounter.com/count");
-  sc.onload=()=>{ try{ window.goatcounter.count({path:installed?"/installed-app":"/browser",title:"Troop Mess v"+APP_BASE}); }catch(e){} };
-  document.head.appendChild(sc);
+  const q=new URLSearchParams({p:installed?"/installed-app":"/browser",t:"Troop Mess v"+APP_BASE,
+    s:[screen.width,screen.height,Math.round(window.devicePixelRatio||1)].join(","),rnd:Math.random().toString(36).slice(2)});
+  new Image().src="https://"+GC_CODE+".goatcounter.com/count?"+q;
+})();
+/* Web fonts load without blocking the first paint: the stylesheet comes in as "print"
+   and switches to every screen once it has arrived. */
+(function(){
+  const fl=document.getElementById("webfonts"); if(!fl)return;
+  const on=()=>{fl.media="all";};
+  if(fl.sheet)on(); else fl.addEventListener("load",on);
 })();
 
 const sharedLost=planFromLink();
