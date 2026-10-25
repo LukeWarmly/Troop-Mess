@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.24</title>
+<title>Troop Mess — Camp Meal Planner v3.25</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -297,6 +297,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   .rtable th,.rtable td{border:.75pt solid #000}
   .rtable th.job{background:#fff!important;color:#000!important;font-size:10pt;padding:4pt 5pt}
   .rtable th.slot{background:#fff!important;color:#000!important;font-size:8pt}
+  .rtable th.camphead{background:#eee!important;color:#000!important;border-top:1.5pt solid #000}
   .tempbox{border:1pt solid #000!important;border-left:3pt solid #000!important;background:#fff!important;
     page-break-inside:avoid;break-inside:avoid}
   .tempbox b{color:#000!important}
@@ -381,6 +382,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .rtable th.slot{font-family:var(--mono);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
   padding:8px 6px;background:var(--enamel-2);color:var(--slate)}
 .rtable td.write{height:38px;background:#fff}
+.rtable th.camphead{background:var(--slate);color:#fff;padding:5px 8px;letter-spacing:.14em}
 .rjob small{display:block;font-family:var(--body);font-weight:400;font-size:.7rem;
   text-transform:none;letter-spacing:0;color:var(--slate-2);margin-top:1px}
 
@@ -454,7 +456,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.24</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.25</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -527,7 +529,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
           <li><b>Five meals:</b> breakfast, lunch, dinner, dessert, and cracker barrel.</li>
           <li><b>Scaling that knows the pot doesn't grow.</b> If eight scouts need 1.75 times a recipe written for a 10-inch Dutch oven, the app says so, names the oven size that will hold it, looks up the correct coal count for that oven at the same temperature, and tells you to add time and check the center. Scaling the food without scaling the cookware is how a patrol ends up with a raw middle.</li>
           <li><b>The coal chart, built in.</b> The app works out what temperature a recipe's coal count represents, so it can hold that temperature in a different sized oven. The full chart prints with the packet whenever a Dutch oven recipe is on the menu.</li>
-          <li><b>Buddy pairs on the roster.</b> Two name lines per job, because scouts work in pairs and nobody walks to the water spigot alone.</li>
+          <li><b>Buddy pairs on the roster.</b> Two name lines per meal job, because scouts work in pairs and nobody walks to the water spigot alone. Three on the dining fly, which goes up first on arrival and comes down last; two on bear bags where they are needed.</li>
           <li><b>A weekend that looks like a weekend.</b> Friday arrival, water and cracker barrel. Saturday breakfast, lunch, dinner. Sunday breakfast and break camp.</li>
           <li><b>Lunch either way.</b> Saturday lunch is often built after breakfast and carried, because the patrol is out at an activity &mdash; there are three sack lunches for exactly that. But plenty of trips have the patrol in camp at midday, so there are sixteen cooked lunches for car camping as well, from grilled cheese and tomato soup to Dutch oven pizza.</li>
           <li><b>Amounts you can actually measure.</b> Scaling a recipe produces awkward numbers, so the app snaps them to real spoon and cup increments and prints fractions &mdash; 2&#8532; cups of baking mix, &frac14; tsp of pepper &mdash; promoting 8 tbsp to &frac12; cup where that reads better.</li>
@@ -599,7 +601,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.24 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.25 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -611,7 +613,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.24","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.25","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1729,7 +1731,7 @@ const DEPT_ORDER=["Produce","Meat & Seafood","Dairy & Eggs","Frozen","Canned & J
 const THRIFTY=2.25; /* $/serving threshold */
 
 const S={scouts:0,adults:0,days:2,pattern:'weekend',style:null,noDutch:false,meals:new Set(),diets:new Set(),picked:new Set(),checked:new Set(),tab:"trip",
-  crew:[],rhead:{patrol:"",campout:"",grub:"",pl:""},swaps:{},seed:0};
+  crew:[],rhead:{patrol:"",campout:"",grub:"",pl:""},swaps:{},seed:0,bear:false};
 
 const $=s=>document.querySelector(s);
 const eaters=()=>S.scouts+S.adults;
@@ -2432,6 +2434,37 @@ function fillSlots(n){
   }
   return list;
 }
+/* Camp jobs: not tied to a mealtime. The dining fly is the first thing up on arrival
+   (in a bad storm, tents can go up one at a time under it) and the last thing down
+   when breaking camp; three people, because it is a team job and a leadership lesson.
+   Bear bags take two and are only in the rotation where the patrol says they are needed. */
+const CAMP_JOBS={
+  flyup:  {k:"flyup",  t:"fly",  n:"Dining fly up",   s:"First job on arrival, before the water run. In a storm, tents go up under it.", need:3},
+  flydown:{k:"flydown",t:"fly",  n:"Dining fly down", s:"Comes down last when breaking camp, after everything else is packed.", need:3},
+  bear:   {k:"bear",   t:"bear", n:"Bear bags",       s:"Hang after the last meal of the night; the same two bring them down at first light.", need:2}
+};
+const BACKPACK_STYLES=["back","high"];
+/* Which camp jobs fall on which day. A weekend: fly up Friday, bags Friday and
+   Saturday night, fly down Sunday. Backpacking: a new campsite every day, so the fly
+   comes down after breakfast and goes up again at the next site, bags every night.
+   A longer stay in one camp: up on day one, bags nightly, down on the last day. */
+function campJobs(di){
+  const days=rosterDays(), last=days.length-1, out=[];
+  if(days.length<2&&S.pattern!=="weekend")return out;  /* a day trip has no camp to make */
+  const backpack=S.pattern!=="weekend"&&BACKPACK_STYLES.includes(S.style);
+  if(backpack){
+    if(di>0)out.push(CAMP_JOBS.flydown);
+    if(di<last)out.push(CAMP_JOBS.flyup);
+  } else {
+    if(di===0)out.push(CAMP_JOBS.flyup);
+    if(di===last)out.push(CAMP_JOBS.flydown);
+  }
+  if(di<last)out.push(CAMP_JOBS.bear);  /* always a row; only in the rotation when turned on */
+  return out;
+}
+const campKey=(di,job,k)=>di+"|camp|"+job+"|"+k;
+/* Which slots count as "the same shift" for the two-jobs-at-once check. */
+const slotGroup=key=>{const p=key.split("|");return p[1]==="camp"?p[0]+"|camp|"+p[2]:p[0]+"|"+p[1];};
 const MAX_CREW=30, MAX_NAME=24;
 const escH=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function cleanName(x){return String(x||"").replace(/\s+/g," ").trim().slice(0,MAX_NAME);}
@@ -2475,20 +2508,29 @@ function autoRoster(){
   const rank=new Map(order.map((o,i)=>[o.n,i]));
   const jobCount={},total={};
   crew.forEach(n=>{total[n]=0;jobCount[n]={};DUTY_JOBS.forEach(j=>jobCount[n][j.k]=0);});
+  Object.values(CAMP_JOBS).forEach(j=>crew.forEach(n=>jobCount[n][j.t]=0));
   let turn=0;
-  rosterDays().forEach((day,di)=>day.cols.forEach((col,ci)=>{
-    const used=new Set();
-    fillSlots(crew.length).forEach(([job,k])=>{
-      let best=null,bestScore=null;
-      crew.forEach(n=>{
-        if(used.has(n))return;
-        const score=[jobCount[n][job],total[n],(rank.get(n)-turn+crew.length*99)%crew.length];
-        if(!best||score[0]<bestScore[0]||(score[0]===bestScore[0]&&(score[1]<bestScore[1]||(score[1]===bestScore[1]&&score[2]<bestScore[2])))){best=n;bestScore=score;}
-      });
-      if(best){used.add(best);jobCount[best][job]++;total[best]++;out[slotKey(di,ci,job,k)]=best;}
+  const pick=(used,job)=>{
+    let best=null,bestScore=null;
+    crew.forEach(n=>{
+      if(used.has(n))return;
+      const score=[jobCount[n][job],total[n],(rank.get(n)-turn+crew.length*99)%crew.length];
+      if(!best||score[0]<bestScore[0]||(score[0]===bestScore[0]&&(score[1]<bestScore[1]||(score[1]===bestScore[1]&&score[2]<bestScore[2])))){best=n;bestScore=score;}
     });
-    turn++;
-  }));
+    if(best){used.add(best);jobCount[best][job]++;total[best]++;}
+    return best;
+  };
+  rosterDays().forEach((day,di)=>{
+    const camp=campJobs(di);
+    const campFill=j=>{const used=new Set();for(let k=0;k<Math.min(j.need,crew.length);k++){const n=pick(used,j.t);if(n)out[campKey(di,j.k,k)]=n;}turn++;};
+    camp.filter(j=>j.t==="fly").forEach(campFill);
+    day.cols.forEach((col,ci)=>{
+      const used=new Set();
+      fillSlots(crew.length).forEach(([job,k])=>{const n=pick(used,job);if(n)out[slotKey(di,ci,job,k)]=n;});
+      turn++;
+    });
+    if(S.bear)camp.filter(j=>j.t==="bear").forEach(campFill);
+  });
   return out;
 }
 /* What actually goes in a slot: the patrol's own change if there is one and the name
@@ -2496,27 +2538,31 @@ function autoRoster(){
 function rosterFinal(){
   const auto=autoRoster(),out={};
   const names=new Set(S.crew);
-  rosterDays().forEach((day,di)=>day.cols.forEach((c,ci)=>DUTY_JOBS.forEach(j=>[0,1].forEach(k=>{
-    const key=slotKey(di,ci,j.k,k);
-    const sw=S.swaps[key];
-    out[key]=(sw===""||(sw&&names.has(sw)))?sw:(auto[key]||"");
-  }))));
+  const put=key=>{const sw=S.swaps[key];out[key]=(sw===""||(sw&&names.has(sw)))?sw:(auto[key]||"");};
+  rosterDays().forEach((day,di)=>{
+    day.cols.forEach((c,ci)=>DUTY_JOBS.forEach(j=>[0,1].forEach(k=>put(slotKey(di,ci,j.k,k)))));
+    campJobs(di).forEach(j=>{for(let k=0;k<j.need;k++)put(campKey(di,j.k,k));});
+  });
   return out;
 }
 function rosterTally(fin){
-  const t={};S.crew.forEach(n=>{t[n]={total:0};DUTY_JOBS.forEach(j=>t[n][j.k]=0);});
-  Object.entries(fin).forEach(([key,n])=>{if(n&&t[n]){const job=key.split("|")[2];t[n][job]++;t[n].total++;}});
+  const t={};S.crew.forEach(n=>{t[n]={total:0,fly:0,bear:0};DUTY_JOBS.forEach(j=>t[n][j.k]=0);});
+  Object.entries(fin).forEach(([key,n])=>{if(n&&t[n]){let job=key.split("|")[2];if(CAMP_JOBS[job])job=CAMP_JOBS[job].t;t[n][job]++;t[n].total++;}});
   return t;
 }
 function renderRoster(){
   const weekend=S.pattern==="weekend";
   let h=`<div class="block">
     <div class="block-head"><h2>Duty roster</h2><span class="rule"></span></div>
-    <p class="hint">Two people per job, because scouts work in buddy pairs — and nobody walks to the water spigot alone. Type the patrol's names below and the app suggests a fair rotation; tap any name on the grid to change it. Leave the names empty to print a blank grid and fill it in by hand.</p>
-    <div class="chips" style="margin-bottom:16px">
+    <p class="hint">Two people per meal job, because scouts work in buddy pairs — and nobody walks to the water spigot alone. Three go on the dining fly: it is the first thing up on arrival, even before the water run, and in a bad storm tents can go up under it one at a time; it is the last thing down when breaking camp. Type the patrol's names below and the app suggests a fair rotation; tap any name on the grid to change it. Leave the names empty to print a blank grid and fill it in by hand.</p>
+    <div class="chips" style="margin-bottom:10px">
       <button class="chip" data-pattern="weekend" aria-pressed="${weekend}">Standard weekend<span class="sub">Fri night · Sat B/L/D · Sun breakfast</span></button>
       <button class="chip" data-pattern="custom" aria-pressed="${!weekend}">Longer trip<span class="sub">1–14 days · same mealtimes each day</span></button>
-    </div>`;
+    </div>
+    <div class="chips" style="margin-bottom:16px">
+      <button class="chip" id="chipBear" data-bear="1" aria-pressed="${!!S.bear}">Bear bags each night<span class="sub">Two to hang them · off where there is a bear box</span></button>
+    </div>
+    <p class="hint" style="margin-top:-6px">Leave bear bags off and the row stays blank, so it prints to fill in by hand if the site turns out to need it.${!weekend&&BACKPACK_STYLES.includes(S.style)?" Backpacking means a new campsite every day, so the fly comes down after breakfast and goes up again at the next site.":""}</p>`;
   if(!weekend){
     h+=`<p class="hint" style="margin-top:-6px">Every day gets a column for each meal you chose on The Trip. The roster only says who cooks, tends the fire, fetches water and cleans up at each mealtime; what you eat comes from your menu, so every meal can be different.</p>
     <div class="counters" style="margin-bottom:18px">
@@ -2531,7 +2577,7 @@ function renderRoster(){
         <span style="font-size:.74rem;color:var(--slate-2)">Set by the meals you chose on The Trip.</span></p>
       </div></div>`;
   } else {
-    h+=`<p class="hint" style="margin-top:-6px">Friday has no cooked meal but still needs a water run and someone on cracker barrel. Sunday ends with striking camp. Saturday lunch is often packed after breakfast when the patrol is out at an activity, but it does not have to be — there are cooked lunches in the book too. Switch to Longer trip for a trip of any length from 1 to 14 days.</p>`;
+    h+=`<p class="hint" style="margin-top:-6px">Friday has no cooked meal, but the dining fly goes up first, then the water run, then cracker barrel. Sunday ends with striking camp, and the fly comes down last. Saturday lunch is often packed after breakfast when the patrol is out at an activity, but it does not have to be — there are cooked lunches in the book too. Switch to Longer trip for a trip of any length from 1 to 14 days.</p>`;
   }
   h+=`<div class="field crewfield">
       <label for="f-crew">Patrol members <span class="lblnote">one per line, or separated by commas</span></label>
@@ -2566,9 +2612,17 @@ function renderRosterGrid(){
   }
   /* Same person twice in one meal — usually a tap that needs a second tap. */
   const twice=new Set(),seen={};
-  Object.entries(fin).forEach(([key,n])=>{if(!n)return;const m=key.split("|").slice(0,2).join("|");
+  Object.entries(fin).forEach(([key,n])=>{if(!n)return;const m=slotGroup(key);
     seen[m]=seen[m]||{};if(seen[m][n])twice.add(m+"|"+n);seen[m][n]=1;});
   const opts=sel=>`<option value=""${sel===""?" selected":""}>—</option>`+S.crew.map(n=>`<option${n===sel?" selected":""}>${escH(n)}</option>`).join("");
+  const cell=(key,cls,label,span)=>{
+    const sp=span>1?` colspan="${span}"`:"";
+    if(!named)return `<td class="${cls}"${sp}></td>`;
+    const v=fin[key]||"";
+    const mine=Object.prototype.hasOwnProperty.call(S.swaps,key)&&(S.swaps[key]===""||S.crew.includes(S.swaps[key]));
+    const dupe=v&&twice.has(slotGroup(key)+"|"+v);
+    return `<td class="${cls} named${mine?" changed":""}${dupe?" dupe":""}"${sp}${dupe?` title="${escH(v)} has two jobs in this shift"`:""}><select class="rsel" data-slot="${key}" aria-label="${escH(label)}">${opts(v)}</select><span class="rprint">${escH(v)}</span></td>`;
+  };
   let h="";
   days.forEach((day,di)=>{
     h+=`<table class="rtable"><caption>${day.d}</caption>
@@ -2578,24 +2632,27 @@ function renderRosterGrid(){
       const rows=j.pair?2:1;
       for(let k=0;k<rows;k++){
         h+=`<tr>`+(k===0?`<th class="job rjob" rowspan="${rows}">${j.n}<small>${j.s}</small></th>`:"")+
-          day.cols.map((c,ci)=>{
-            const cls=`write${j.pair&&k===0?" buddy":""}`;
-            if(!named)return `<td class="${cls}"></td>`;
-            const key=slotKey(di,ci,j.k,k), v=fin[key]||"";
-            const mine=Object.prototype.hasOwnProperty.call(S.swaps,key)&&(S.swaps[key]===""||S.crew.includes(S.swaps[key]));
-            const dupe=v&&twice.has(di+"|"+ci+"|"+v);
-            return `<td class="${cls} named${mine?" changed":""}${dupe?" dupe":""}"${dupe?` title="${escH(v)} has two jobs this meal"`:""}><select class="rsel" data-slot="${key}" aria-label="${escH(day.d+" "+c+" "+j.n+" "+(k+1))}">${opts(v)}</select><span class="rprint">${escH(v)}</span></td>`;
-          }).join("")+`</tr>`;
+          day.cols.map((c,ci)=>cell(slotKey(di,ci,j.k,k),`write${j.pair&&k===0?" buddy":""}`,day.d+" "+c+" "+j.n+" "+(k+1))).join("")+`</tr>`;
       }
     });
+    const camp=campJobs(di);
+    if(camp.length){
+      h+=`<tr class="camprow"><th class="slot camphead" colspan="${day.cols.length+1}" style="text-align:left">Camp jobs · ${day.d}</th></tr>`;
+      camp.forEach(j=>{
+        for(let k=0;k<j.need;k++){
+          h+=`<tr>`+(k===0?`<th class="job rjob" rowspan="${j.need}">${j.n}<small>${j.s}</small></th>`:"")+
+            cell(campKey(di,j.k,k),`write${k<j.need-1?" buddy":""}`,day.d+" "+j.n+" "+(k+1),day.cols.length)+`</tr>`;
+        }
+      });
+    }
     h+=`</tbody></table>`;
   });
   if(named){
-    const t=rosterTally(fin);
+    const t=rosterTally(fin), showBear=S.bear||S.crew.some(n=>t[n].bear);
     h+=`<div class="tally"><div class="block-head"><h2>Who does what</h2><span class="rule"></span></div>
-      <table class="ttable"><thead><tr><th>Name</th>${DUTY_JOBS.map(j=>`<th>${j.n.split(" ")[0]}</th>`).join("")}<th>Total</th></tr></thead><tbody>`+
-      S.crew.map(n=>`<tr><td>${escH(n)}</td>${DUTY_JOBS.map(j=>`<td>${t[n][j.k]||"·"}</td>`).join("")}<td><b>${t[n].total}</b></td></tr>`).join("")+
-      `</tbody></table>${twice.size?`<p class="warnline">Red names have two jobs in the same meal.</p>`:""}<p class="hint">Changed slots are marked with a dot. Shuffle starts over with a new rotation and drops your changes.</p></div>`;
+      <table class="ttable"><thead><tr><th>Name</th>${DUTY_JOBS.map(j=>`<th>${j.n.split(" ")[0]}</th>`).join("")}<th>Fly</th>${showBear?"<th>Bears</th>":""}<th>Total</th></tr></thead><tbody>`+
+      S.crew.map(n=>`<tr><td>${escH(n)}</td>${DUTY_JOBS.map(j=>`<td>${t[n][j.k]||"·"}</td>`).join("")}<td>${t[n].fly||"·"}</td>${showBear?`<td>${t[n].bear||"·"}</td>`:""}<td><b>${t[n].total}</b></td></tr>`).join("")+
+      `</tbody></table>${twice.size?`<p class="warnline">Red names have two jobs in the same shift.</p>`:""}<p class="hint">Changed slots are marked with a dot. Shuffle starts over with a new rotation and drops your changes.</p></div>`;
   }
   grid.innerHTML=h;
 }
@@ -2651,7 +2708,7 @@ const b64u={
   dec:t=>JSON.parse(decodeURIComponent(escape(atob(t.replace(/-/g,"+").replace(/_/g,"/"))))) 
 };
 function planToLink(){
-  const data=b64u.enc({v:1,s:S.scouts,a:S.adults,d:S.days,pt:S.pattern,st:S.style,
+  const data=b64u.enc({v:1,s:S.scouts,a:S.adults,d:S.days,pt:S.pattern,st:S.style,bb:S.bear?1:0,
     nd:S.noDutch?1:0,m:[...S.meals],di:[...S.diets],p:[...S.picked],
     ...(S.crew.length||Object.values(S.rhead).some(Boolean)?{c:S.crew,rh:S.rhead,sw:S.swaps,sd:S.seed}:{})});
   return location.origin+location.pathname+"#p="+data;
@@ -2668,7 +2725,7 @@ function planFromLink(src){
   S.scouts=n(d.s,0,99,0); S.adults=n(d.a,0,99,0); S.days=n(d.d,1,14,2);
   if(["weekend","week","custom"].includes(d.pt))S.pattern=d.pt;
   if(STYLES.some(x=>x.k===d.st))S.style=d.st;
-  S.noDutch=!!d.nd;
+  S.noDutch=!!d.nd;S.bear=!!d.bb;
   S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
   (d.m||[]).forEach(k=>{if(MEALS.some(x=>x.k===k))S.meals.add(k);});
   (d.di||[]).forEach(k=>{if(DIETS.some(x=>x.k===k))S.diets.add(k);});
@@ -2703,7 +2760,7 @@ function savePlan(){
   try{
     localStorage.setItem(PLAN_KEY,JSON.stringify({v:1,
       scouts:S.scouts,adults:S.adults,days:S.days,pattern:S.pattern,
-      style:S.style,noDutch:S.noDutch,
+      style:S.style,noDutch:S.noDutch,bear:S.bear,
       meals:[...S.meals],diets:[...S.diets],picked:[...S.picked],checked:[...S.checked],
       crew:S.crew,rhead:S.rhead,swaps:S.swaps,seed:S.seed,
       tab:S.tab==="add"?"trip":S.tab}));
@@ -2717,7 +2774,7 @@ function loadPlan(){
   S.scouts=n(d.scouts,0,99,0); S.adults=n(d.adults,0,99,0); S.days=n(d.days,1,14,2);
   if(["weekend","week","custom"].includes(d.pattern))S.pattern=d.pattern;
   if(STYLES.some(x=>x.k===d.style))S.style=d.style;
-  S.noDutch=!!d.noDutch;
+  S.noDutch=!!d.noDutch;S.bear=!!d.bear;
   /* Only keep keys the app still knows about. A recipe deleted in a later version
      must not come back as a ghost in somebody's saved menu. */
   (d.meals||[]).forEach(k=>{if(MEALS.some(x=>x.k===k))S.meals.add(k);});
@@ -2735,7 +2792,7 @@ function restoreRoster(crew,rhead,swaps,seed){
   if(rhead&&typeof rhead==="object")Object.keys(S.rhead).forEach(k=>{if(typeof rhead[k]==="string")S.rhead[k]=rhead[k].slice(0,60);});
   S.swaps={};
   if(swaps&&typeof swaps==="object")Object.entries(swaps).slice(0,800).forEach(([k,v])=>{
-    if(/^\d+\|\d+\|[a-z]+\|[01]$/.test(k)&&typeof v==="string"&&(v===""||S.crew.includes(v)))S.swaps[k]=v;
+    if(/^\d+\|(\d+|camp)\|[a-z]+\|[0-2]$/.test(k)&&typeof v==="string"&&(v===""||S.crew.includes(v)))S.swaps[k]=v;
   });
   S.seed=Number.isInteger(seed)&&seed>=0&&seed<10000?seed:0;
 }
@@ -2777,10 +2834,10 @@ function renderTripTop(){
 function newTrip(){
   let snap=null; try{ snap=localStorage.getItem(PLAN_KEY); }catch(e){}
   if(!snap){ savePlan(); try{ snap=localStorage.getItem(PLAN_KEY); }catch(e){} }
-  undoSnap={plan:snap,state:JSON.stringify({scouts:S.scouts,adults:S.adults,days:S.days,pattern:S.pattern,style:S.style,noDutch:S.noDutch,
+  undoSnap={plan:snap,state:JSON.stringify({scouts:S.scouts,adults:S.adults,days:S.days,pattern:S.pattern,style:S.style,noDutch:S.noDutch,bear:S.bear,
     meals:[...S.meals],diets:[...S.diets],picked:[...S.picked],checked:[...S.checked],crew:S.crew,rhead:S.rhead,swaps:S.swaps,seed:S.seed})};
   clearTimeout(undoTimer); undoTimer=setTimeout(()=>{undoSnap=null;renderTripTop();},8000);
-  S.scouts=0;S.adults=0;S.days=2;S.pattern="weekend";S.style=null;S.noDutch=false;
+  S.scouts=0;S.adults=0;S.days=2;S.pattern="weekend";S.style=null;S.noDutch=false;S.bear=false;
   S.meals.clear();S.diets.clear();S.picked.clear();S.checked.clear();
   /* Same patrol, new campout: keep the names and patrol name, drop the rest. */
   S.rhead={patrol:S.rhead.patrol||"",campout:"",grub:"",pl:""};S.swaps={};S.seed=0;
@@ -2794,7 +2851,7 @@ function undoNewTrip(){
   const d=JSON.parse(undoSnap.state);
   Object.assign(S,{scouts:d.scouts,adults:d.adults,days:d.days,pattern:d.pattern,style:d.style,noDutch:d.noDutch,
     meals:new Set(d.meals),diets:new Set(d.diets),picked:new Set(d.picked),checked:new Set(d.checked),
-    crew:d.crew,rhead:d.rhead,swaps:d.swaps,seed:d.seed});
+    crew:d.crew,rhead:d.rhead,swaps:d.swaps,seed:d.seed,bear:!!d.bear});
   undoSnap=null; clearTimeout(undoTimer);
   savePlan(); refresh();
 }
@@ -2829,6 +2886,7 @@ document.addEventListener("click",e=>{
   if(t.id==="btnPrintRoster"){printRoster();return;}
   if(t.id==="btnShuffle"){S.seed=((S.seed||0)%9973)+1;S.swaps={};renderRosterGrid();return;}
   if(t.dataset.pattern){if(S.pattern!==t.dataset.pattern)S.swaps={};S.pattern=t.dataset.pattern;renderRoster();return;}
+  if(t.dataset.bear){S.bear=!S.bear;Object.keys(S.swaps).forEach(k=>{if(/\|camp\|bear\|/.test(k))delete S.swaps[k];});savePlan();renderRoster();return;}
   if(t.dataset.days){S.days=Math.min(14,Math.max(1,(S.days||2)+Number(t.dataset.days)));renderRoster();return;}
   if(t.dataset.store){openStores(t.dataset.store);return;}
   if(t.dataset.check){const k=t.dataset.check;S.checked.has(k)?S.checked.delete(k):S.checked.add(k);renderList();return;}
@@ -2837,7 +2895,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.24";
+const APP_BASE="3.25";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");

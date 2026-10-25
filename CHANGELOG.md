@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.24** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.25** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,38 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.25 — Camp jobs on the duty roster (October 25, 2026)
+
+The roster only knew mealtime jobs. Rob pointed out the first order of business on
+arrival, before the water run, is the dining fly. Tents are normally pitched where they
+will stand, but in a bad storm they can be put together one at a time under the fly and
+carried to their spots. It is a three-person job and a leadership exercise (two can do it, but that takes
+practice). Where there are bears, two more hang the bags each night. On a longer trip
+manpower runs short fast, so these belong on the grid.
+
+- Each day's table gets a **Camp jobs** section under the meal jobs: **Dining fly up**
+  (three names), **Dining fly down** (three) and **Bear bags** (two). They go into the
+  same fair rotation and count in the "Who does what" tally (Fly and Bears columns).
+- **Standard weekend:** fly up Friday on arrival, bags Friday and Saturday night, fly
+  down Sunday, last thing when breaking camp.
+- **Longer trip, backpacking or high adventure:** a new campsite every day, so the fly
+  comes down after breakfast and goes up again at the next site; bags every night. The
+  fly-down and fly-up crews are different people, so more scouts get the reps.
+- **Longer trip in one camp (car camping, Dutch oven, no-cook):** up on day one, bags
+  nightly, down on the last day. A one-day trip has no camp jobs.
+- **Bear bags are opt-in.** A chip on the roster turns them on; off, the row still
+  prints with blanks so it can be filled in by hand if the site turns out to need them,
+  and the rotation leaves it out. The choice is saved with the plan and travels on the
+  share link.
+- Camp slots can be changed by tapping like any other, print with the roster, and the
+  red "two jobs at once" check now works per shift rather than per mealtime column.
+
+Tested: weekend, 4-day backpacking and 5-day car trips at 2 to 12 names (no duplicate
+assignments within a shift; fly and bear counts within one of each other across the
+patrol), bear toggle and camp swaps survive reload and the share link, blank grid and
+print layout, plus the regular roster, sharing, data, nine-screen and accessibility
+suites. Service worker cache renamed to troop-mess-v3.25.
 
 ### v3.24 — 53 new recipes for the thin categories (October 24, 2026)
 

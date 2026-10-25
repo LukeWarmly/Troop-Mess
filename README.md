@@ -54,7 +54,7 @@ want.
 servings actually needed, with a cost estimate and total food weight. Cooking instructions
 are provided for every recipe you picked, including Dutch oven coal counts.
 
-**Roster.** The duty roster. Type the patrol's names and the app suggests a fair rotation (everyone cooks, everyone cleans, water always in pairs); tap any name to change it. Leave the names empty for a blank grid to fill in by hand. Names stay with the trip and travel on the share link.
+**Roster.** The duty roster. Type the patrol's names and the app suggests a fair rotation (everyone cooks, everyone cleans, water always in pairs, three on the dining fly up and down, two on bear bags where a site needs them); tap any name to change it. Leave the names empty for a blank grid to fill in by hand. Names stay with the trip and travel on the share link.
 
 **Share a menu without a server.** The List has a *Share this menu* button. On a phone it
 opens the normal share sheet — Messages, email, whatever you use — and sends a link with
@@ -127,8 +127,9 @@ twice about it on a Sunday with camp to strike.
 represents, so it can hold that temperature in a different sized oven. The full chart
 prints with the packet whenever a Dutch oven recipe is on the menu.
 
-**Buddy pairs on the roster.** Two name lines per job, because scouts work in pairs and
-nobody walks to the water spigot alone.
+**Buddy pairs on the roster.** Two name lines per meal job, because scouts work in pairs and
+nobody walks to the water spigot alone. Three on the dining fly, up first on arrival and
+down last when breaking camp; two on bear bags where a site needs them.
 
 **A weekend that looks like a weekend.** Friday arrival, water and cracker barrel.
 Saturday breakfast, lunch, dinner. Sunday breakfast and break camp.
