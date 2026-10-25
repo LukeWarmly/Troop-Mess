@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.22** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.23** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,43 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.23 — MyPlate scoring corrected after independent audit (October 24, 2026)
+
+A second, independent reviewer checked every MyPlate tag and the counting rule against
+USDA's definitions. These are the corrections.
+
+- **Eggs counted double.** The pantry weight for an egg includes the shell, so four eggs
+  in ten brownies were counting as Protein. Eggs now count at half weight. Brownies,
+  pineapple upside-down cake, applesauce cake and orange-peel cupcakes no longer show
+  Protein.
+- **Dried fruit:** raisins and dried cranberries count double (MyPlate: ½ cup dried = 1
+  cup of fruit), not triple.
+- **Milk powder** is now scaled like fluid milk, so a spoon of it in hot cocoa no longer
+  makes the cocoa count as Dairy. **Cheese powder** counts at its own weight.
+- **Ingredients in a group add up.** Peppers plus onion together make the vegetables in
+  a scramble; before, each was judged alone and both fell short. Sausage & Egg Scramble,
+  Omelet in a Bag and Inside Out Chicken now show Vegetables.
+- **Fruit and vegetable bar raised** from 1 oz to 1½ oz per serving (about a quarter
+  cup), so a smear of pizza sauce no longer counts as a vegetable.
+- **Dessert is shown but not counted.** The dessert row is greyed and marked "not
+  counted"; the Whole menu row covers meals and cracker barrel. S'mores no longer give
+  the menu its Grains.
+- **Wording.** The check no longer calls itself "the answer" to First Class 2a. It says to
+  use it to check your own answer, notes that 2a also asks how the menu meets the needs
+  of the activity, and that MyPlate wants variety and half the plate as fruits and
+  vegetables, which this check does not measure.
+- Zip code is remembered as you type it, not only when you tap a store button.
+- Typing names into a long roster (14 days, 30 names) no longer lags: the grid redraws
+  after a short pause instead of on every keystroke.
+- Service worker cache renamed to troop-mess-v3.23.
+
+Checked across all 148 recipes: 21 changed grouping, all in the direction the audit
+asked for. Full regression passed on the live-path copy (served under /Troop-Mess/ as
+GitHub does): all twelve earlier suites, plus a tap-only walkthrough with no script
+shortcuts, the v3.21 → v3.22 upgrade with a saved plan, roster and phone recipe (all
+kept, old cache removed), stress (30 recipes, 30 names, 14 days, 40 rapid taps),
+keyboard-only use, and service-worker scope at the live path.
 
 ### v3.22 — MyPlate (October 24, 2026)
 
