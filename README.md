@@ -65,8 +65,8 @@ survives the grubmaster coming down with flu on the Friday. Nothing is uploaded 
 the plan travels inside the link and nowhere else.
 
 **MyPlate.** Every recipe shows which MyPlate food groups it covers, and The List has a
-MyPlate check: which groups each meal covers, what's missing and how to fix it. It is the
-answer to First Class requirement 2a, and it prints with the packet.
+MyPlate check: which groups each meal covers, what's missing and how to fix it. Scouts can
+use it to check their own answer to First Class requirement 2a, and it prints with the packet.
 
 **Your own recipes.** Recipes added on the Add tab are saved on that phone and survive
 updates. The **Share** button next to each one sends a link that adds it to anyone's
