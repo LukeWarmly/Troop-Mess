@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.25** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.26** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,42 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.26 — Review fixes for the camp jobs (October 25, 2026)
+
+An independent reviewer, who had not seen v3.25 being built, went through the roster code
+and tested every trip type, cooking style, day count and patrol size against the live app.
+Everything in the v3.25 notes checked out except one claim, and it found one older
+weakness the camp jobs made visible.
+
+- **Fly-down and fly-up were not always different crews.** On a backpacking day the two
+  jobs were filled one after the other without excluding each other, so with eight names
+  the same scout landed on both about half the time. Now a patrol of six or more never
+  has anyone on both; smaller patrols cannot avoid it.
+- **A hand-picked name could get doubled up by the suggestion.** Swaps were laid over the
+  automatic rotation but the rotation did not know about them, so after an unrelated
+  change (switching to Backpacking, say) the suggestion for the other slot in that shift
+  could land on the name you had just put in by hand — two Alexes in red. The rotation
+  is still worked out as if nothing had been touched, so one tap never reshuffles the rest
+  of the trip; but where a name was placed by hand, a suggestion that would double it
+  gives way to the least-worked scout not already in that shift.
+- The bear-bags chip is hidden on a one-day Longer trip, where there are no camp jobs.
+- The "3 names for 8 spots" note no longer promises both water carriers when there are
+  fewer than four names (water is dropped before fire for a patrol that small).
+- Cook cards at big head counts: "43¼ tbsp sugar" is now "2⅔ cups", "29¼ peaches" is
+  "29 fresh peaches" (whole items from four up), and a count unit whose name already
+  carries an irregular plural ("peaches", "tomatoes", "loaves") is no longer written twice.
+- One label was 11.8 px; everything is at or above the 12 px floor again.
+
+- **Bear bags no longer touch the rest of the roster.** Most campouts never need them —
+  Rob's point: outside a shakedown for an already-planned high adventure, it rarely comes
+  up — so they are now filled as a separate pass over a finished roster. Turning the chip
+  on or off changes nothing but the bear rows. The two who hang them each night are
+  whoever has hung them least, then whoever has worked least overall.
+
+One reviewer point was left as designed: a change made on "the last day" stays with that
+day number if the trip is lengthened (pattern changes clear taps; day changes do not).
+Service worker cache renamed to troop-mess-v3.26.
 
 ### v3.25 — Camp jobs on the duty roster (October 25, 2026)
 

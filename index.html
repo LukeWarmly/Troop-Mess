@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.25</title>
+<title>Troop Mess — Camp Meal Planner v3.26</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -456,7 +456,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.25</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.26</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -601,7 +601,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.25 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.26 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -613,7 +613,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.25","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.26","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -1783,8 +1783,7 @@ const mealRank=r=>{
 const pickedRecipes=()=>R.filter(r=>S.picked.has(r.id)).map((r,i)=>[r,i]).sort((a,b)=>mealRank(a[0])-mealRank(b[0])||a[1]-b[1]).map(x=>x[0]);
 
 function roundBuy(q,unit){
-  const counts=["can","jar","egg","chop","onion","carrot","apple","banana","tomato","head","stalk","bunch","clove","pepper","loaf","eggplant","squash","lime","avocado","leaf","peach","noodle","pouch","box","packet","cube","sleeve","tortilla","bun","slice","roll","pack","pita","bagel","stick","bag","sheet","bar"];
-  if(counts.includes(unit))return Math.ceil(q-1e-9);
+  if(COUNT_UNITS.has(unit))return Math.ceil(q-1e-9);
   return Math.ceil(q*4-1e-9)/4;
 }
 
@@ -2169,6 +2168,10 @@ function measureBlock(){
    fraction. Error is biggest on the smallest amounts, which is where it
    matters least — a third more of an eighth of a teaspoon is nothing. */
 const GLYPH={0.125:"⅛",0.25:"¼",0.333:"⅓",0.375:"⅜",0.5:"½",0.625:"⅝",0.667:"⅔",0.75:"¾",0.875:"⅞"};
+/* Things you count rather than measure. The shopping list rounds them up to whole ones;
+   the cook card keeps halves and quarters for small amounts (1½ onions) but once there
+   are four or more, nobody cuts a quarter peach — it shows whole ones. */
+const COUNT_UNITS=new Set(["can","jar","egg","chop","onion","carrot","apple","banana","tomato","head","stalk","bunch","clove","pepper","loaf","eggplant","squash","lime","avocado","leaf","peach","noodle","pouch","box","packet","cube","sleeve","tortilla","bun","slice","roll","pack","pita","bagel","stick","bag","sheet","bar"]);
 const STEPS={
   tsp :[0,.125,.25,.375,.5,.625,.75,.875],
   tbsp:[0,.25,.5,.75],
@@ -2176,6 +2179,7 @@ const STEPS={
   dflt:[0,.25,.5,.75]
 };
 function snapQty(q,unit){
+  if(COUNT_UNITS.has(unit)&&q>=4)return Math.round(q);
   const steps=STEPS[unit]||STEPS.dflt;
   const whole=Math.floor(q), frac=q-whole;
   let best=steps[0],bd=Infinity;
@@ -2196,10 +2200,12 @@ const CLEAN=[.25,.333,.5,.667,.75,0];
 const isClean=q=>{const f=+(q-Math.floor(q)).toFixed(3);return CLEAN.some(c=>Math.abs(c-f)<0.02);};
 function fmtMeasure(q,unit){
   if(unit==="tsp"&&q>=3){
-    const t=q/3; if(isClean(t)&&t>=1)return{q:fracText(snapQty(t,"tbsp")),u:"tbsp"};
+    const t=q/3; if((isClean(t)&&t>=1)||q>=12)return fmtMeasure(t,"tbsp");
   }
   if(unit==="tbsp"&&q>=4){
-    const c=q/16; if(isClean(c)&&c>=0.25)return{q:fracText(snapQty(c,"cup")),u:"cup"};
+    /* A clean quarter-cup converts at any size; past a cup, nobody counts tablespoons,
+       so round to the nearest quarter cup instead. */
+    const c=q/16; if((isClean(c)&&c>=0.25)||q>=16)return{q:fracText(snapQty(c,"cup")),u:"cup"};
   }
   return {q:fracText(snapQty(q,unit)),u:unit};
 }
@@ -2390,7 +2396,7 @@ function renderList(){
       const many=shown>1.001;   /* ½ cup, not ½ cups */
       /* "cup" is a word and pluralizes; lb, oz, tsp and tbsp are abbreviations and do not. */
       /* Don't write "10 eggs eggs" — skip the unit when the name already carries it. */
-      const carries=new RegExp("\\b"+u+"s?\\b").test(nm);
+      const carries=new RegExp("\\b("+u+"s?|"+unitWord(u,true)+")\\b").test(nm);
       const unitTxt=carries?"":`${unitWord(u,many)} `;
       /* With the unit dropped, pluralize the name instead: "2 yellow onions". */
       /* Only pluralize when the name ends in a word — not `tortillas, 8"`. */
@@ -2510,6 +2516,9 @@ function autoRoster(){
   crew.forEach(n=>{total[n]=0;jobCount[n]={};DUTY_JOBS.forEach(j=>jobCount[n][j.k]=0);});
   Object.values(CAMP_JOBS).forEach(j=>crew.forEach(n=>jobCount[n][j.t]=0));
   let turn=0;
+  const names=new Set(crew);
+  const swapOf=key=>{const sw=S.swaps[key];return sw===""||(sw&&names.has(sw))?sw:undefined;};
+  const fill=(used,job,key)=>{const n=pick(used,job);if(n)out[key]=n;};
   const pick=(used,job)=>{
     let best=null,bestScore=null;
     crew.forEach(n=>{
@@ -2522,14 +2531,35 @@ function autoRoster(){
   };
   rosterDays().forEach((day,di)=>{
     const camp=campJobs(di);
-    const campFill=j=>{const used=new Set();for(let k=0;k<Math.min(j.need,crew.length);k++){const n=pick(used,j.t);if(n)out[campKey(di,j.k,k)]=n;}turn++;};
-    camp.filter(j=>j.t==="fly").forEach(campFill);
+    const campKeys=j=>Array.from({length:Math.min(j.need,crew.length)},(_,k)=>campKey(di,j.k,k));
+    const campFill=(j,used)=>{campKeys(j).forEach(k=>fill(used,j.t,k));turn++;};
+    /* Taking the fly down and putting it up again are different crews when the patrol
+       is big enough for two of three, so more scouts get the reps. */
+    const fly=camp.filter(j=>j.t==="fly"), flyUsed=crew.length>=6?new Set():null;
+    fly.forEach(j=>campFill(j,flyUsed||new Set()));
     day.cols.forEach((col,ci)=>{
       const used=new Set();
-      fillSlots(crew.length).forEach(([job,k])=>{const n=pick(used,job);if(n)out[slotKey(di,ci,job,k)]=n;});
+      fillSlots(crew.length).forEach(([job,k])=>fill(used,job,slotKey(di,ci,job,k)));
       turn++;
     });
-    if(S.bear)camp.filter(j=>j.t==="bear").forEach(campFill);
+    if(S.bear)camp.filter(j=>j.t==="bear").forEach(j=>campFill(j,new Set()));
+  });
+  /* The patrol's own changes come last. The rotation above is worked out as if no slot
+     had been touched, so one tap never reshuffles the rest of the trip; but where a
+     name was put into a shift by hand, the suggestion that would double it up gives
+     way to the least-worked scout not already in that shift. */
+  const groups={};
+  Object.keys(out).forEach(k=>{(groups[slotGroup(k)]=groups[slotGroup(k)]||[]).push(k);});
+  Object.values(groups).forEach(keys=>{
+    const swappedIn=new Set(keys.map(swapOf).filter(Boolean));
+    if(!swappedIn.size)return;
+    const taken=new Set([...swappedIn,...keys.filter(k=>swapOf(k)===undefined&&!swappedIn.has(out[k])).map(k=>out[k])]);
+    keys.forEach(k=>{
+      if(swapOf(k)!==undefined||!swappedIn.has(out[k]))return;
+      const job=k.split("|")[2], jt=CAMP_JOBS[job]?CAMP_JOBS[job].t:job;
+      const free=crew.filter(n=>!taken.has(n)).sort((a,b)=>(jobCount[a][jt]-jobCount[b][jt])||(total[a]-total[b])||(rank.get(a)-rank.get(b)));
+      if(free.length){out[k]=free[0];taken.add(free[0]);}else delete out[k];
+    });
   });
   return out;
 }
@@ -2559,10 +2589,10 @@ function renderRoster(){
       <button class="chip" data-pattern="weekend" aria-pressed="${weekend}">Standard weekend<span class="sub">Fri night · Sat B/L/D · Sun breakfast</span></button>
       <button class="chip" data-pattern="custom" aria-pressed="${!weekend}">Longer trip<span class="sub">1–14 days · same mealtimes each day</span></button>
     </div>
-    <div class="chips" style="margin-bottom:16px">
+    <div class="chips" style="margin-bottom:16px"${S.pattern!=="weekend"&&(S.days||2)<2?" hidden":""}>
       <button class="chip" id="chipBear" data-bear="1" aria-pressed="${!!S.bear}">Bear bags each night<span class="sub">Two to hang them · off where there is a bear box</span></button>
     </div>
-    <p class="hint" style="margin-top:-6px">Leave bear bags off and the row stays blank, so it prints to fill in by hand if the site turns out to need it.${!weekend&&BACKPACK_STYLES.includes(S.style)?" Backpacking means a new campsite every day, so the fly comes down after breakfast and goes up again at the next site.":""}</p>`;
+    <p class="hint" style="margin-top:-6px"${S.pattern!=="weekend"&&(S.days||2)<2?" hidden":""}>Leave bear bags off and the row stays blank, so it prints to fill in by hand if the site turns out to need it.${!weekend&&BACKPACK_STYLES.includes(S.style)?" Backpacking means a new campsite every day, so the fly comes down after breakfast and goes up again at the next site.":""}</p>`;
   if(!weekend){
     h+=`<p class="hint" style="margin-top:-6px">Every day gets a column for each meal you chose on The Trip. The roster only says who cooks, tends the fire, fetches water and cleans up at each mealtime; what you eat comes from your menu, so every meal can be different.</p>
     <div class="counters" style="margin-bottom:18px">
@@ -2574,7 +2604,7 @@ function renderRoster(){
         </div></div>
       <div class="counter"><label>Columns</label>
         <p style="margin:6px 0 0;font-size:.82rem;color:var(--slate)">${rosterSlots().join(" · ")}<br>
-        <span style="font-size:.74rem;color:var(--slate-2)">Set by the meals you chose on The Trip.</span></p>
+        <span style="font-size:.76rem;color:var(--slate-2)">Set by the meals you chose on The Trip.</span></p>
       </div></div>`;
   } else {
     h+=`<p class="hint" style="margin-top:-6px">Friday has no cooked meal, but the dining fly goes up first, then the water run, then cracker barrel. Sunday ends with striking camp, and the fly comes down last. Saturday lunch is often packed after breakfast when the patrol is out at an activity, but it does not have to be — there are cooked lunches in the book too. Switch to Longer trip for a trip of any length from 1 to 14 days.</p>`;
@@ -2606,7 +2636,7 @@ function renderRosterGrid(){
   if(note){
     const perMeal=DUTY_JOBS.reduce((a,j)=>a+(j.pair?2:1),0);
     note.textContent = !named ? "" :
-      S.crew.length<perMeal ? `${S.crew.length} names for ${perMeal} spots a meal — the app fills cook, cleanup and both water carriers first. Tap a blank to double someone up.`
+      S.crew.length<perMeal ? `${S.crew.length} names for ${perMeal} spots a meal — ${S.crew.length>=4?"the app fills cook, cleanup and both water carriers first":"the app fills cook and cleanup first, and never sends one person for water alone"}. Tap a blank to double someone up.`
       : S.crew.length>perMeal ? `${S.crew.length} names for ${perMeal} spots a meal — the rest sit out each meal and rotate in.`
       : `${S.crew.length} names, one for every spot.`;
   }
@@ -2895,7 +2925,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.25";
+const APP_BASE="3.26";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
