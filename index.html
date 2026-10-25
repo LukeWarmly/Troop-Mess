@@ -2542,8 +2542,22 @@ function autoRoster(){
       fillSlots(crew.length).forEach(([job,k])=>fill(used,job,slotKey(di,ci,job,k)));
       turn++;
     });
-    if(S.bear)camp.filter(j=>j.t==="bear").forEach(j=>campFill(j,new Set()));
   });
+  /* Bear bags are a separate pass over a finished roster, so turning them on or off
+     changes nothing else: most campouts never need them. The two who hang them each
+     night are whoever has hung them least, then whoever has worked least overall. */
+  if(S.bear){
+    const bc={},bt={};crew.forEach(n=>{bc[n]=0;bt[n]=total[n];});
+    rosterDays().forEach((day,di)=>campJobs(di).filter(j=>j.t==="bear").forEach(j=>{
+      const used=new Set();
+      for(let k=0;k<Math.min(j.need,crew.length);k++){
+        const key=campKey(di,j.k,k);
+        let best=null;
+        crew.forEach(n=>{if(used.has(n))return;if(!best||bc[n]<bc[best]||(bc[n]===bc[best]&&(bt[n]<bt[best]||(bt[n]===bt[best]&&(rank.get(n)-di+crew.length*99)%crew.length<(rank.get(best)-di+crew.length*99)%crew.length))))best=n;});
+        if(best){used.add(best);bc[best]++;bt[best]++;total[best]++;jobCount[best].bear++;out[key]=best;}
+      }
+    }));
+  }
   /* The patrol's own changes come last. The rotation above is worked out as if no slot
      had been touched, so one tap never reshuffles the rest of the trip; but where a
      name was put into a shift by hand, the suggestion that would double it up gives
