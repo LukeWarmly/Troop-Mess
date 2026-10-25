@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Troop Mess — Camp Meal Planner v3.23</title>
+<title>Troop Mess — Camp Meal Planner v3.24</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -454,7 +454,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.23</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.24</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -599,7 +599,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.23 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.24 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -611,7 +611,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.23","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.24","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -623,6 +623,7 @@ beef:{n:"Ground beef",d:"Meat & Seafood",u:"lb",p:5.49,w:1,f:["meat"]},
 italSausage:{n:"Bulk Italian sausage",d:"Meat & Seafood",u:"lb",p:5.99,w:1,f:["meat","pork"]},
 hotSausage:{n:"Hot breakfast sausage",d:"Meat & Seafood",u:"lb",p:5.49,w:1,f:["meat","pork"]},
 sausageLinks:{n:"Breakfast sausage links",d:"Meat & Seafood",u:"lb",p:4.99,w:1,f:["meat","pork"]},
+andouille:{n:"Andouille sausage",d:"Meat & Seafood",u:"lb",p:6.99,w:1,f:["meat","pork"]},
 smokedSausage:{n:"Smoked sausage rope",d:"Meat & Seafood",u:"lb",p:4.29,w:1,f:["meat","pork"]},
 bacon:{n:"Bacon",d:"Meat & Seafood",u:"lb",p:6.99,w:1,f:["meat","pork"]},
 hotDogs:{n:"Hot dogs (beef & pork)",d:"Meat & Seafood",u:"lb",p:4.99,w:1,f:["meat","pork"]},
@@ -637,6 +638,7 @@ chickenThigh:{n:"Chicken thighs",d:"Meat & Seafood",u:"lb",p:2.99,w:1,f:["meat"]
 porkChop:{n:"Boneless pork loin chops",d:"Meat & Seafood",u:"chop",p:3.25,w:.5,f:["meat","pork"]},
 porkLoin:{n:"Pork loin",d:"Meat & Seafood",u:"lb",p:4.49,w:1,f:["meat","pork"]},
 porkTender:{n:"Pork tenderloin",d:"Meat & Seafood",u:"lb",p:5.99,w:1,f:["meat","pork"]},
+stripSteak:{n:"Strip steak",d:"Meat & Seafood",u:"lb",p:12.99,w:1,f:["meat"]},
 stewMeat:{n:"Beef stew meat",d:"Meat & Seafood",u:"lb",p:7.99,w:1,f:["meat"]},
 turkey:{n:"Ground turkey",d:"Meat & Seafood",u:"lb",p:5.49,w:1,f:["meat"]},
 imitCrab:{n:"Imitation crabmeat",d:"Meat & Seafood",u:"lb",p:4.99,w:1,f:["shellfish"]},
@@ -653,7 +655,10 @@ sourCream:{n:"Sour cream",d:"Dairy & Eggs",u:"oz",p:.16,w:.0625,f:["dairy"]},
 creamCheese:{n:"Cream cheese",d:"Dairy & Eggs",u:"oz",p:.29,w:.0625,f:["dairy"]},
 cheddar:{n:"Shredded cheddar",d:"Dairy & Eggs",u:"lb",p:5.49,w:1,f:["dairy"]},
 mozz:{n:"Shredded mozzarella",d:"Dairy & Eggs",u:"lb",p:5.29,w:1,f:["dairy"]},
+mozzBlock:{n:"Mozzarella, block",d:"Dairy & Eggs",u:"lb",p:5.99,w:1,f:["dairy"]},
 mexBlend:{n:"Shredded Mexican blend",d:"Dairy & Eggs",u:"lb",p:5.49,w:1,f:["dairy"]},
+pepperJack:{n:"Jalapeño Monterey Jack, block",d:"Dairy & Eggs",u:"lb",p:6.49,w:1,f:["dairy"]},
+buttermilk:{n:"Buttermilk",d:"Dairy & Eggs",u:"cup",p:.55,w:.54,f:["dairy"]},
 colbyJack:{n:"Shredded Colby-Jack",d:"Dairy & Eggs",u:"lb",p:5.49,w:1,f:["dairy"]},
 parm:{n:"Grated parmesan",d:"Dairy & Eggs",u:"cup",p:2.40,w:.22,f:["dairy"]},
 ricotta:{n:"Ricotta cheese",d:"Dairy & Eggs",u:"oz",p:.19,w:.0625,f:["dairy"]},
@@ -675,6 +680,16 @@ mushroom:{n:"Fresh mushrooms",d:"Produce",u:"lb",p:3.99,w:1,f:[]},
 portobello:{n:"Portobello mushrooms",d:"Produce",u:"lb",p:5.49,w:1,f:[]},
 garlic:{n:"Garlic cloves",d:"Produce",u:"clove",p:.12,w:.01,f:[]},
 greenPepper:{n:"Green bell peppers",d:"Produce",u:"pepper",p:1.19,w:.35,f:[]},
+jalapeno:{n:"Jalapeño peppers",d:"Produce",u:"pepper",p:.25,w:.05,f:[]},
+eggplant:{n:"Eggplant",d:"Produce",u:"eggplant",p:1.99,w:1.1,f:[]},
+zucchini:{n:"Zucchini or summer squash",d:"Produce",u:"squash",p:.89,w:.45,f:[]},
+sweetPotato:{n:"Sweet potatoes",d:"Produce",u:"lb",p:1.29,w:1,f:[]},
+poblano:{n:"Poblano peppers",d:"Produce",u:"pepper",p:.79,w:.25,f:[]},
+lime:{n:"Limes",d:"Produce",u:"lime",p:.40,w:.15,f:[]},
+avocado:{n:"Avocados",d:"Produce",u:"avocado",p:1.25,w:.35,f:[]},
+peach:{n:"Fresh peaches",d:"Produce",u:"peach",p:.95,w:.35,f:[]},
+redPepper:{n:"Red bell peppers",d:"Produce",u:"pepper",p:1.49,w:.35,f:[]},
+redOnion:{n:"Red onion",d:"Produce",u:"onion",p:.99,w:.4,f:[]},
 apple:{n:"Sweet apples",d:"Produce",u:"apple",p:.95,w:.4,f:[]},
 banana:{n:"Bananas",d:"Produce",u:"banana",p:.29,w:.28,f:[]},
 tomato:{n:"Tomatoes",d:"Produce",u:"tomato",p:.85,w:.35,f:[]},
@@ -688,6 +703,8 @@ fzCarrots:{n:"Frozen carrots",d:"Frozen",u:"lb",p:1.89,w:1,f:[]},
 fzCorn:{n:"Frozen corn",d:"Frozen",u:"lb",p:1.79,w:1,f:[]},
 fzGreenBeans:{n:"Frozen green beans",d:"Frozen",u:"lb",p:1.99,w:1,f:[]},
 fzMixedVeg:{n:"Frozen mixed vegetables",d:"Frozen",u:"lb",p:1.99,w:1,f:[]},
+fzBroccoli:{n:"Frozen broccoli florets",d:"Frozen",u:"lb",p:2.29,w:1,f:[]},
+fzPepOnion:{n:"Frozen pepper & onion blend",d:"Frozen",u:"lb",p:2.49,w:1,f:[]},
 hashBrowns:{n:"Frozen hash browns",d:"Frozen",u:"lb",p:1.79,w:1,f:[]},
 taterTots:{n:"Tater tots",d:"Frozen",u:"lb",p:2.29,w:1,f:["gluten"]},
 ravioli:{n:"Frozen cheese ravioli",d:"Frozen",u:"lb",p:4.99,w:1,f:["dairy","gluten"]},
@@ -701,14 +718,18 @@ diced32:{n:"Diced tomatoes, 32 oz",d:"Canned & Jarred",u:"can",p:2.49,w:2.1,f:[]
 tomSoup:{n:"Tomato soup, 10.75 oz",d:"Canned & Jarred",u:"can",p:1.19,w:.72,f:[]},
 mushSoup:{n:"Cream of mushroom soup",d:"Canned & Jarred",u:"can",p:1.49,w:.72,f:["dairy"]},
 broth14:{n:"Chicken broth, 14 oz",d:"Canned & Jarred",u:"can",p:1.39,w:.95,f:["meat"]},
+beefBroth14:{n:"Beef broth, 14 oz",d:"Canned & Jarred",u:"can",p:1.39,w:.95,f:["meat"]},
+tomPaste:{n:"Tomato paste",d:"Canned & Jarred",u:"tbsp",p:.12,w:.035,f:[]},
 broth105:{n:"Chicken broth, 10.5 oz",d:"Canned & Jarred",u:"can",p:1.19,w:.72,f:["meat"]},
 stock:{n:"Chicken stock",d:"Canned & Jarred",u:"cup",p:.75,w:.52,f:["meat"]},
 pinto:{n:"Pinto beans, 15 oz",d:"Canned & Jarred",u:"can",p:1.09,w:1.0,f:[]},
 black:{n:"Black beans, 15 oz",d:"Canned & Jarred",u:"can",p:1.09,w:1.0,f:[]},
 kidney:{n:"Kidney beans, 16 oz",d:"Canned & Jarred",u:"can",p:1.19,w:1.05,f:[]},
 chickpea:{n:"Chickpeas, 15 oz",d:"Canned & Jarred",u:"can",p:1.19,w:1.0,f:[]},
+pesto:{n:"Basil pesto, 6 oz",d:"Canned & Jarred",u:"jar",p:3.49,w:.42,f:["dairy","nuts"]},
 refried:{n:"Refried beans, 16 oz",d:"Canned & Jarred",u:"can",p:1.49,w:1.05,f:[]},
 cornCan:{n:"Whole kernel corn",d:"Canned & Jarred",u:"can",p:1.09,w:.95,f:[]},
+creamedCorn:{n:"Creamed corn, 14.75 oz",d:"Canned & Jarred",u:"can",p:1.19,w:.95,f:[]},
 salsa16:{n:"Salsa, 16 oz",d:"Canned & Jarred",u:"jar",p:3.29,w:1.15,f:[]},
 picante24:{n:"Picante sauce, 24 oz",d:"Canned & Jarred",u:"jar",p:3.99,w:1.7,f:[]},
 spag24:{n:"Spaghetti sauce, 24 oz",d:"Canned & Jarred",u:"jar",p:2.79,w:1.7,f:[]},
@@ -721,8 +742,13 @@ enchGreen:{n:"Green enchilada sauce, 10 oz",d:"Canned & Jarred",u:"can",p:2.29,w
 pieFilling:{n:"Apple pie filling, 21 oz",d:"Canned & Jarred",u:"can",p:3.99,w:1.45,f:[]},
 mushCan:{n:"Sliced mushrooms, 4 oz",d:"Canned & Jarred",u:"can",p:1.09,w:.3,f:[]},
 pineapple:{n:"Pineapple slices, 8 oz",d:"Canned & Jarred",u:"can",p:1.49,w:.55,f:[]},
+pineappleChunks:{n:"Pineapple chunks, 20 oz",d:"Canned & Jarred",u:"can",p:2.29,w:1.3,f:[]},
+ketchup:{n:"Ketchup",d:"Canned & Jarred",u:"tbsp",p:.05,w:.035,f:[]},
+riceVinegar:{n:"Rice vinegar",d:"Spices & Baking",u:"tsp",p:.04,w:.011,f:[]},
 tunaPouch:{n:"Tuna pouch, 2.6 oz",d:"Canned & Jarred",u:"pouch",p:1.49,w:.18,f:["meat"]},
 chickenPouch:{n:"Chicken pouch, 2.6 oz",d:"Canned & Jarred",u:"pouch",p:1.99,w:.18,f:["meat"]},
+chickenCan:{n:"Canned chicken, 12.5 oz",d:"Canned & Jarred",u:"can",p:3.29,w:.8,f:["meat"]},
+stirFrySauce:{n:"Stir-fry sauce (your pick)",d:"Canned & Jarred",u:"cup",p:2.60,w:.65,f:["gluten"]},
 
 /* Dry Goods */
 bowtie:{n:"Bow-tie pasta",d:"Dry Goods",u:"lb",p:1.79,w:1,f:["gluten"]},
@@ -759,6 +785,7 @@ driedVeg:{n:"Dried vegetable blend",d:"Dry Goods",u:"cup",p:1.60,w:.12,f:[]},
 sunTomato:{n:"Sun-dried tomatoes",d:"Dry Goods",u:"tbsp",p:.40,w:.02,f:[]},
 friedOnion:{n:"Crispy fried onions",d:"Dry Goods",u:"cup",p:.95,w:.11,f:["gluten"]},
 hummusPowder:{n:"Instant hummus mix",d:"Dry Goods",u:"cup",p:1.75,w:.30,f:[]},
+redLentils:{n:"Red lentils, dry",d:"Dry Goods",u:"cup",p:.95,w:.42,f:[]},
 granola:{n:"Granola",d:"Dry Goods",u:"cup",p:.85,w:.25,f:["gluten"]},
 raisins:{n:"Raisins",d:"Dry Goods",u:"cup",p:.90,w:.32,f:[]},
 driedCran:{n:"Dried cranberries",d:"Dry Goods",u:"cup",p:1.40,w:.28,f:[]},
@@ -797,6 +824,7 @@ skewers:{n:"Bamboo skewers",d:"Camp Supplies",u:"skewer",p:.06,w:.01,f:[]},
 sandwichBags:{n:"Quart zip bags",d:"Camp Supplies",u:"bag",p:.09,w:.015,f:[]},
 gallonBags:{n:"Gallon freezer bags",d:"Camp Supplies",u:"bag",p:.22,w:.03,f:[]},
 mustardPacket:{n:"Mustard packets",d:"Spices & Baking",u:"packet",p:.08,w:.02,f:[]},
+cookieBags:{n:"Snack-size cookie bags, 1 oz (Teddy Grahams, mini Chips Ahoy, Oreo Minis, Nutter Butter Bites)",d:"Dry Goods",u:"bag",p:.75,w:.07,f:["gluten"]},
 cookies:{n:"Sandwich cookies",d:"Dry Goods",u:"sleeve",p:1.69,w:.45,f:["gluten","dairy"]},
 caramelDip:{n:"Caramel dip",d:"Canned & Jarred",u:"oz",p:.22,w:.0625,f:["dairy"]},
 pretzels:{n:"Pretzels",d:"Dry Goods",u:"oz",p:.22,w:.0625,f:["gluten"]},
@@ -806,6 +834,7 @@ tunaCan:{n:"Tuna, 5 oz can",d:"Canned & Jarred",u:"can",p:1.09,w:.38,f:["meat"]}
 chickenSoup:{n:"Cream of chicken soup",d:"Canned & Jarred",u:"can",p:1.49,w:.72,f:["dairy","meat"]},
 sloppyJoe:{n:"Sloppy joe sauce, 15 oz",d:"Canned & Jarred",u:"can",p:1.39,w:1.0,f:[]},
 bakedBeans:{n:"Baked beans, 28 oz",d:"Canned & Jarred",u:"can",p:2.19,w:1.95,f:[]},
+crustyBread:{n:"Crusty bread loaf",d:"Bakery",u:"loaf",p:3.49,w:1.0,f:["gluten"]},
 subRolls:{n:"Sub rolls",d:"Bakery",u:"roll",p:.75,w:.18,f:["gluten"]},
 hotDogBuns:{n:"Hot dog buns",d:"Bakery",u:"bun",p:.32,w:.11,f:["gluten"]},
 deliTurkey:{n:"Deli turkey",d:"Meat & Seafood",u:"lb",p:7.49,w:1,f:["meat"]},
@@ -826,6 +855,7 @@ poundCake:{n:"Pound cake",d:"Bakery",u:"loaf",p:3.49,w:1.0,f:["gluten","dairy","
 /* Bakery */
 tort10:{n:'Flour tortillas, 10"',d:"Bakery",u:"tortilla",p:.38,w:.09,f:["gluten"]},
 tort8:{n:'Flour tortillas, 8"',d:"Bakery",u:"tortilla",p:.28,w:.06,f:["gluten"]},
+cornTort:{n:'Corn tortillas, 6"',d:"Bakery",u:"tortilla",p:.12,w:.05,f:[]},
 buns:{n:"Whole grain hamburger buns",d:"Bakery",u:"bun",p:.55,w:.12,f:["gluten"]},
 bread:{n:"Sandwich bread",d:"Bakery",u:"slice",p:.11,w:.06,f:["gluten"]},
 bagel:{n:"Bagels",d:"Bakery",u:"bagel",p:.65,w:.22,f:["gluten"]},
@@ -837,6 +867,8 @@ oil:{n:"Vegetable oil",d:"Spices & Baking",u:"tbsp",p:.06,w:.03,f:[]},
 oliveOil:{n:"Olive oil",d:"Spices & Baking",u:"tbsp",p:.12,w:.03,f:[]},
 oilPacket:{n:"Olive oil packets",d:"Spices & Baking",u:"packet",p:.30,w:.03,f:[]},
 flour:{n:"All-purpose flour",d:"Spices & Baking",u:"tbsp",p:.03,w:.02,f:["gluten"]},
+cornmeal:{n:"Cornmeal",d:"Spices & Baking",u:"cup",p:.45,w:.3,f:[]},
+bakingPowder:{n:"Baking powder",d:"Spices & Baking",u:"tsp",p:.04,w:.01,f:[]},
 sugar:{n:"Sugar",d:"Spices & Baking",u:"tsp",p:.01,w:.01,f:[]},
 brownSugar:{n:"Brown sugar",d:"Spices & Baking",u:"tbsp",p:.05,w:.028,f:[]},
 salt:{n:"Salt",d:"Spices & Baking",u:"tsp",p:.01,w:.013,f:[]},
@@ -857,6 +889,13 @@ lemonPepper:{n:"Lemon pepper",d:"Spices & Baking",u:"tsp",p:.08,w:.006,f:[]},
 paprika:{n:"Paprika",d:"Spices & Baking",u:"tsp",p:.07,w:.005,f:[]},
 nutmeg:{n:"Ground nutmeg",d:"Spices & Baking",u:"tsp",p:.12,w:.005,f:[]},
 tacoSeas:{n:"Taco seasoning",d:"Spices & Baking",u:"packet",p:1.09,w:.08,f:[]},
+curryPowder:{n:"Curry powder",d:"Spices & Baking",u:"tsp",p:.09,w:.005,f:[]},
+cumin:{n:"Ground cumin",d:"Spices & Baking",u:"tsp",p:.07,w:.005,f:[]},
+thyme:{n:"Dried thyme",d:"Spices & Baking",u:"tsp",p:.08,w:.004,f:[]},
+coriander:{n:"Ground coriander",d:"Spices & Baking",u:"tsp",p:.08,w:.004,f:[]},
+cajunSeas:{n:"Creole or Cajun seasoning",d:"Spices & Baking",u:"tsp",p:.07,w:.005,f:[]},
+bayLeaf:{n:"Bay leaf",d:"Spices & Baking",u:"leaf",p:.10,w:.001,f:[]},
+smokedPaprika:{n:"Smoked paprika",d:"Spices & Baking",u:"tsp",p:.09,w:.005,f:[]},
 ranchMix:{n:"Dry ranch dressing mix",d:"Spices & Baking",u:"packet",p:1.29,w:.06,f:["dairy"]},
 onionSoupMix:{n:"Dry onion soup mix",d:"Spices & Baking",u:"packet",p:1.19,w:.09,f:[]},
 gravyMix:{n:"Brown gravy mix",d:"Spices & Baking",u:"packet",p:.89,w:.06,f:["gluten"]},
@@ -1382,6 +1421,9 @@ const R=[
 {id:"campstirfry",n:"Camp Stir Fry",src:"Camp one-pan standard",serv:8,gear:"Large skillet plus a pot",styles:["camp","car"],meals:["dinner"],time:"20 min",prep:"Cook and slice the chicken at home. Raw chicken is the single riskiest thing in a cooler.",
  ing:[i("chickenCooked",2),i("fzMixedVeg",2),i("instRice",4),i("soySauce",8),i("garlicPwd",2),i("ginger",2),i("oil",3)],
  steps:["Boil water and make the instant rice in a pot. Set aside covered.","Heat oil in the skillet. Add the frozen vegetables and cook 6 minutes until hot through and some edges brown.","Add the precooked chicken, soy sauce, garlic powder and ginger. Toss 3 minutes.","Serve over the rice."]},
+{id:"pepperonionstirfry",n:"Pepper & Onion Chicken Stir Fry",src:"Rob Newman, Troop 46",serv:8,gear:"Large skillet plus a pot",styles:["camp","car"],meals:["dinner"],time:"20 min",
+ ing:[i("chickenCan",3),i("fzPepOnion",2),i("stirFrySauce",1),i("instRice",4),i("oil",2)],
+ steps:["Pick the sauce when you shop: teriyaki, sweet & sour, General Tso, or a plain stir-fry sauce all work. One 12-ounce bottle covers eight. If anyone is gluten free, buy one marked gluten free (most regular soy and teriyaki sauces contain wheat) and this whole dish is gluten free.","Boil water and make the instant rice in the pot. Set it aside with the lid on.","Heat the oil in the skillet. Tip in the frozen pepper and onion blend straight from the bag and cook 6 to 8 minutes, stirring now and then, until the water has cooked off and some edges are browning.","Drain the canned chicken and add it. Pour in the sauce. Toss 3 minutes until everything is hot and coated.","Serve over the rice.","No cooler needed for the chicken, and the frozen bag is your ice pack on the drive in. Peppers and onions are the vegetables in this one \u2014 a handful of frozen broccoli added with them makes it greener."]},
 {id:"sloppyjoes",n:"Sloppy Joes",src:"Camp standard",serv:8,gear:"One pot",styles:["camp","car"],meals:["dinner","lunch"],time:"15 min",prep:"Brown the beef with the onion at home. At camp this becomes a ten-minute meal.",
  ing:[i("beef",2),i("onion",1),i("sloppyJoe",2),i("hotDogBuns",16),i("cheddar",.25)],
  steps:["Reheat the browned beef and onion in the pot until it reaches 165°.","Stir in the sauce. Simmer 8 minutes.","Spoon onto buns. Add cheese if you like.","Hard to get wrong, and scouts eat all of it."]},
@@ -1405,7 +1447,176 @@ const R=[
  steps:["Set out the rolls, meat, cheese and toppings in a line.","Everyone builds their own.","No stove and no cleanup, which makes it the right lunch on a day with a long hike or a late arrival.","Keep the meat and cheese in the cooler until the moment you serve, and put them straight back."]},
 {id:"caesarwraps",perPerson:true,pu:"wraps",n:"Chicken Caesar Wraps",src:"Camp standard",serv:1,gear:"None",styles:["camp","car","nocook"],meals:["lunch"],time:"5 min",prep:"Cook and slice the chicken at home. Chop the romaine and bag it.",
  ing:[i("tort10",1),i("chickenCooked",.2),i("romaine",.15),i("caesar",.1),i("parm",.1)],
- steps:["Toss the chopped romaine with the dressing and parmesan.","Pile it onto a tortilla with the sliced chicken.","Roll tight and cut on the diagonal.","Dress the lettuce right before serving — do it early and you get a soggy wrap by noon."]}
+ steps:["Toss the chopped romaine with the dressing and parmesan.","Pile it onto a tortilla with the sliced chicken.","Roll tight and cut on the diagonal.","Dress the lettuce right before serving — do it early and you get a soggy wrap by noon."]},
+/* ---- v3.24 additions: the thin categories ---- */
+/* No-cook dinners */
+{id:"nocookcaesarpita",n:"Chicken Caesar Pita Pockets",src:"Troop Mess",serv:8,gear:"Bowl and a can opener",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"10 min",
+ ing:[i("chickenCan",3),i("caesar",.75),i("romaine",2),i("parm",.5),i("pita",8),i("pepper",.5)],
+ steps:["Drain the chicken into a bowl and break it up with a fork.","Chop the romaine. Toss it with the chicken, dressing, parmesan and pepper.","Cut each pita in half, open the pockets and stuff them.","Nothing to cook, nothing to wash but one bowl. The dressing travels fine in a cooler; the rest needs none."]},
+{id:"nocookchickpeawrap",n:"Mediterranean Chickpea Wraps",src:"Troop Mess",serv:8,gear:"Bowl, fork and a can opener",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"15 min",
+ ing:[i("chickpea",3),i("cherryTom",2),i("greenOnion",1),i("oliveOil",3),i("lemonPepper",2),i("salt",1),i("hummusPowder",1),i("tort10",8)],
+ steps:["Make the hummus from the mix with water, as the box says. Let it sit 5 minutes.","Drain and rinse the chickpeas. Mash about half of them with a fork so the filling holds together.","Halve the tomatoes, slice the green onions, and mix with the chickpeas, oil, lemon pepper and salt.","Spread hummus down each tortilla, spoon on the chickpea mix, roll tight.","Vegan as written. Add crumbled feta or a slice of cheese for anyone who wants it."]},
+{id:"nocooktunabean",n:"Tuna & White Bean Salad with Crackers",src:"Troop Mess",serv:8,gear:"Bowl and a can opener",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"10 min",
+ ing:[i("tunaCan",3),i("chickpea",2),i("cherryTom",2),i("celery",3),i("oliveOil",4),i("lemonPepper",2),i("parsleyDry",1),i("crackers",3)],
+ steps:["Drain the tuna and the beans. Rinse the beans.","Chop the celery, halve the tomatoes.","Mix it all with the oil, lemon pepper and parsley. Taste for salt; tuna brings its own.","Serve with crackers to scoop. Keeps an hour in the shade if you make it before an evening activity."]},
+{id:"nocookwalkingtaco",n:"Cold Walking Tacos",src:"Troop Mess",serv:8,gear:"Can opener and a spoon",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"10 min",
+ ing:[i("fritosBag",8),i("black",2),i("salsa16",1),i("cheddar",.5),i("lettuce",3),i("sourCream",8)],
+ steps:["Drain and rinse the black beans.","Crush each chip bag a little, cut it open along the side.","Everybody builds their own: beans, salsa, cheese, lettuce, a spoon of sour cream.","The hot version is in the book too (Walking Tacos). This one is for the night nobody is lighting a stove."]},
+{id:"nocookramenslaw",n:"Crunchy Ramen Slaw",src:"Troop Mess",serv:8,gear:"Big bowl",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"15 min",
+ ing:[i("ramen",3),i("cabbage",.5),i("carrot",3),i("greenOnion",1),i("oil",4),i("soySauce",6),i("sugar",4),i("chickenCan",2)],
+ steps:["Shred the cabbage thin and grate or thinly slice the carrots. Slice the green onions.","Crush the ramen in the packs. Save the seasoning packets for the dressing.","Dressing: oil, soy sauce, sugar and one ramen seasoning packet, shaken in a jar.","Toss everything with the crushed noodles and the drained chicken just before eating so the noodles stay crunchy.","Leave the chicken out and it is a vegetarian side for any dinner."]},
+{id:"nocookhummusplate",n:"Hummus Plate Dinner",src:"Troop Mess",serv:8,gear:"Bowl and a knife",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"10 min",
+ ing:[i("hummusPowder",2),i("pita",8),i("babyCarrot",1.5),i("cherryTom",2),i("oliveOil",2),i("paprika",1),i("stringCheese",8)],
+ steps:["Make the hummus from the mix with water. A drizzle of oil and a shake of paprika on top.","Cut the pitas into wedges.","Set out carrots, tomatoes and string cheese. Everyone dips.","Vegan without the string cheese. Filling enough for dinner when there is plenty of pita."]},
+{id:"nocookchickensalad",n:"Apple Chicken Salad Wraps",src:"Troop Mess",serv:8,gear:"Bowl and a knife",styles:["nocook","car","camp"],meals:["dinner","lunch"],time:"15 min",
+ ing:[i("chickenCan",3),i("mayoPacket",8),i("apple",2),i("celery",3),i("raisins",.5),i("pepper",.5),i("lettuce",2),i("tort10",8)],
+ steps:["Drain the chicken and flake it.","Dice the apples and celery. Mix with the chicken, mayo, raisins and pepper.","Lettuce on each tortilla, chicken salad on top, roll it up.","Cold, crunchy and no cooler needed until the mayo is open."]},
+{id:"nocookbigboard",n:"Big Board Dinner",src:"Troop Mess",serv:8,gear:"Cutting board and a knife",styles:["nocook","car","camp"],meals:["dinner"],time:"10 min",prep:"Slice the sausage and cheese at home.",
+ ing:[i("summerSausage",16),i("hardCheese",12),i("crackers",3),i("apple",4),i("babyCarrot",1),i("pretzels",8),i("peanutButter",8)],
+ steps:["Lay it all out: sausage and cheese slices, crackers, apple wedges, carrots, pretzels and a bowl of peanut butter for dipping.","It is the cracker barrel board, scaled up to be dinner. Nobody cooks, nobody cleans, and it is gone in ten minutes.","Fruit and vegetables are built in, which is more than most camp dinners can say."]},
+
+/* Backpacking dinners, freezer bag */
+{id:"fbpeanutcurry",perPerson:true,pu:"bags",n:"Peanut Curry Couscous",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"8 min soak",water:1,bag:true,
+ ing:[i("couscous",.5),i("driedVeg",.25),i("curryPowder",1),i("peanutButter",2),i("raisins",.125),i("salt",.25),i("freezerBags",1)],
+ steps:["At home: bag the couscous, dried vegetables, curry powder, raisins and salt. Peanut butter in its own small bag or packet.","At camp: boiling water in, stir, seal, 8 minutes.","Stir in the peanut butter until it melts through.","Vegan, and one of the lighter dinners in the book."]},
+{id:"fbthainoodles",perPerson:true,pu:"bags",n:"Thai Peanut Noodles",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"5 min soak",water:1,bag:true,
+ ing:[i("ramen",1),i("peanutButter",2),i("soySauce",2),i("sugar",1),i("chiliPowder",.25),i("driedVeg",.25),i("freezerBags",1)],
+ steps:["At home: break the ramen into the bag with the dried vegetables. Leave the seasoning packet out. Peanut butter, soy packets and a pinch of sugar and chili travel alongside.","At camp: boiling water to just cover, seal, 5 minutes.","Pour off most of the water, then stir in peanut butter, soy and sugar until it coats the noodles.","Vegan. Adds up to a real dinner for the weight of a ramen pack."]},
+{id:"fbshepherd",perPerson:true,pu:"bags",n:"Trail Shepherd's Pie",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"5 min soak",water:1.25,bag:true,
+ ing:[i("instPotato",.5),i("gravyMix",.5),i("driedVeg",.25),i("jerky",1),i("freezerBags",1)],
+ steps:["At home: bag the potato flakes, half a gravy packet and the dried vegetables. Jerky travels whole.","At camp: snip the jerky small and drop it in. Boiling water, stir well, seal, 5 minutes.","Stir again before eating; the gravy thickens as it sits.","Gluten free if the gravy mix is (check the packet)."]},
+{id:"fbcheesybroccoli",perPerson:true,pu:"bags",n:"Cheesy Broccoli Rice",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"8 min soak",water:1,bag:true,
+ ing:[i("instRice",.75),i("cheesePowder",2),i("driedVeg",.25),i("milkPowder",.125),i("pepper",.25),i("freezerBags",1)],
+ steps:["At home: bag everything together.","At camp: boiling water in, stir, seal, 8 minutes.","Stir hard at the end so the cheese sauce comes together.","Vegetarian and gluten free. Dried vegetable blends usually have broccoli in them; a handful of extra dried broccoli makes it the real thing."]},
+{id:"fbtunamac",perPerson:true,pu:"bags",n:"Trail Tuna Mac",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"10 min soak",water:1.5,bag:true,
+ ing:[i("macCheese",.5),i("tunaPouch",1),i("driedVeg",.25),i("milkPowder",.06),i("freezerBags",1)],
+ steps:["At home: bag half a box of macaroni with its cheese packet, the dried vegetables and milk powder. Tuna pouch rides alongside.","At camp: near-boiling water, stir, seal, 10 full minutes.","Stir in the tuna and eat from the bag."]},
+{id:"fbteriyakirice",perPerson:true,pu:"bags",n:"Chicken Teriyaki Rice",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"8 min soak",water:1,bag:true,
+ ing:[i("instRice",.75),i("chickenPouch",1),i("driedVeg",.25),i("soySauce",2),i("sugar",1),i("ginger",.25),i("freezerBags",1)],
+ steps:["At home: bag the rice, dried vegetables, sugar and ginger. Chicken pouch and soy packets alongside.","At camp: boiling water, stir, seal, 8 minutes.","Stir in the chicken and soy sauce.","Gluten free with gluten-free soy packets."]},
+{id:"fbcouscoustaco",perPerson:true,pu:"bags",n:"Couscous Taco Bowl",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"6 min soak",water:1,bag:true,
+ ing:[i("couscous",.5),i("refriedFlakes",.25),i("tacoSeas",.25),i("cheesePowder",1),i("fritosBag",1),i("freezerBags",1)],
+ steps:["At home: bag the couscous, bean flakes, a quarter packet of taco seasoning and the cheese powder.","At camp: boiling water, stir, seal, 6 minutes.","Crush the chips over the top and stir in.","Vegetarian."]},
+{id:"fbloadedpotato",perPerson:true,pu:"bags",n:"Loaded Mashed Potato Bowl",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dinner"],time:"3 min soak",water:1,bag:true,
+ ing:[i("instPotato",.5),i("cheesePowder",2),i("baconBits",2),i("milkPowder",.125),i("pepper",.25),i("freezerBags",1)],
+ steps:["At home: bag everything.","At camp: boiling water, stir, seal, 3 minutes. Potato flakes are the fastest dinner there is.","Gluten free as written. Lightest cook time in the book for a cold, late arrival."]},
+
+/* Backpacking desserts and cracker barrel */
+{id:"fbcheesecake",perPerson:true,pu:"bags",n:"Trail Cheesecake Cups",serv:1,src:"Freezer bag · Troop Mess",gear:"None — cold water",styles:["back","high","nocook","car"],meals:["dessert"],time:"10 min set",
+ ing:[i("instPudding",.25),i("milkPowder",.2),i("grahams",1),i("driedCran",1),i("freezerBags",1)],
+ steps:["At home: bag the pudding mix (cheesecake or vanilla flavour) with the milk powder. Graham cracker in its own bag.","At camp: half a cup of cold water into the pudding bag, squish it 2 minutes, let it sit 10.","Crush the graham cracker and the cranberries over the top.","No stove, no cooler. Vegetarian."]},
+{id:"fbapplecrisp",perPerson:true,pu:"bags",n:"Hot Apple Crisp Cup",serv:1,src:"Freezer bag · Troop Mess",gear:"Stove, boil water only",styles:["back","high"],meals:["dessert"],time:"5 min soak",water:.5,bag:true,
+ ing:[i("driedApple",.5),i("instOats",1),i("brownSugar",1),i("cinnamon",.25),i("freezerBags",1)],
+ steps:["At home: bag the dried apple, oatmeal, brown sugar and cinnamon.","At camp: boiling water to just cover, seal, 5 minutes.","Vegan. Tastes like the Dutch oven version for an ounce of pack weight."]},
+{id:"fbpbpudding",perPerson:true,pu:"bags",n:"Chocolate Peanut Butter Pudding",serv:1,src:"Freezer bag · Troop Mess",gear:"None — cold water",styles:["back","high","nocook","car"],meals:["dessert"],time:"10 min set",
+ ing:[i("instPudding",.25),i("milkPowder",.2),i("peanutButter",1),i("freezerBags",1)],
+ steps:["At home: bag chocolate pudding mix with the milk powder.","At camp: half a cup of cold water, squish 2 minutes, stir in the peanut butter, sit 10.","Vegetarian and gluten free."]},
+{id:"pbpretzelbites",perPerson:true,pu:"portions",n:"Peanut Butter Pretzel Bites",src:"Troop Mess",serv:1,gear:"None",styles:["nocook","back","high","car","camp"],meals:["crackerbarrel","dessert"],time:"5 min",
+ ing:[i("pretzels",1),i("peanutButter",1),i("chocChips",.1)],
+ steps:["A dab of peanut butter on a pretzel, a chocolate chip pressed in, another pretzel on top.","Make a pile and pass it round. Salty, sweet, no fire.","Vegetarian."]},
+{id:"trailboard",n:"Trail Cracker Barrel",src:"Troop Mess",serv:8,gear:"Knife",styles:["back","high","nocook","car","camp"],meals:["crackerbarrel"],time:"5 min",
+ ing:[i("crackers",2),i("hardCheese",8),i("jerky",6),i("driedCran",1),i("chocBar",2)],
+ steps:["Cheese, jerky and crackers out on a bandana. Cranberries and a square of chocolate to finish.","Block cheddar keeps a day without a cooler, which is why it is the trail cheese.","Gluten free with gluten-free crackers."]},
+
+/* Dutch oven cracker barrel and lunch */
+{id:"dopullapart",n:"Pull-Apart Garlic Bread",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["crackerbarrel","lunch"],coals:{top:16,bot:8,size:'12"'},time:"25 min",
+ ing:[i("biscuitsCan",2),i("butter",.25),i("garlicPwd",2),i("italSeas",2),i("parm",.5),i("foil",.15),i("spray",.1)],
+ steps:["Line the oven with foil and spray it.","Melt the butter in a cup near the fire. Stir in the garlic powder and Italian seasoning.","Cut each biscuit in quarters. Toss the pieces in the butter, pile them in the oven, parmesan over the top.","Bake 20 to 25 minutes until the middle pieces are cooked through. Pull apart with fingers.","Vegetarian. With a jar of warm spaghetti sauce for dipping it is lunch."]},
+{id:"donachos",n:"Dutch Oven Nachos",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["crackerbarrel","lunch"],coals:{top:18,bot:6,size:'12"'},time:"15 min",
+ ing:[i("tortChips",16),i("refried",1),i("black",1),i("cheddar",.75),i("salsa16",1),i("greenOnion",1),i("foil",.15)],
+ steps:["Line the oven with foil.","Half the chips, then spoonfuls of refried beans, drained black beans and half the cheese. Repeat.","Lid on, heat from the top mostly, 10 to 15 minutes until the cheese melts.","Salsa and sliced green onion over the top. Everyone eats out of the oven.","Vegetarian and gluten free."]},
+{id:"docalzones",n:"Dutch Oven Calzones",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["lunch","dinner"],coals:{top:17,bot:8,size:'12"'},time:"25 min",
+ ing:[i("pizzaMix",2),i("pizzaSauce",.75),i("mozz",.75),i("pepperoni",.3),i("foil",.2),i("spray",.1)],
+ steps:["Make the crust per the packets. Divide into 8 balls and press each into a hand-sized round on a floured plate.","Sauce, cheese and pepperoni on one half, leaving an edge. Fold over, press the edge with a fork.","Four at a time in the foil-lined, sprayed oven. Bake 12 minutes until golden.","Leave the pepperoni out of some for the vegetarians; everyone gets a sealed pocket with their name scratched in the crust."]},
+{id:"doquesadillastack",n:"Dutch Oven Quesadilla Stack",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["lunch","dinner"],coals:{top:16,bot:8,size:'12"'},time:"25 min",
+ ing:[i("tort10",8),i("mexBlend",1),i("black",2),i("salsa16",1),i("cornCan",1),i("foil",.15),i("spray",.1)],
+ steps:["Line and spray the oven.","Lay in a tortilla. Cheese, drained beans and corn, a spoon of salsa. Another tortilla. Keep going to the top.","Bake 20 to 25 minutes. Cut in wedges like a cake.","Vegetarian. Add leftover taco meat between layers if there is any."]},
+{id:"dopretzelbites",n:"Dutch Oven Pretzel Bites",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["crackerbarrel"],coals:{top:16,bot:8,size:'12"'},time:"20 min",
+ ing:[i("biscuitsCan",2),i("butter",.25),i("salt",2),i("mustardPacket",8),i("foil",.15),i("spray",.1)],
+ steps:["Cut each biscuit in thirds and roll into balls.","Melt the butter, roll the balls in it, into the lined oven, coarse salt over the top.","Bake 15 to 20 minutes until browned.","Mustard for dipping. Vegetarian, and a cracker barrel the whole patrol will fight over."]},
+{id:"dohamsliders",n:"Hot Ham & Cheese Sliders",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["lunch","crackerbarrel"],coals:{top:16,bot:8,size:'12"'},time:"20 min",
+ ing:[i("buns",8),i("deliHam",1),i("cheeseSlice",8),i("butter",.25),i("mustardPacket",8),i("foil",.15)],
+ steps:["Split the buns. Ham and a cheese slice in each, mustard if wanted.","Pack them in the foil-lined oven. Brush the tops with melted butter.","Lid on, 15 minutes until the cheese melts and the tops toast.","Deli turkey works the same way."]},
+
+/* Vegetarian and vegan dinners */
+{id:"threebeanchilimac",n:"Three-Bean Chili Mac",src:"Troop Mess",serv:8,gear:"One big pot",styles:["car","camp","dutch"],meals:["dinner"],time:"30 min",
+ ing:[i("kidney",1),i("black",1),i("pinto",1),i("diced145",2),i("tomSauce15",1),i("onion",1),i("chiliPowder",6),i("elbow",3),i("oil",2),i("salt",1)],
+ steps:["Soften the chopped onion in the oil.","Add the drained beans, tomatoes, tomato sauce, chili powder, salt and 2 cups of water. Bring to a boil.","Stir in the dry macaroni. Simmer, stirring often, 12 to 15 minutes until the pasta is done and the chili is thick.","Vegan as written. Put cheese and sour cream on the side for the rest."]},
+{id:"chickpeacurry",n:"Chickpea & Vegetable Curry",src:"Troop Mess",serv:8,gear:"One big pot",styles:["car","camp","dutch"],meals:["dinner"],time:"25 min",
+ ing:[i("chickpea",3),i("fzMixedVeg",2),i("diced145",2),i("onion",1),i("curryPowder",8),i("peanutButter",4),i("oil",2),i("salt",1),i("instRice",4)],
+ steps:["Rice in a separate pot, or make it first and keep it covered.","Soften the chopped onion in the oil. Stir in the curry powder for 30 seconds.","Add the tomatoes, drained chickpeas, frozen vegetables, peanut butter and a cup of water. Simmer 15 minutes.","Serve over rice. Vegan and gluten free."]},
+{id:"lentilsloppyjoes",n:"Lentil Sloppy Joes",src:"Troop Mess",serv:8,gear:"One pot",styles:["car","camp","dutch"],meals:["dinner","lunch"],time:"35 min",
+ ing:[i("redLentils",2),i("onion",1),i("greenPepper",1),i("sloppyJoe",2),i("oil",2),i("buns",8)],
+ steps:["Soften the chopped onion and pepper in the oil.","Add the lentils and 5 cups of water. Simmer 20 minutes until the lentils are soft and most of the water is gone.","Stir in the sloppy joe sauce and heat through.","Spoon onto buns. Vegan. Red lentils cook fast and nobody will miss the beef."]},
+{id:"veggiefajitas",n:"Skillet Veggie Fajitas",src:"Troop Mess",serv:8,gear:"Large skillet",styles:["car","camp"],meals:["dinner"],time:"20 min",
+ ing:[i("fzPepOnion",2),i("black",2),i("tacoSeas",1),i("oil",2),i("tort10",8),i("salsa16",1),i("lettuce",2)],
+ steps:["Heat the oil. Cook the frozen peppers and onions 8 minutes until browning at the edges.","Add the drained beans and the taco seasoning with a splash of water. Heat 3 minutes.","Warm the tortillas on the lid. Build with salsa and lettuce.","Vegan. Grilled chicken strips on the side make it a mixed table."]},
+{id:"pestopasta",n:"Pesto Pasta Primavera",src:"Troop Mess",serv:8,gear:"One big pot",styles:["car","camp"],meals:["dinner"],time:"20 min",
+ ing:[i("rotini",2),i("pesto",2),i("fzMixedVeg",1.5),i("parm",.5),i("cherryTom",2),i("salt",1)],
+ steps:["Boil the pasta in salted water. Three minutes before it is done, tip the frozen vegetables in with it.","Drain, saving a cup of the water.","Stir in the pesto with a splash of the pasta water until it coats. Halved tomatoes and parmesan over the top.","Vegetarian. Pesto has nuts (pine nuts) and dairy."]},
+{id:"doveglasagna",n:"Dutch Oven Vegetable Lasagna",src:"Troop Mess",serv:10,gear:'12" deep Dutch oven',styles:["dutch","car"],meals:["dinner"],coals:{top:17,bot:8,size:'12"'},time:"50 min",
+ ing:[i("noBoil",12),i("spag28",2),i("ricotta",15),i("mozz",1),i("fzMixedVeg",1.5),i("mushroom",1),i("italSeas",2),i("foil",.2),i("spray",.1)],
+ steps:["Line and spray the oven. Slice the mushrooms.","Sauce on the bottom, then noodles, ricotta, vegetables, mushrooms, mozzarella. Repeat until the oven is three-quarters full, ending with sauce and mozzarella.","Bake 45 minutes. Let it stand 10 before cutting.","Vegetarian. The frozen vegetables need no thawing."]},
+{id:"bakedpotatobar",n:"Loaded Baked Potato Bar",src:"Troop Mess",serv:8,gear:"Foil in the coals or a Dutch oven",styles:["car","camp","dutch"],meals:["dinner"],coals:{top:12,bot:12,size:'12"'},time:"60 min",
+ ing:[i("redPotato",4),i("cheddar",.75),i("sourCream",12),i("butter",.25),i("greenOnion",1),i("black",2),i("baconBits",6),i("salt",2),i("foil",.3)],
+ steps:["Wrap each potato in foil (two or three small ones per person). Into the coals or a Dutch oven for an hour, turning once.","Set out the toppings: cheese, sour cream, butter, sliced green onion, warmed drained black beans, bacon bits on the side.","Squeeze each potato open and pile it on.","Vegetarian and gluten free without the bacon bits. Start the coals early; this is the slow one."]},
+{id:"doapplebakedoats",n:"Dutch Oven Apple Cinnamon Baked Oatmeal",src:"Troop Mess",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["breakfast"],coals:{top:15,bot:7,size:'12"'},time:"35 min",
+ ing:[i("rolledOats",4),i("apple",3),i("raisins",.75),i("brownSugar",6),i("cinnamon",2),i("salt",.5),i("oil",3),i("foil",.15)],
+ steps:["Line the oven with foil and oil it. Dice the apples.","Mix the oats, apples, raisins, sugar, cinnamon, salt, oil and 4 cups of water in the oven.","Bake 30 minutes until set and browned at the edges.","Vegan as written; milk over the top for anyone who wants it. Gluten free with certified oats."]},
+
+/* Gluten free */
+{id:"streettacos",n:"Chicken Street Tacos",src:"Troop Mess",serv:8,gear:"Skillet",styles:["car","camp"],meals:["dinner","lunch"],time:"15 min",
+ ing:[i("chickenCan",3),i("tacoSeas",1),i("cornTort",16),i("salsa16",1),i("lettuce",2),i("cheddar",.5),i("oil",1)],
+ steps:["Heat the oil. Add the drained chicken and taco seasoning with a splash of water. Warm through, 5 minutes.","Warm the corn tortillas in a dry skillet or on the lid, two per taco.","Build: chicken, salsa, lettuce, cheese.","Gluten free. Canned chicken means no cooler for the meat."]},
+{id:"skilletfrittata",n:"Pepper & Onion Frittata",src:"Troop Mess",serv:8,gear:"Large skillet with a lid",styles:["car","camp"],meals:["breakfast","dinner"],time:"20 min",
+ ing:[i("eggs",16),i("fzPepOnion",1),i("cheddar",.5),i("oil",2),i("salt",1),i("pepper",.5)],
+ steps:["Cook the frozen peppers and onions in the oil until the water is gone, 6 minutes.","Beat the eggs with salt and pepper. Pour over. Cheese on top.","Lid on, low heat, 10 minutes until set in the middle. Cut in wedges.","Vegetarian and gluten free. Breakfast or a fast dinner."]},
+{id:"tacoriceskillet",n:"Taco Rice Skillet",src:"Troop Mess",serv:8,gear:"Large skillet",styles:["car","camp"],meals:["dinner"],time:"25 min",prep:"Brown the beef at home and chill it.",
+ ing:[i("beef",2),i("tacoSeas",2),i("instRice",3),i("black",1),i("salsa16",1),i("cheddar",.75),i("cornCan",1)],
+ steps:["Reheat the browned beef with the taco seasoning and 3 cups of water. Bring to a boil.","Stir in the rice, drained beans and corn. Lid on, off the heat, 5 minutes.","Salsa stirred through, cheese on top, lid back on until it melts.","Gluten free (check the taco seasoning packet; most are)."]},
+{id:"trailcheeselunch",n:"Cheese, Jerky & Apple Lunch",src:"Troop Mess",serv:1,perPerson:true,pu:"lunches",gear:"None",styles:["back","high","nocook","car","camp"],meals:["lunch"],time:"0 min",
+ ing:[i("hardCheese",2),i("jerky",1.5),i("apple",1),i("babyCarrot",.15),i("trailMix",1.5)],
+ steps:["Bag each lunch at home: cheese, jerky, an apple, a handful of carrots, a handful of trail mix.","Eat it on the trail with no stopping to cook.","Gluten free. Four MyPlate groups in a sandwich bag."]},
+/* Rob's recipes, October 2026 */
+{id:"hotdogskewers",n:"Campfire Hot Dog Skewers",src:"Rob Newman, Troop 46",serv:6,gear:"Grill grate over the fire, or a camp stove with a skillet",styles:["car","camp"],meals:["dinner","lunch"],time:"20 min",prep:"Mix the sauce at home in a jar. Cut the peppers and onion and bag them; the pineapple too if it is fresh.",
+ ing:[i("hotDogs",1),i("pineappleChunks",1),i("redPepper",1),i("greenPepper",1),i("redOnion",1),i("bbqSauce",.25),i("ketchup",1.5),i("soySauce",1),i("riceVinegar",1),i("chiliPowder",.5),i("skewers",12)],
+ steps:["Sauce: stir together the barbecue sauce, ketchup, soy sauce, rice vinegar and chili powder.","Cut the hot dogs in quarters, the peppers and onion into inch pieces. Drain the pineapple.","Thread the skewers: hot dog, pineapple, pepper, onion, and round again. Soak bamboo skewers in water first so they don't burn.","Grill over the coals 8 to 10 minutes, turning, brushing with the sauce for the last few minutes until it glazes.","No grate? Slide everything off the skewers into a hot skillet and cook the same way.","Two skewers each. The pineapple and peppers put fruit and vegetables on the plate without anyone noticing."]},
+{id:"walkingsmores",perPerson:true,pu:"bags",n:"Walking S'mores",src:"Rob Newman, Troop 46",serv:1,gear:"Campfire and roasting sticks",styles:["car","camp"],meals:["dessert","crackerbarrel"],time:"10 min",
+ ing:[i("cookieBags",1),i("chocBar",.25),i("marshmallow",.25),i("skewers",1)],
+ steps:["Tear or cut each cookie bag open along one long side, so it opens like a pocket. Take out half the cookies and keep them.","Put 2 pieces of chocolate in the bag.","Stack 2 marshmallows on a roasting stick. Toast over the fire, watching closely, to the doneness you like. Make sure they are not on fire.","Push the marshmallows off the stick into the bag with a fork or one of the saved cookies. Top with 1 more piece of chocolate and the saved cookies.","Wait 30 seconds to a minute for the marshmallow to melt the chocolate, then eat it out of the bag with a fork.","Mix up the bags: Teddy Grahams, mini Chips Ahoy, Oreo Minis and Nutter Butter Bites all work, and everyone picks their own."]},
+{id:"campcornbread",n:"Camp Cornbread",src:"Rob Newman, Troop 46",serv:12,gear:'12" Dutch oven',styles:["dutch","car"],meals:["dinner","lunch"],coals:{top:17,bot:8,size:'12"'},time:"35–45 min",
+ ing:[i("cornmeal",2),i("flour",32),i("eggs",4),i("bakingPowder",6),i("salt",1),i("jalapeno",1),i("cheddar",.25),i("pepperJack",.25),i("buttermilk",1),i("creamedCorn",1),i("butter",.125),i("cornCan",1)],
+ steps:["Set the Dutch oven near the fire, not over it, to warm while you mix. Butter the inside.","Dry ingredients in a bowl: flour, cornmeal, baking powder, salt. Mix well.","Cut the jalapeño into quarter-inch pieces and the pepper jack into half-inch cubes. Drain the corn (two ears of charred corn from the chili, cut off the cob, are better still).","Stir the buttermilk, creamed corn and eggs together, then add them to the dry bowl with the jalapeño, both cheeses and the corn. Mix until just combined; lumps are fine.","Scrape it into the oven. If you can, scoop a shallow hole for the bottom coals and set the oven over it. Most of the heat goes on the lid: it is the hot air under the lid that bakes the bread.","Bake 35 to 45 minutes. Every peek lets the heat out, so use your nose: first you smell sweet corn, then baking bread. A sharp burnt smell means look now and pull it if it is charring. Done when a knife in the middle comes out clean.","Tip it out onto crossed sticks or a rack so air gets underneath while it cools. Cut in wedges.","The side for any chili night. Makes a 12-inch round; serves 12 as a side."]},
+{id:"eggplantparmskewers",n:"Eggplant Parm Skewers",src:"Rob Newman, Troop 46",serv:6,gear:"Grill grate over the fire",styles:["car","camp"],meals:["dinner"],time:"25 min",prep:"Cube the eggplant, bread and mozzarella at home and bag them separately.",
+ ing:[i("eggplant",1),i("crustyBread",.5),i("cherryTom",2),i("pesto",1),i("mozzBlock",.5),i("skewers",12),i("salt",.5)],
+ steps:["Cut the eggplant and the bread into 1½-inch cubes. Cube the mozzarella. Soak bamboo skewers in water.","Thread the skewers, alternating eggplant, bread and a cherry tomato.","Grill over medium coals, brushing with pesto as they go. Turn often so the bread toasts instead of burning. The eggplant is done when it is soft, about 12 to 15 minutes.","Slide everything off the skewers into a bowl and toss with the mozzarella cubes while it is hot, so the cheese starts to melt. A pinch of salt.","Vegetarian. Pesto has pine nuts and parmesan. Two skewers each."]},
+{id:"fotgchilimac",n:"Fresh Off The Grid Chili Mac",src:"Michael van Vliet, freshoffthegrid.com",serv:8,gear:'Large lidded pot or 10" Dutch oven',styles:["car","camp","dutch"],meals:["dinner"],time:"25 min",
+ ing:[i("oil",2),i("onion",2),i("beef",1),i("tomPaste",4),i("chiliPowder",12),i("cumin",6),i("smokedPaprika",2),i("salt",2),i("garlic",4),i("elbow",4),i("kidney",2),i("beefBroth14",2),i("cheddar",.25),i("greenOnion",1)],
+ steps:["Heat the oil in the pot over medium heat. Cook the diced onion 3 to 5 minutes until soft.","Add the beef, tomato paste, chili powder, cumin, smoked paprika and salt. Break up the meat and stir to coat. Once browned, add the minced garlic for a minute.","Stir in the dry macaroni, drained beans and broth. Lid on, 5 to 6 minutes, or whatever the noodle box says. Stir once so it doesn't catch.","Off the heat, stir in the cheese. Sliced green onion, minced red onion or jalapeño on top for those who want it.","Plant-based ground (Impossible or similar) and vegetable broth make it vegetarian; it cooks the same way.","One pot, fifteen minutes of cooking. Chili powder, not chile powder, which can be much hotter."]},
+{id:"fotgstroganoff",n:"One Pot Beef Stroganoff",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:'12" cast iron skillet or large pot',styles:["car","camp"],meals:["dinner"],time:"35 min",prep:"Cut the steak into bite-sized pieces at home and keep it cold. Quarter the mushrooms and dice the onion too, if you want a fast camp.",
+ ing:[i("stripSteak",1),i("salt",2),i("pepper",1),i("oil",4),i("mushroom",1),i("onion",1),i("garlic",4),i("beefBroth14",2),i("worcester",6),i("thyme",2),i("eggNoodle",.5),i("sourCream",8)],
+ steps:["Heat the oil in the skillet until it just smokes. Season the steak with salt and pepper and sear it in batches until browned and cooked through. Set it aside under foil to rest.","Turn the heat down. Cook the mushrooms about 5 minutes, add the onion for 5 more, then the garlic for 1 minute.","Pour in the broth, Worcestershire and thyme, scraping the browned bits off the bottom. Bring to a boil, add the noodles, and cook about 8 minutes, stirring now and then, until tender.","Off the heat. Temper half the sour cream with a few spoonfuls of the hot sauce, stir it in, then stir in the rest.","Slice the rested steak, add it back, season to taste.","Stew meat works in place of strip steak if you give it a longer, slower sear. Keep the steak cold until it hits the pan."]},
+{id:"fotgchilaquiles",n:"Camp Stove Chilaquiles",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:"Large skillet with high sides and a lid",styles:["car","camp"],meals:["breakfast","dinner"],time:"30 min",
+ ing:[i("oil",16),i("cornTort",24),i("redOnion",2),i("garlic",8),i("tomSauce15",2),i("jalapeno",2),i("salt",2),i("eggs",12),i("cheddar",.25)],
+ steps:["Cut the tortillas into wedges. Heat the oil over high heat and fry the wedges in a single layer, in batches, turning once, until golden. Drain on a paper towel. Shortcut: a bag of tortilla chips instead, and skip most of the oil.","Turn the heat to medium. Cook the diced onion and chopped jalapeño in the oil left in the pan until soft, then the garlic for 30 seconds.","Stir in the tomato sauce, salt and a splash of water. Simmer, then add the fried tortillas and stir to coat.","Push the tortillas to the edges to make a well. Crack the eggs into the sauce and scramble them, or lid on and let them poach.","Cheese over the top; cilantro, avocado or lime if you have them.","Vegetarian and gluten free. The original uses a 7 oz can of El Pato sauce in place of the tomato sauce and jalapeño; use it if your store has it."]},
+{id:"fotgchickpeahash",n:"Chickpea Breakfast Hash",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:"Large cast iron skillet",styles:["car","camp"],meals:["breakfast","dinner"],time:"25 min",
+ ing:[i("oil",4),i("zucchini",4),i("redOnion",2),i("greenPepper",2),i("redPepper",2),i("chickpea",4),i("cumin",2),i("coriander",1),i("cinnamon",.5),i("salt",2),i("eggs",8)],
+ steps:["Slice the zucchini into half-moons, the onion into thin half-moons, the peppers into strips.","Heat the oil until it shimmers. Cook the onion, peppers and zucchini about 5 minutes until they start to soften.","Add the drained chickpeas and the spices. Cook about 10 minutes until browned in spots.","Push everything to the sides to make a well. A little more oil if the pan is dry. Crack the eggs into the well and cook them how you like.","Vegetarian and gluten free. Leave the eggs out and it is vegan. One egg each here; make it two for a hungry patrol."]},
+{id:"fotgsweetpotatoburgers",perPerson:true,pu:"burgers",n:"Sweet Potato Black Bean Burgers",src:"Fresh Off The Grid, freshoffthegrid.com",serv:1,gear:"Cast iron skillet and a box grater",styles:["car","camp"],meals:["dinner","lunch"],time:"30 min",prep:"Grate the sweet potato and mix the patties at home; they hold together better after a night in the cooler.",
+ ing:[i("sweetPotato",.09),i("black",.17),i("eggs",.17),i("chiliPowder",.17),i("salt",.17),i("cumin",.08),i("garlicPwd",.08),i("panko",.25),i("oil",.2),i("buns",1),i("mayoPacket",1),i("avocado",.25)],
+ steps:["Grate the sweet potato on the small holes of a box grater.","Mash it in a bowl with the drained black beans until fairly smooth.","Stir in the egg and spices, then the panko. Let it rest 10 minutes so the crumbs soak up the moisture.","Shape a quarter cup at a time into balls and flatten to patties about ¾ inch thick.","Heat a little oil. Cook 4 to 5 minutes a side until crisp outside and hot through. Toast the buns if you like.","Spicy mayo on the bun (a mayo packet with a shake of chili powder), a patty, sliced avocado.","Vegetarian. One sweet potato and one can of beans make six."]},
+{id:"fotgdoenchiladas",n:"Dutch Oven Veggie Enchiladas",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["dinner"],coals:{top:16,bot:6,size:'12"'},time:"35 min",
+ ing:[i("oil",4),i("redPepper",2),i("redOnion",1),i("garlic",8),i("cumin",6),i("salt",3),i("enchRed",3),i("mexBlend",1),i("black",2),i("tort10",10),i("jalapeno",1),i("lime",2),i("foil",.15)],
+ steps:["Warm the oil in the Dutch oven over medium heat. Cook the pepper strips until they start to soften, then the sliced onion until both are soft. Garlic, cumin and salt for 30 seconds. Tip the vegetables onto a plate.","Line the oven with foil. Spread a cup of enchilada sauce over the bottom.","A line of vegetables down each tortilla, a few spoons of drained black beans, some cheese. Roll and lay seam-down in the oven.","Rest of the sauce and cheese over the top. Lid on.","Set the oven over indirect heat with most of the coals on the lid, about 10 minutes, until the cheese melts.","Sliced jalapeño and a squeeze of lime to serve. Vegetarian; corn tortillas make it gluten free."]},
+{id:"fotgcampfiretacos",n:"Sweet Potato & Black Bean Campfire Tacos",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:"Large skillet and a small pot",styles:["car","camp"],meals:["dinner","lunch"],time:"30 min",
+ ing:[i("oil",4),i("sweetPotato",1.5),i("poblano",2),i("cumin",6),i("salt",2),i("redOnion",1),i("garlic",4),i("black",2),i("lime",4),i("chiliPowder",2),i("cornTort",16),i("avocado",2)],
+ steps:["Cube the sweet potatoes (peeling optional), seed and chop the poblanos.","Skillet: oil over medium-high, sweet potatoes for 10 minutes, stirring now and then. Add the poblanos, cumin and a pinch of salt and cook 10 more until tender.","Small pot: oil, diced onion 3 to 4 minutes, garlic for 1 minute. Add the black beans with their liquid, the lime juice, chili powder and salt. Low simmer 15 minutes.","Warm the corn tortillas over the flame with tongs, 10 to 20 seconds a side.","Beans in each tortilla, a scoop of sweet potato and pepper on top, avocado, hot sauce or cilantro if you have them.","Vegan and gluten free as written."]},
+{id:"fotgredbeansrice",n:"Dutch Oven Red Beans and Rice",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:'12" Dutch oven or large lidded pot, on a camp stove',styles:["dutch","car","camp"],meals:["dinner"],time:"40 min",
+ ing:[i("oil",2),i("andouille",1),i("celery",4),i("greenPepper",2),i("onion",1),i("garlic",8),i("cajunSeas",6),i("smokedPaprika",2),i("bayLeaf",2),i("kidney",2),i("rice",1),i("butter",.125),i("parsley",.5),i("salt",1)],
+ steps:["Heat the oil in the Dutch oven over medium heat on the stove. Slice pre-cooked andouille into half-inch rounds (or crumble raw) and brown 3 to 5 minutes.","Add the chopped pepper, onion and celery. Cook, stirring often, 10 to 12 minutes until lightly browned.","Stir in the sliced garlic, Cajun seasoning, smoked paprika and bay leaves for 2 minutes.","Add the drained, rinsed beans, the rinsed rice and 3 cups of water. Bring to a boil, scraping the browned bits off the bottom.","Turn the heat low, lid on tight (a folded cloth under the lid helps the seal), 20 minutes until the rice is tender.","Stir in the butter, salt to taste, parsley over the top. Fish out the bay leaves.","Smoked sausage rope stands in for andouille if that is what the store has."]},
+{id:"fotgpeachcobbler",n:"Dutch Oven Peach Cobbler",src:"Fresh Off The Grid, freshoffthegrid.com",serv:8,gear:'12" Dutch oven',styles:["dutch","car"],meals:["dessert"],coals:{top:17,bot:8,size:'12"'},time:"30 min",
+ ing:[i("peach",9),i("sugar",40),i("butter",.33),i("flour",21),i("bakingPowder",1.5),i("salt",.75),i("foil",.15)],
+ steps:["Line the oven with foil (the original uses a round of parchment). Melt the butter in a metal bowl set near the fire.","Cut the peaches into bite-sized pieces, spread them in the oven and sprinkle with about 3 tablespoons of the sugar.","In a bowl mix the flour, the rest of the sugar, baking powder and salt. Pour in the melted butter and stir with a fork until soft and crumbly.","Scatter the topping over the peaches, leaving a few gaps. Lid on.","Coals under and on the lid for about 350°F. Bake 20 to 30 minutes until the fruit bubbles and the top is golden. Rotate the lid once.","Serve warm. Whipped cream if anyone brought it.","Out of peach season, two 29 oz cans of sliced peaches, drained, stand in for the fresh ones. Vegetarian."]}
 ]
 
 /* ---------- Options ---------- */
@@ -1415,6 +1626,7 @@ const STYLES=[
  {k:"back", n:"Backpacking",   s:"Freezer bag, boil water"},
  {k:"nocook",n:"No-cook",      s:"Stoveless"},
  {k:"high", n:"High adventure",s:"Trek · pack it all"}
+
 ];
 /* Where each meal falls on a standard Friday-to-Sunday trip, so the grubmaster
    can see what still needs covering instead of holding it in their head. */
@@ -1438,7 +1650,7 @@ const FACTOR={car:1.0,dutch:1.0,camp:1.0,back:1.2,nocook:1.1,high:1.4};
    group. A number after the letters weights the food: dried fruit counts double
    (MyPlate: ½ cup raisins = 1 cup of fruit), powders count as what they make, and
    eggs count half because their purchase weight includes the shell. */
-const MYPLATE={beef:"P",italSausage:"P",hotSausage:"P",sausageLinks:"P",smokedSausage:"P",bacon:"P",hotDogs:"P",pepperoni:"P",turkeyPep:"P",pepStick:"P",summerSausage:"P",jerky:"P",chickenCooked:"P",chickenRaw:"P",chickenThigh:"P",porkChop:"P",porkLoin:"P",porkTender:"P",stewMeat:"P",turkey:"P",imitCrab:"P",shrimp:"P",scallops:"P",eggs:"P0.5",pinto:"P",black:"P",kidney:"P",chickpea:"P",refried:"P",tunaPouch:"P",chickenPouch:"P",peanutButter:"P",trailMix:"P",tunaCan:"P",bakedBeans:"P",deliTurkey:"P",deliHam:"P",refriedFlakes:"P4",hummusPowder:"P3",milk:"D",cheddar:"D",mozz:"D",mexBlend:"D",colbyJack:"D",parm:"D",ricotta:"D",cottage:"D",cheeseSlice:"D",americanCheese:"D",hardCheese:"D",stringCheese:"D",milkPowder:"D5",cheesePowder:"D1",celery:"V",onion:"V",greenOnion:"V",redPotato:"V",babyCarrot:"V",carrot:"V",cabbage:"V",mushroom:"V",portobello:"V",greenPepper:"V",tomato:"V",lettuce:"V",fzPeas:"V",fzCarrots:"V",fzCorn:"V",fzGreenBeans:"V",fzMixedVeg:"V",hashBrowns:"V",taterTots:"V",tomSauce15:"V",tomSauce8:"V",diced145:"V",diced32:"V",tomSoup:"V",cornCan:"V",salsa16:"V",picante24:"V",spag24:"V",spag28:"V",spag32:"V",pizzaSauce:"V",pizzaSauce14:"V",enchGreen:"V",enchRed:"V",mushCan:"V",cherryTom:"V",romaine:"V",sloppyJoe:"V",driedVeg:"V6",sunTomato:"V4",instPotato:"V4",apple:"F",banana:"F",orange:"F",pieFilling:"F",pineapple:"F",applesauce:"F",peaches29:"F",cherryFilling:"F",berryFilling:"F",cider:"F",raisins:"F2",driedCran:"F2",driedApple:"F4",bowtie:"G",spiral:"G",rotini:"G",elbow:"G",eggNoodle:"G",lasagnaNoodle:"G",noBoil:"G",rice:"G",instRice:"G",couscous:"G",ramen:"G",instOats:"G",rolledOats:"G",grits:"G",macCheese:"G",readyRice:"G",stuffing:"G",stuffing8:"G",biscuitMix:"G",pancakeMix:"G",cornbreadMix:"G",pizzaMix:"G",ritz:"G",crackers:"G",breadCrumbs:"G",panko:"G",granola:"G",fritos:"G",fritosBag:"G",tortChips:"G",grahams:"G",cereal:"G",popcorn:"G",englishMuffin:"G",chexCereal:"G",branCereal:"G",pretzels:"G",spaghetti:"G",subRolls:"G",hotDogBuns:"G",buns:"G",bread:"G",bagel:"G",pita:"G",biscuitsCan:"G",breadDough:"G",ravioli:"GD",tort10:"G",tort8:"G"};
+const MYPLATE={chickenCan:"P",fzPepOnion:"V",peach:"F",andouille:"P",sweetPotato:"V",poblano:"V",avocado:"F",zucchini:"V",stripSteak:"P",tomPaste:"V3",eggplant:"V",crustyBread:"G",mozzBlock:"D",cornmeal:"G",pepperJack:"D",buttermilk:"D",creamedCorn:"V",jalapeno:"V",redPepper:"V",redOnion:"V",pineappleChunks:"F",cornTort:"G",fzBroccoli:"V",redLentils:"P3",beef:"P",italSausage:"P",hotSausage:"P",sausageLinks:"P",smokedSausage:"P",bacon:"P",hotDogs:"P",pepperoni:"P",turkeyPep:"P",pepStick:"P",summerSausage:"P",jerky:"P",chickenCooked:"P",chickenRaw:"P",chickenThigh:"P",porkChop:"P",porkLoin:"P",porkTender:"P",stewMeat:"P",turkey:"P",imitCrab:"P",shrimp:"P",scallops:"P",eggs:"P0.5",pinto:"P",black:"P",kidney:"P",chickpea:"P",refried:"P",tunaPouch:"P",chickenPouch:"P",peanutButter:"P",trailMix:"P",tunaCan:"P",bakedBeans:"P",deliTurkey:"P",deliHam:"P",refriedFlakes:"P4",hummusPowder:"P3",milk:"D",cheddar:"D",mozz:"D",mexBlend:"D",colbyJack:"D",parm:"D",ricotta:"D",cottage:"D",cheeseSlice:"D",americanCheese:"D",hardCheese:"D",stringCheese:"D",milkPowder:"D5",cheesePowder:"D1",celery:"V",onion:"V",greenOnion:"V",redPotato:"V",babyCarrot:"V",carrot:"V",cabbage:"V",mushroom:"V",portobello:"V",greenPepper:"V",tomato:"V",lettuce:"V",fzPeas:"V",fzCarrots:"V",fzCorn:"V",fzGreenBeans:"V",fzMixedVeg:"V",hashBrowns:"V",taterTots:"V",tomSauce15:"V",tomSauce8:"V",diced145:"V",diced32:"V",tomSoup:"V",cornCan:"V",salsa16:"V",picante24:"V",spag24:"V",spag28:"V",spag32:"V",pizzaSauce:"V",pizzaSauce14:"V",enchGreen:"V",enchRed:"V",mushCan:"V",cherryTom:"V",romaine:"V",sloppyJoe:"V",driedVeg:"V6",sunTomato:"V4",instPotato:"V4",apple:"F",banana:"F",orange:"F",pieFilling:"F",pineapple:"F",applesauce:"F",peaches29:"F",cherryFilling:"F",berryFilling:"F",cider:"F",raisins:"F2",driedCran:"F2",driedApple:"F4",bowtie:"G",spiral:"G",rotini:"G",elbow:"G",eggNoodle:"G",lasagnaNoodle:"G",noBoil:"G",rice:"G",instRice:"G",couscous:"G",ramen:"G",instOats:"G",rolledOats:"G",grits:"G",macCheese:"G",readyRice:"G",stuffing:"G",stuffing8:"G",biscuitMix:"G",pancakeMix:"G",cornbreadMix:"G",pizzaMix:"G",ritz:"G",crackers:"G",breadCrumbs:"G",panko:"G",granola:"G",fritos:"G",fritosBag:"G",tortChips:"G",grahams:"G",cereal:"G",popcorn:"G",englishMuffin:"G",chexCereal:"G",branCereal:"G",pretzels:"G",spaghetti:"G",subRolls:"G",hotDogBuns:"G",buns:"G",bread:"G",bagel:"G",pita:"G",biscuitsCan:"G",breadDough:"G",ravioli:"GD",tort10:"G",tort8:"G"};
 Object.entries(MYPLATE).forEach(([k,v])=>{ if(P[k]){ P[k].g=v.replace(/[^FVGPD]/g,""); const m=parseFloat(v.replace(/[FVGPD]/g,"")); if(m>0)P[k].gx=m; } });
 const GROUPS=[
   {k:"F",n:"Fruits",sn:"Fruit",c:"#C8243A",tip:"apples, oranges, bananas or raisins on the side"},
@@ -1569,7 +1781,7 @@ const mealRank=r=>{
 const pickedRecipes=()=>R.filter(r=>S.picked.has(r.id)).map((r,i)=>[r,i]).sort((a,b)=>mealRank(a[0])-mealRank(b[0])||a[1]-b[1]).map(x=>x[0]);
 
 function roundBuy(q,unit){
-  const counts=["can","jar","egg","chop","onion","carrot","apple","banana","tomato","head","stalk","bunch","clove","pepper","loaf","noodle","pouch","box","packet","cube","sleeve","tortilla","bun","slice","roll","pack","pita","bagel","stick","bag","sheet","bar"];
+  const counts=["can","jar","egg","chop","onion","carrot","apple","banana","tomato","head","stalk","bunch","clove","pepper","loaf","eggplant","squash","lime","avocado","leaf","peach","noodle","pouch","box","packet","cube","sleeve","tortilla","bun","slice","roll","pack","pita","bagel","stick","bag","sheet","bar"];
   if(counts.includes(unit))return Math.ceil(q-1e-9);
   return Math.ceil(q*4-1e-9)/4;
 }
@@ -1586,11 +1798,11 @@ function shopAmount(q,u){
 /* What to pick up off the shelf. Sizes are common US packages, smallest first.
    Amounts are in the item's own unit (cups or tbsp). */
 const PKG={
-  milk:[["quart","",4],["half gallon","",8],["gallon","",16]],
+  milk:[["quart","",4],["half gallon","",8],["gallon","",16]], buttermilk:[["quart","",4]], cornmeal:[["bag","2 lb",6]],
   halfHalf:[["pint","",2],["quart","",4]], cream:[["half pint","",1],["pint","",2],["quart","",4]],
   stock:[["carton","32 oz",4]], cider:[["half gallon","",8],["gallon","",16]],
   pizzaSauce:[["jar","14 oz",1.75]], bbqSauce:[["bottle","18 oz",2.25]], syrup:[["bottle","24 oz",3]],
-  caesar:[["bottle","16 oz",2]], teriyaki:[["bottle","10 oz",1.25]],
+  caesar:[["bottle","16 oz",2]], teriyaki:[["bottle","10 oz",1.25]], stirFrySauce:[["bottle","12 oz",1.5]], ketchup:[["bottle","20 oz",40]],
   rice:[["bag","2 lb",5]], instRice:[["box","14 oz",4]], rolledOats:[["canister","18 oz",6]],
   biscuitMix:[["box","40 oz",9]], pancakeMix:[["box","32 oz",7]], marshmallow:[["bag","10 oz",5]],
   chocChips:[["bag","12 oz",2]], raisins:[["box","12 oz",2]], parm:[["canister","8 oz",2]],
@@ -1993,7 +2205,8 @@ function fmtMeasure(q,unit){
 /* Hand measures are for DRY ingredients only — you cannot hold milk in a fist.
    Anything pourable gets a camp-cup reference instead, or nothing. */
 const WET=new Set(["milk","halfHalf","cream","stock","pizzaSauce","caesar","syrup","teriyaki",
-  "cider","oil","oliveOil","maple","worcester","jelly","peanutButter","honey","soySauce"]);
+  "cider","oil","oliveOil","maple","worcester","jelly","peanutButter","honey","soySauce",
+  "buttermilk","stirFrySauce","bbqSauce","ketchup","riceVinegar","pesto"]);
 function handMeasure(q,unit,key){
   if(WET.has(key)){
     if(unit!=="cup")return null;                 /* a spoonful of oil has no hand equivalent */
@@ -2624,7 +2837,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.23";
+const APP_BASE="3.24";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");

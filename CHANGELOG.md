@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.23** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.24** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,96 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.24 — 53 new recipes for the thin categories (October 24, 2026)
+
+Recipe count 148 → 201. Aimed at the categories that had few choices, plus five of
+Rob's own and nine from Fresh Off The Grid.
+
+**Rob's recipes (Troop 46)**
+- Pepper & Onion Chicken Stir Fry: canned chicken, frozen pepper and onion blend, instant
+  rice, and a bottle of sauce of your choice (teriyaki, sweet & sour, General Tso or plain
+  stir-fry; gluten-free bottles make the dish gluten free).
+- Campfire Hot Dog Skewers: hot dogs, pineapple, red and green peppers and red onion on
+  skewers, glazed with a barbecue, ketchup, soy and rice vinegar sauce.
+- Walking S'mores: a snack-size cookie bag, two pieces of chocolate and two toasted
+  marshmallows, eaten out of the bag with a fork.
+- Camp Cornbread: cornmeal, flour, buttermilk, creamed corn, two cheeses and a jalapeño,
+  baked in a 12-inch Dutch oven; the side for chili night. "Your nose is the best timer."
+- Eggplant Parm Skewers: eggplant, crusty bread and cherry tomatoes on skewers, brushed
+  with pesto on the grill, tossed with mozzarella cubes. Vegetarian.
+
+**From Fresh Off The Grid (freshoffthegrid.com), credited on the cards**
+- Fresh Off The Grid Chili Mac: tomato paste, chili powder, cumin, smoked paprika and
+  garlic, one pot, fifteen minutes. Plant-based ground makes it vegetarian.
+- One Pot Beef Stroganoff: seared strip steak, mushrooms, egg noodles and sour cream in a
+  cast iron skillet.
+- Camp Stove Chilaquiles: fried corn tortilla wedges in tomato sauce with eggs cooked in
+  the pan. Vegetarian, gluten free; breakfast or dinner.
+- Chickpea Breakfast Hash: zucchini, peppers, red onion and chickpeas with cumin and
+  coriander, eggs in a well. Vegetarian, gluten free; vegan without the eggs.
+- Sweet Potato Black Bean Burgers: grated sweet potato and mashed black beans bound with
+  panko, pan-fried, spicy mayo and avocado on the bun. Vegetarian; per person.
+- Dutch Oven Veggie Enchiladas: peppers, onion, black beans and cheese rolled in
+  tortillas under enchilada sauce, coals on the lid. Vegetarian.
+- Sweet Potato & Black Bean Campfire Tacos: cumin-roasted sweet potato and poblano with
+  lime black beans on corn tortillas. Vegan and gluten free.
+- Dutch Oven Red Beans and Rice: andouille, the trinity, Cajun seasoning, kidney beans
+  and rice in one pot on the stove.
+- Dutch Oven Peach Cobbler: fresh peaches under a flour, butter and sugar crumb topping,
+  coals under and on the lid. The real cobbler, as against the boxed-mix Peach Dump Cake
+  and the oat-topped Skillet Peach Crisp already in the book.
+
+**Compared with what was already in the book**
+- Chili Mac vs One-Pot Chili Mac: both kept. The old one is canned chili and a cheese
+  packet; the Fresh Off The Grid one is from-scratch spices and tomato paste.
+- Veggie Enchiladas: the Black Bean Enchiladas written for this release were nearly the
+  same dish, so only the Fresh Off The Grid version was kept.
+- Red Beans and Rice vs Dutch Oven Spanish Rice & Beans: different dishes (Cajun with
+  andouille vs tomato-Spanish), both kept.
+- Stroganoff, chilaquiles, chickpea hash, sweet potato burgers, campfire tacos: nothing
+  like them before.
+
+**No-cook dinners (2 → 10):** Chicken Caesar Pita Pockets, Mediterranean Chickpea Wraps,
+Tuna & White Bean Salad with Crackers, Cold Walking Tacos, Crunchy Ramen Slaw, Hummus
+Plate Dinner, Apple Chicken Salad Wraps, Big Board Dinner.
+
+**Backpacking dinners (11 → 19), freezer bag:** Peanut Curry Couscous, Thai Peanut
+Noodles, Trail Shepherd's Pie, Cheesy Broccoli Rice, Trail Tuna Mac, Chicken Teriyaki
+Rice, Couscous Taco Bowl, Loaded Mashed Potato Bowl.
+
+**Backpacking desserts and cracker barrel (7 and 5 → 11 and 7):** Trail Cheesecake Cups,
+Hot Apple Crisp Cup, Chocolate Peanut Butter Pudding, Peanut Butter Pretzel Bites, Trail
+Cracker Barrel.
+
+**Dutch oven cracker barrel and lunch (2 and 8 → 6 and 14):** Pull-Apart Garlic Bread,
+Dutch Oven Nachos, Dutch Oven Calzones, Dutch Oven Quesadilla Stack, Dutch Oven Pretzel
+Bites, Hot Ham & Cheese Sliders.
+
+**Vegetarian and vegan dinners (car camping 4 → 16 vegetarian, 4 → 9 vegan):**
+Three-Bean Chili Mac, Chickpea & Vegetable Curry, Lentil Sloppy
+Joes, Skillet Veggie Fajitas, Pesto Pasta Primavera, Dutch Oven Vegetable Lasagna, Loaded
+Baked Potato Bar, and a vegan Dutch oven breakfast: Apple Cinnamon Baked Oatmeal.
+
+**Gluten free:** Chicken Street Tacos (corn tortillas), Pepper & Onion Frittata, Taco
+Rice Skillet, Cheese, Jerky & Apple Lunch, plus eleven of the recipes above.
+
+**Pantry:** 39 new items — canned chicken, frozen pepper & onion blend, stir-fry sauce,
+corn tortillas, frozen broccoli, red lentils, curry powder, basil pesto, red and green
+peppers, red onion, pineapple chunks, ketchup, rice vinegar, snack-size cookie bags,
+cornmeal, baking powder, jalapeño, pepper jack, buttermilk, creamed corn, eggplant, crusty
+bread, block mozzarella, beef broth, tomato paste, cumin, smoked paprika, thyme, strip
+steak, zucchini, coriander, sweet potatoes, poblanos, limes, avocados, andouille, Cajun seasoning, bay leaf, fresh peaches —
+all flagged for the diet filters and tagged for MyPlate. 280 items.
+
+Every new recipe was rendered at 3, 8 and 20 people and checked for text oddities, cost
+per serving, diet flags and MyPlate groups. Full regression passed: data integrity,
+random-menu text scan, 36 style/diet combinations, MyPlate, recipes and sharing, roster,
+meal order, v3.18 and v3.19 suites, install strip, nine screen sizes, 12 px floor,
+accessibility, installable, offline with 201 recipes. The menu draws 209 cards in 57 ms;
+the app file is 826 KB.
+
+Service worker cache renamed to troop-mess-v3.24.
 
 ### v3.23 — MyPlate scoring corrected after independent audit (October 24, 2026)
 

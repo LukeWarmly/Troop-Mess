@@ -98,14 +98,14 @@ app again with your recipes baked into it.
 
 ## What's in it
 
-**148 recipes.** Thirty-five came from the troop cookbook found in that storage area.
+**201 recipes.** Thirty-five came from the troop cookbook found in that storage area.
 Eighteen more came from the Cub Grub Cookbook used in Baloo training, adapted for
 Troop-age scouts. The rest cover the gaps those had — backpacking, no-cook, breakfasts
 and desserts — plus recipes sent in by the troop.
 
 **Five ways of cooking:** car camping, Dutch oven, backpacking (freezer bag), no-cook, and
 high adventure — plus a tick box to exclude Dutch oven recipes entirely, for the trip
-where nobody wants to haul cast iron. One hundred and fourteen of the recipes need no Dutch oven.
+where nobody wants to haul cast iron. One hundred and forty-nine of the recipes need no Dutch oven.
 
 **Five meals:** breakfast, lunch, dinner, dessert, and cracker barrel.
 
