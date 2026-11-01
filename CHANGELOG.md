@@ -1,6 +1,6 @@
 # Troop Mess — Camp Meal Planner
 
-**Current version: v3.27** · Wood Badge ticket, goal 1 of 5
+**Current version: v3.28** · Wood Badge ticket, goal 1 of 5
 
 A single self-contained HTML file. No internet, no install, no accounts. Open it in any
 browser on any device and it runs. Everything below lives inside that one file.
@@ -286,6 +286,14 @@ and dessert were empty. The app said so plainly rather than pretending otherwise
   palm" rather than the teaspoon advice.
 - The shopping list reads as fractions too.
 - Grammar: "2 yellow onions" not "2 onions yellow onion"; "1/2 cup" not "1/2 cups".
+
+### v3.28 — Roster hint no longer looks like names from a trip (November 1, 2026)
+
+One of Rob's testers saw the grey example names in the Patrol members box (Alex, Ben,
+Carlos, Dev) and took them for names left over from a real campout. The grey hint now
+reads "Type the patrol's names here, one per line" with a note that it disappears when
+you start typing. Same behavior as before: it is a hint, not data, and it can never end
+up on a printed roster. Service worker cache renamed to troop-mess-v3.28.
 
 ### v3.27 — No outside code runs in the app (October 25, 2026)
 

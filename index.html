@@ -7,8 +7,8 @@
      its fingerprint (sha256), and nothing from any other site. If the script is edited,
      the fingerprint must be updated or the app will not run: see "Editing the code" in
      README.md. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-t+DxZJ543Y8+sggho8UHtffw7+i3c2g5nlkeuURFC9Y='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://troopmess.goatcounter.com; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
-<title>Troop Mess — Camp Meal Planner v3.27</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Syv5YegHM8vm1nKfB5p/BJiVP6jKkUvBF5RmSW8LMcI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://troopmess.goatcounter.com; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Troop Mess — Camp Meal Planner v3.28</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14232B">
 <meta name="mobile-web-app-capable" content="yes">
@@ -461,7 +461,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 <body>
 
 <header class="masthead" id="mast">
-  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.27</p>
+  <p class="mast-eyebrow" id="verEyebrow">Troop Quartermaster · v3.28</p>
   <p class="mast-byline">Rob Newman · Troops 46/146 · Mecklenburg County Council<br>Wood Badge Eagle Patrol · 15-415-25</p>
   <h1>Troop Mess<br><span>Camp Meal Planner</span></h1>
   <p class="mast-sub">Pick who you're feeding and how you're cooking. Get scaled recipes, one consolidated shopping list, a cost estimate, and pack weight.</p>
@@ -606,7 +606,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
     <div id="addBody"></div>
   </section>
 
-  <p class="foot" id="verFoot">Troop Mess v3.27 · Prices are rough national estimates, not quotes</p>
+  <p class="foot" id="verFoot">Troop Mess v3.28 · Prices are rough national estimates, not quotes</p>
 </main>
 
 <div class="dock">
@@ -618,7 +618,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   <button id="dGo" disabled>Build list</button>
 </div>
 
-<script id="customData" type="application/json">{"version":"3.27","pantry":{},"recipes":[]}</script>
+<script id="customData" type="application/json">{"version":"3.28","pantry":{},"recipes":[]}</script>
 <script>
 /* ==========================================================
    TROOP MESS v1.2
@@ -2630,7 +2630,7 @@ function renderRoster(){
   }
   h+=`<div class="field crewfield">
       <label for="f-crew">Patrol members <span class="lblnote">one per line, or separated by commas</span></label>
-      <textarea id="f-crew" rows="5" placeholder="Alex&#10;Ben&#10;Carlos&#10;Dev">${escH(S.crew.join("\n"))}</textarea>
+      <textarea id="f-crew" rows="5" placeholder="Type the patrol&#39;s names here, one per line&#10;(this grey text disappears when you start typing)">${escH(S.crew.join("\n"))}</textarea>
       <p class="hint" id="crewNote" style="margin-top:6px"></p>
     </div>
     <div class="btnrow" style="margin-bottom:18px">
@@ -2944,7 +2944,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ================= CUSTOM RECIPES ================= */
-const APP_BASE="3.27";
+const APP_BASE="3.28";
 let CUSTOM={version:APP_BASE,pantry:{},recipes:[]};
 try{
   const raw=document.getElementById("customData");
